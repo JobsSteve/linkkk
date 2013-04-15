@@ -17,7 +17,13 @@
 		2BA510E2171C2856009A6547 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510E1171C2856009A6547 /* Default@2x.png */; };
 		2BA510E4171C2856009A6547 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510E3171C2856009A6547 /* Default-568h@2x.png */; };
 		2BA510E7171C2856009A6547 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510E5171C2856009A6547 /* MainStoryboard.storyboard */; };
-		2BA510EA171C2856009A6547 /* LKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510E9171C2856009A6547 /* LKViewController.m */; };
+		2BA510EA171C2856009A6547 /* LKMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510E9171C2856009A6547 /* LKMainViewController.m */; };
+		2BA51101171C39D2009A6547 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510F7171C39D2009A6547 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		2BA51102171C39D2009A6547 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510F9171C39D2009A6547 /* SinaWeibo.bundle */; };
+		2BA51103171C39D2009A6547 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510FB171C39D2009A6547 /* SinaWeibo.m */; };
+		2BA51104171C39D2009A6547 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510FD171C39D2009A6547 /* SinaWeiboAuthorizeView.m */; };
+		2BA51105171C39D2009A6547 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */; };
+		2BA5110B171C413E009A6547 /* LKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5110A171C413E009A6547 /* LKLoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +41,20 @@
 		2BA510E1171C2856009A6547 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		2BA510E3171C2856009A6547 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2BA510E6171C2856009A6547 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		2BA510E8171C2856009A6547 /* LKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKViewController.h; sourceTree = "<group>"; };
-		2BA510E9171C2856009A6547 /* LKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LKViewController.m; sourceTree = "<group>"; };
+		2BA510E8171C2856009A6547 /* LKMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKMainViewController.h; sourceTree = "<group>"; };
+		2BA510E9171C2856009A6547 /* LKMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LKMainViewController.m; sourceTree = "<group>"; };
+		2BA510F6171C39D2009A6547 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		2BA510F7171C39D2009A6547 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		2BA510F9171C39D2009A6547 /* SinaWeibo.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SinaWeibo.bundle; sourceTree = "<group>"; };
+		2BA510FA171C39D2009A6547 /* SinaWeibo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeibo.h; sourceTree = "<group>"; };
+		2BA510FB171C39D2009A6547 /* SinaWeibo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeibo.m; sourceTree = "<group>"; };
+		2BA510FC171C39D2009A6547 /* SinaWeiboAuthorizeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboAuthorizeView.h; sourceTree = "<group>"; };
+		2BA510FD171C39D2009A6547 /* SinaWeiboAuthorizeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboAuthorizeView.m; sourceTree = "<group>"; };
+		2BA510FE171C39D2009A6547 /* SinaWeiboConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboConstants.h; sourceTree = "<group>"; };
+		2BA510FF171C39D2009A6547 /* SinaWeiboRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboRequest.h; sourceTree = "<group>"; };
+		2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboRequest.m; sourceTree = "<group>"; };
+		2BA51109171C413E009A6547 /* LKLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLoginViewController.h; sourceTree = "<group>"; };
+		2BA5110A171C413E009A6547 /* LKLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				2BA510D3171C2856009A6547 /* Linkkk */,
+				2BA510F4171C39B2009A6547 /* Third Parties */,
 				2BA510CC171C2856009A6547 /* Frameworks */,
 				2BA510CA171C2856009A6547 /* Products */,
 			);
@@ -86,8 +105,10 @@
 				2BA510DC171C2856009A6547 /* LKAppDelegate.h */,
 				2BA510DD171C2856009A6547 /* LKAppDelegate.m */,
 				2BA510E5171C2856009A6547 /* MainStoryboard.storyboard */,
-				2BA510E8171C2856009A6547 /* LKViewController.h */,
-				2BA510E9171C2856009A6547 /* LKViewController.m */,
+				2BA510E8171C2856009A6547 /* LKMainViewController.h */,
+				2BA510E9171C2856009A6547 /* LKMainViewController.m */,
+				2BA51109171C413E009A6547 /* LKLoginViewController.h */,
+				2BA5110A171C413E009A6547 /* LKLoginViewController.m */,
 				2BA510D4171C2856009A6547 /* Supporting Files */,
 			);
 			path = Linkkk;
@@ -105,6 +126,40 @@
 				2BA510E3171C2856009A6547 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2BA510F4171C39B2009A6547 /* Third Parties */ = {
+			isa = PBXGroup;
+			children = (
+				2BA510F5171C39D2009A6547 /* JSONKit */,
+				2BA510F8171C39D2009A6547 /* SinaWeibo */,
+			);
+			name = "Third Parties";
+			path = Linkkk;
+			sourceTree = "<group>";
+		};
+		2BA510F5171C39D2009A6547 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				2BA510F6171C39D2009A6547 /* JSONKit.h */,
+				2BA510F7171C39D2009A6547 /* JSONKit.m */,
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
+		2BA510F8171C39D2009A6547 /* SinaWeibo */ = {
+			isa = PBXGroup;
+			children = (
+				2BA510F9171C39D2009A6547 /* SinaWeibo.bundle */,
+				2BA510FA171C39D2009A6547 /* SinaWeibo.h */,
+				2BA510FB171C39D2009A6547 /* SinaWeibo.m */,
+				2BA510FC171C39D2009A6547 /* SinaWeiboAuthorizeView.h */,
+				2BA510FD171C39D2009A6547 /* SinaWeiboAuthorizeView.m */,
+				2BA510FE171C39D2009A6547 /* SinaWeiboConstants.h */,
+				2BA510FF171C39D2009A6547 /* SinaWeiboRequest.h */,
+				2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */,
+			);
+			path = SinaWeibo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +219,7 @@
 				2BA510E2171C2856009A6547 /* Default@2x.png in Resources */,
 				2BA510E4171C2856009A6547 /* Default-568h@2x.png in Resources */,
 				2BA510E7171C2856009A6547 /* MainStoryboard.storyboard in Resources */,
+				2BA51102171C39D2009A6547 /* SinaWeibo.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +232,12 @@
 			files = (
 				2BA510DA171C2856009A6547 /* main.m in Sources */,
 				2BA510DE171C2856009A6547 /* LKAppDelegate.m in Sources */,
-				2BA510EA171C2856009A6547 /* LKViewController.m in Sources */,
+				2BA510EA171C2856009A6547 /* LKMainViewController.m in Sources */,
+				2BA51101171C39D2009A6547 /* JSONKit.m in Sources */,
+				2BA51103171C39D2009A6547 /* SinaWeibo.m in Sources */,
+				2BA51104171C39D2009A6547 /* SinaWeiboAuthorizeView.m in Sources */,
+				2BA51105171C39D2009A6547 /* SinaWeiboRequest.m in Sources */,
+				2BA5110B171C413E009A6547 /* LKLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +316,7 @@
 		2BA510EE171C2856009A6547 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";
@@ -266,6 +328,7 @@
 		2BA510EF171C2856009A6547 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";

@@ -8,11 +8,26 @@
 
 #import "LKAppDelegate.h"
 
+#import "SinaWeibo.h"
+
+#define kAppKey             @"2279872707"
+#define kAppSecret          @"e0a3ff6db611f960c7e3f1765407c9d7"
+#define kAppRedirectURI     @"http://map.linkkk.com"
+
 @implementation LKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    _sinaweibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI ssoCallbackScheme:@"linkkk.weibo" andDelegate:nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *auth = [defaults objectForKey:@"SinaWeiboAuthData"];
+    if ([auth objectForKey:@"AccessTokenKey"] && [auth objectForKey:@"ExpirationDateKey"] && [auth objectForKey:@"UserIDKey"])
+    {
+        _sinaweibo.accessToken = [auth objectForKey:@"AccessTokenKey"];
+        _sinaweibo.expirationDate = [auth objectForKey:@"ExpirationDateKey"];
+        _sinaweibo.userID = [auth objectForKey:@"UserIDKey"];
+    }
+    
     return YES;
 }
 							
@@ -41,6 +56,23 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [_sinaweibo handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [_sinaweibo handleOpenURL:url];
+}
+
+- (void)dealloc
+{
+    [_sinaweibo release];
+    
+    [super dealloc];
 }
 
 @end
