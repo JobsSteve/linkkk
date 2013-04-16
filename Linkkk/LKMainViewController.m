@@ -29,6 +29,11 @@
 {
     if (![self _sinaweibo].isAuthValid)
         [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"defaults: %@", [defaults objectForKey:@"SinaWeiboAuthData"]);
+    
+    //[self _loginLinkkk];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,9 +51,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    LKLoginViewController *loginViewController = ((LKLoginViewController *)segue.destinationViewController);
-    loginViewController.delegate = self;
-    loginViewController.sinaweibo = [self _sinaweibo];
+    if ([segue.identifier isEqualToString:@"LoginSegue"]) {
+        LKLoginViewController *loginViewController = ((LKLoginViewController *)segue.destinationViewController);
+        loginViewController.delegate = self;
+        loginViewController.sinaweibo = [self _sinaweibo];
+    }
 }
 
 #pragma mark - Sina Weibo Handlers
@@ -86,8 +93,12 @@
 - (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
 {
     NSLog(@"WEIBO: did login");
-    [self dismiss];
     [self _storeAuthData];
+    if ([self _loginLinkkk]) {
+        [self dismiss];
+    } else {
+        NSLog(@"LINKKK: can't login");
+    }
 }
 
 - (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo
@@ -112,6 +123,26 @@
 - (void)dismiss
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)_loginLinkkk
+{
+    SinaWeibo *weibo = [self _sinaweibo];
+    
+    NSString *post = [NSString stringWithFormat:@"uid=%@&access_token=%@&expires_in=%d", weibo.userID, weibo.accessToken, (int)weibo.expirationDate.timeIntervalSinceNow];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/v5/app/login/"]];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = postData;
+    [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    NSHTTPURLResponse *response;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+    NSLog(@"%d, %@, %@", response.statusCode, response.allHeaderFields, string);
+    return YES;
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B29ECF9171D92C900235616 /* input.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B29ECF8171D92C900235616 /* input.json */; };
 		2BA510CE171C2856009A6547 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CD171C2856009A6547 /* UIKit.framework */; };
 		2BA510D0171C2856009A6547 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CF171C2856009A6547 /* Foundation.framework */; };
 		2BA510D2171C2856009A6547 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510D1171C2856009A6547 /* CoreGraphics.framework */; };
@@ -24,9 +25,14 @@
 		2BA51104171C39D2009A6547 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510FD171C39D2009A6547 /* SinaWeiboAuthorizeView.m */; };
 		2BA51105171C39D2009A6547 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */; };
 		2BA5110B171C413E009A6547 /* LKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5110A171C413E009A6547 /* LKLoginViewController.m */; };
+		2BD1DB20171D978F0029949F /* LKPlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB1F171D978F0029949F /* LKPlaceView.m */; };
+		2BD1DB23171D9FE80029949F /* LKNearbyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB22171D9FE80029949F /* LKNearbyCell.m */; };
+		2BD1DB26171DA0660029949F /* LKNearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB25171DA0660029949F /* LKNearbyViewController.m */; };
+		2BD1DB2A171DCACA0029949F /* LKProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB29171DCACA0029949F /* LKProfileViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B29ECF8171D92C900235616 /* input.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = input.json; sourceTree = "<group>"; };
 		2BA510C9171C2856009A6547 /* Linkkk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Linkkk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA510CD171C2856009A6547 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2BA510CF171C2856009A6547 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -55,6 +61,14 @@
 		2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboRequest.m; sourceTree = "<group>"; };
 		2BA51109171C413E009A6547 /* LKLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLoginViewController.h; sourceTree = "<group>"; };
 		2BA5110A171C413E009A6547 /* LKLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLoginViewController.m; sourceTree = "<group>"; };
+		2BD1DB1E171D978F0029949F /* LKPlaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPlaceView.h; sourceTree = "<group>"; };
+		2BD1DB1F171D978F0029949F /* LKPlaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPlaceView.m; sourceTree = "<group>"; };
+		2BD1DB21171D9FE80029949F /* LKNearbyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNearbyCell.h; sourceTree = "<group>"; };
+		2BD1DB22171D9FE80029949F /* LKNearbyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNearbyCell.m; sourceTree = "<group>"; };
+		2BD1DB24171DA0660029949F /* LKNearbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNearbyViewController.h; sourceTree = "<group>"; };
+		2BD1DB25171DA0660029949F /* LKNearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNearbyViewController.m; sourceTree = "<group>"; };
+		2BD1DB28171DCACA0029949F /* LKProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKProfileViewController.h; sourceTree = "<group>"; };
+		2BD1DB29171DCACA0029949F /* LKProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKProfileViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +123,16 @@
 				2BA510E9171C2856009A6547 /* LKMainViewController.m */,
 				2BA51109171C413E009A6547 /* LKLoginViewController.h */,
 				2BA5110A171C413E009A6547 /* LKLoginViewController.m */,
+				2BD1DB24171DA0660029949F /* LKNearbyViewController.h */,
+				2BD1DB25171DA0660029949F /* LKNearbyViewController.m */,
+				2BD1DB21171D9FE80029949F /* LKNearbyCell.h */,
+				2BD1DB22171D9FE80029949F /* LKNearbyCell.m */,
+				2BD1DB1E171D978F0029949F /* LKPlaceView.h */,
+				2BD1DB1F171D978F0029949F /* LKPlaceView.m */,
+				2BD1DB28171DCACA0029949F /* LKProfileViewController.h */,
+				2BD1DB29171DCACA0029949F /* LKProfileViewController.m */,
+				2BD1DB27171DC6C50029949F /* Resource */,
+				2B29ECF8171D92C900235616 /* input.json */,
 				2BA510D4171C2856009A6547 /* Supporting Files */,
 			);
 			path = Linkkk;
@@ -160,6 +184,13 @@
 				2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */,
 			);
 			path = SinaWeibo;
+			sourceTree = "<group>";
+		};
+		2BD1DB27171DC6C50029949F /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +251,7 @@
 				2BA510E4171C2856009A6547 /* Default-568h@2x.png in Resources */,
 				2BA510E7171C2856009A6547 /* MainStoryboard.storyboard in Resources */,
 				2BA51102171C39D2009A6547 /* SinaWeibo.bundle in Resources */,
+				2B29ECF9171D92C900235616 /* input.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +270,10 @@
 				2BA51104171C39D2009A6547 /* SinaWeiboAuthorizeView.m in Sources */,
 				2BA51105171C39D2009A6547 /* SinaWeiboRequest.m in Sources */,
 				2BA5110B171C413E009A6547 /* LKLoginViewController.m in Sources */,
+				2BD1DB20171D978F0029949F /* LKPlaceView.m in Sources */,
+				2BD1DB23171D9FE80029949F /* LKNearbyCell.m in Sources */,
+				2BD1DB26171DA0660029949F /* LKNearbyViewController.m in Sources */,
+				2BD1DB2A171DCACA0029949F /* LKProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +392,7 @@
 				2BA510EF171C2856009A6547 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
