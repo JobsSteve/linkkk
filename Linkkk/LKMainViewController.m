@@ -8,32 +8,39 @@
 
 #import "LKMainViewController.h"
 #import "LKLoginViewController.h"
+#import "LKProfileViewController.h"
 #import "LKAppDelegate.h"
+#import "LKProfile.h"
 
 #import "SinaWeibo.h"
 
 @interface LKMainViewController ()
-
+{
+}
 @end
 
 @implementation LKMainViewController
+
+- (id)initWithCoder:(NSCoder *)decoder
+{
+    self = [super initWithCoder:decoder];
+    if (self) {
+
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    self.title = @"Linkkk";
+    self.title = @"首页";
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     if (![self _sinaweibo].isAuthValid)
         [self performSegueWithIdentifier:@"LoginSegue" sender:self];
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"defaults: %@", [defaults objectForKey:@"SinaWeiboAuthData"]);
-    
-    //[self _loginLinkkk];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,8 +60,12 @@
 {
     if ([segue.identifier isEqualToString:@"LoginSegue"]) {
         LKLoginViewController *loginViewController = ((LKLoginViewController *)segue.destinationViewController);
-        loginViewController.delegate = self;
         loginViewController.sinaweibo = [self _sinaweibo];
+    } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
+        LKProfileViewController *profileViewController = ((LKProfileViewController *)segue.destinationViewController);
+        profileViewController.sinaweibo = [self _sinaweibo];
+    } else {
+        // DO NOTHING
     }
 }
 
@@ -94,11 +105,13 @@
 {
     NSLog(@"WEIBO: did login");
     [self _storeAuthData];
-    if ([self _loginLinkkk]) {
-        [self dismiss];
-    } else {
-        NSLog(@"LINKKK: can't login");
-    }
+    [self _dismiss];
+}
+
+- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
+{
+    NSLog(@"WEIBO: did logout");
+    [self _removeAuthData];
 }
 
 - (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo
@@ -120,29 +133,9 @@
 
 #pragma mark - Helper Functions
 
-- (void)dismiss
+- (void)_dismiss
 {
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (BOOL)_loginLinkkk
-{
-    SinaWeibo *weibo = [self _sinaweibo];
-    
-    NSString *post = [NSString stringWithFormat:@"uid=%@&access_token=%@&expires_in=%d", weibo.userID, weibo.accessToken, (int)weibo.expirationDate.timeIntervalSinceNow];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/v5/app/login/"]];
-    request.HTTPMethod = @"POST";
-    request.HTTPBody = postData;
-    [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSHTTPURLResponse *response;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-    NSLog(@"%d, %@, %@", response.statusCode, response.allHeaderFields, string);
-    return YES;
 }
 
 @end

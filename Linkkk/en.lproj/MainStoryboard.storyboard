@@ -63,7 +63,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="fk6-CQ-nAc" kind="push" id="Fnf-uS-65r"/>
+                                    <segue destination="fk6-CQ-nAc" kind="push" identifier="ProfileSegue" id="Fnf-uS-65r"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wmr-WG-tg5">
@@ -114,9 +114,17 @@
                                     <action selector="login:" destination="Dhe-b1-gjJ" eventType="touchUpInside" id="gGZ-6h-Mq6"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" animating="YES" style="gray" id="UXW-Xt-9zN">
+                                <rect key="frame" x="151" y="311" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="r9f-aW-itf" id="c7q-Eh-kpa"/>
+                        <outlet property="spinner" destination="UXW-Xt-9zN" id="EZQ-Ln-WJb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n50-XX-RZT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -391,6 +399,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LKLoginViewController.h"/>
             <relationships>
                 <relationship kind="action" name="login:"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="spinner" candidateClass="UIActivityIndicatorView"/>
             </relationships>
         </class>
         <class className="LKMainViewController" superclassName="UIViewController">
@@ -428,6 +438,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="OXz-tS-kv5"/>
+        <segue reference="lYG-We-G5Y"/>
     </inferredMetricsTieBreakers>
 </document>

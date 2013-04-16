@@ -29,6 +29,7 @@
 		2BD1DB23171D9FE80029949F /* LKNearbyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB22171D9FE80029949F /* LKNearbyCell.m */; };
 		2BD1DB26171DA0660029949F /* LKNearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB25171DA0660029949F /* LKNearbyViewController.m */; };
 		2BD1DB2A171DCACA0029949F /* LKProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB29171DCACA0029949F /* LKProfileViewController.m */; };
+		2BD1DB31171DD1AF0029949F /* LKProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB30171DD1AF0029949F /* LKProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,8 @@
 		2BD1DB25171DA0660029949F /* LKNearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKNearbyViewController.m; sourceTree = "<group>"; };
 		2BD1DB28171DCACA0029949F /* LKProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKProfileViewController.h; sourceTree = "<group>"; };
 		2BD1DB29171DCACA0029949F /* LKProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKProfileViewController.m; sourceTree = "<group>"; };
+		2BD1DB2F171DD1AE0029949F /* LKProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKProfile.h; sourceTree = "<group>"; };
+		2BD1DB30171DD1AF0029949F /* LKProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,7 @@
 				2BA510DC171C2856009A6547 /* LKAppDelegate.h */,
 				2BA510DD171C2856009A6547 /* LKAppDelegate.m */,
 				2BA510E5171C2856009A6547 /* MainStoryboard.storyboard */,
+				2BD1DB32171DD1C00029949F /* Model */,
 				2BA510E8171C2856009A6547 /* LKMainViewController.h */,
 				2BA510E9171C2856009A6547 /* LKMainViewController.m */,
 				2BA51109171C413E009A6547 /* LKLoginViewController.h */,
@@ -191,6 +195,15 @@
 			children = (
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		2BD1DB32171DD1C00029949F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2BD1DB2F171DD1AE0029949F /* LKProfile.h */,
+				2BD1DB30171DD1AF0029949F /* LKProfile.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +287,7 @@
 				2BD1DB23171D9FE80029949F /* LKNearbyCell.m in Sources */,
 				2BD1DB26171DA0660029949F /* LKNearbyViewController.m in Sources */,
 				2BD1DB2A171DCACA0029949F /* LKProfileViewController.m in Sources */,
+				2BD1DB31171DD1AF0029949F /* LKProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

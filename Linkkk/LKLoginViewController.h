@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class SinaWeibo;
-@protocol LKLoginDelegate;
 
 @interface LKLoginViewController : UIViewController
 
-@property (assign, nonatomic) id<LKLoginDelegate> delegate;
 @property (strong, nonatomic) SinaWeibo *sinaweibo;
+@property (strong, nonatomic) IBOutlet UIButton *loginButton;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 - (IBAction)login:(id)sender;
 

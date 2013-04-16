@@ -23,6 +23,11 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -32,6 +37,8 @@
 - (void)dealloc
 {
     [_sinaweibo release];
+    [_loginButton release]; _loginButton = nil;
+    [_spinner release]; _spinner = nil;
     
     [super dealloc];
 }

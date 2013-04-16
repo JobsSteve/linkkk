@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
 
-@protocol LKLoginDelegate <NSObject>
-- (void)dismiss;
-@end
-
-@interface LKMainViewController : UIViewController <LKLoginDelegate, SinaWeiboDelegate>
+@interface LKMainViewController : UIViewController <SinaWeiboDelegate>
 
 @end

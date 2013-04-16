@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SinaWeibo.h"
 
 @interface LKProfileViewController : UIViewController
+
+@property (strong, nonatomic) SinaWeibo *sinaweibo;
 
 - (IBAction)logout:(id)sender;
 
