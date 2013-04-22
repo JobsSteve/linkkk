@@ -35,13 +35,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
-{
-    [_sinaweibo release];
-    
-    [super dealloc];
-}
-
 #pragma mark - Callbacks
 
 - (IBAction)logout:(id)sender

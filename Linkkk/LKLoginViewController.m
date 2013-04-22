@@ -34,15 +34,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
-{
-    [_sinaweibo release];
-    [_loginButton release]; _loginButton = nil;
-    [_spinner release]; _spinner = nil;
-    
-    [super dealloc];
-}
-
 #pragma mark -
 
 - (IBAction)login:(id)sender

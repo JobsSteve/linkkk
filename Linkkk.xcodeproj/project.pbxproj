@@ -23,11 +23,11 @@
 		2BA510E4171C2856009A6547 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510E3171C2856009A6547 /* Default-568h@2x.png */; };
 		2BA510E7171C2856009A6547 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510E5171C2856009A6547 /* MainStoryboard.storyboard */; };
 		2BA510EA171C2856009A6547 /* LKMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510E9171C2856009A6547 /* LKMainViewController.m */; };
-		2BA51101171C39D2009A6547 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510F7171C39D2009A6547 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		2BA51101171C39D2009A6547 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510F7171C39D2009A6547 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		2BA51102171C39D2009A6547 /* SinaWeibo.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510F9171C39D2009A6547 /* SinaWeibo.bundle */; };
-		2BA51103171C39D2009A6547 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510FB171C39D2009A6547 /* SinaWeibo.m */; };
-		2BA51104171C39D2009A6547 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510FD171C39D2009A6547 /* SinaWeiboAuthorizeView.m */; };
-		2BA51105171C39D2009A6547 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */; };
+		2BA51103171C39D2009A6547 /* SinaWeibo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510FB171C39D2009A6547 /* SinaWeibo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2BA51104171C39D2009A6547 /* SinaWeiboAuthorizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510FD171C39D2009A6547 /* SinaWeiboAuthorizeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2BA51105171C39D2009A6547 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2BA5110B171C413E009A6547 /* LKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5110A171C413E009A6547 /* LKLoginViewController.m */; };
 		2BBD25C2171EEF7C002BA661 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBD25C1171EEF7C002BA661 /* MapKit.framework */; };
 		2BD1DB20171D978F0029949F /* LKPlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB1F171D978F0029949F /* LKPlaceView.m */; };
@@ -392,7 +392,7 @@
 		2BA510EE171C2856009A6547 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";
@@ -404,7 +404,7 @@
 		2BA510EF171C2856009A6547 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";

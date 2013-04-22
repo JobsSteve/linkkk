@@ -68,11 +68,4 @@
     return [_sinaweibo handleOpenURL:url];
 }
 
-- (void)dealloc
-{
-    [_sinaweibo release];
-    
-    [super dealloc];
-}
-
 @end
