@@ -10,6 +10,7 @@
 		2B286FA81724600D00A454FE /* LKPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B286FA71724600D00A454FE /* LKPlace.m */; };
 		2B286FAA1724610A00A454FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B286FA91724610A00A454FE /* CoreLocation.framework */; };
 		2B286FAD1724C66E00A454FE /* LKPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B286FAC1724C66D00A454FE /* LKPlaceViewController.m */; };
+		2B286FB01724CAFA00A454FE /* LKMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B286FAF1724CAF900A454FE /* LKMainView.m */; };
 		2B29ECF9171D92C900235616 /* input.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B29ECF8171D92C900235616 /* input.json */; };
 		2BA510CE171C2856009A6547 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CD171C2856009A6547 /* UIKit.framework */; };
 		2BA510D0171C2856009A6547 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CF171C2856009A6547 /* Foundation.framework */; };
@@ -42,6 +43,8 @@
 		2B286FA91724610A00A454FE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2B286FAB1724C66D00A454FE /* LKPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPlaceViewController.h; sourceTree = "<group>"; };
 		2B286FAC1724C66D00A454FE /* LKPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPlaceViewController.m; sourceTree = "<group>"; };
+		2B286FAE1724CAF900A454FE /* LKMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKMainView.h; sourceTree = "<group>"; };
+		2B286FAF1724CAF900A454FE /* LKMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKMainView.m; sourceTree = "<group>"; };
 		2B29ECF8171D92C900235616 /* input.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = input.json; sourceTree = "<group>"; };
 		2BA510C9171C2856009A6547 /* Linkkk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Linkkk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA510CD171C2856009A6547 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -139,6 +142,8 @@
 				2BD1DB32171DD1C00029949F /* Model */,
 				2BA510E8171C2856009A6547 /* LKMainViewController.h */,
 				2BA510E9171C2856009A6547 /* LKMainViewController.m */,
+				2B286FAE1724CAF900A454FE /* LKMainView.h */,
+				2B286FAF1724CAF900A454FE /* LKMainView.m */,
 				2BA51109171C413E009A6547 /* LKLoginViewController.h */,
 				2BA5110A171C413E009A6547 /* LKLoginViewController.m */,
 				2BD1DB24171DA0660029949F /* LKNearbyViewController.h */,
@@ -308,6 +313,7 @@
 				2BD1DB31171DD1AF0029949F /* LKProfile.m in Sources */,
 				2B286FA81724600D00A454FE /* LKPlace.m in Sources */,
 				2B286FAD1724C66E00A454FE /* LKPlaceViewController.m in Sources */,
+				2B286FB01724CAFA00A454FE /* LKMainView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

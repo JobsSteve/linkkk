@@ -7,6 +7,8 @@
 //
 
 #import "LKMainViewController.h"
+#import "LKMainView.h"
+
 #import "LKLoginViewController.h"
 #import "LKProfileViewController.h"
 #import "LKAppDelegate.h"
@@ -35,6 +37,8 @@
     [super viewDidLoad];
     
     self.title = @"首页";
+    
+    ((LKMainView *)self.view).delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -43,18 +47,31 @@
         [self performSegueWithIdentifier:@"LoginSegue" sender:self];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.view becomeFirstResponder];
+    [super viewWillAppear:animated];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.view resignFirstResponder];
+    [super viewWillDisappear:animated];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)dealloc
+#pragma mark - Shake View Delegate
+
+- (void)viewDidShake
 {
-    [super dealloc];
+    [self performSegueWithIdentifier:@"NearbySegue" sender:nil];
 }
 
-#pragma mark -
+#pragma mark - Story Board Code
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

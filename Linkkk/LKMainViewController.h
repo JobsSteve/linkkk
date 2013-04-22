@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
 
-@interface LKMainViewController : UIViewController <SinaWeiboDelegate>
+@protocol LKShakeProtocol <NSObject>
+- (void)viewDidShake;
+@end
+
+@interface LKMainViewController : UIViewController <SinaWeiboDelegate, LKShakeProtocol>
 
 @end
