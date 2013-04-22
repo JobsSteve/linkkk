@@ -7,6 +7,7 @@
 //
 
 #import "LKPlaceView.h"
+#import "LKPlace.h"
 
 @implementation LKPlaceView
 

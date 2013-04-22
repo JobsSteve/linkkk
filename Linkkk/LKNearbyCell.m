@@ -7,6 +7,7 @@
 //
 
 #import "LKNearbyCell.h"
+#import "LKPlace.h"
 
 @implementation LKNearbyCell
 
@@ -23,6 +24,13 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setPlace:(LKPlace *)place
+{
+    _place = place;
+    _titleLabel.text = _place.title;
+    _addressLabel.text = _place.address;
 }
 
 @end

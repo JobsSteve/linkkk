@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class LKPlace;
+
 @interface LKNearbyCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
-@property (strong, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) IBOutlet UIImageView *photoView;
+
+@property (strong, nonatomic) LKPlace *place;
 
 @end

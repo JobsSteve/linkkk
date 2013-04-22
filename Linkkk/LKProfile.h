@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSString *csrf;
 
 + (LKProfile *)profile;
-+ (void)login;
+- (void)login;
+- (BOOL)isLoggedIn;
 
 @end

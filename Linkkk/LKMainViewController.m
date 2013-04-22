@@ -106,6 +106,7 @@
     NSLog(@"WEIBO: did login");
     [self _storeAuthData];
     [self _dismiss];
+    [self _login];
 }
 
 - (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
@@ -136,6 +137,13 @@
 - (void)_dismiss
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// Linkkk login
+- (void)_login
+{
+    LKProfile *profile = [LKProfile profile];
+    [profile login];
 }
 
 @end

@@ -8,9 +8,14 @@
 
 #import "LKNearbyViewController.h"
 #import "LKNearbyCell.h"
+#import "LKPlaceViewController.h"
+#import "LKPlace.h"
 
 @interface LKNearbyViewController ()
-
+{
+    int _selectedRow;
+    NSMutableArray *_places;
+}
 @end
 
 @implementation LKNearbyViewController
@@ -27,18 +32,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [self _fetchData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    LKPlaceViewController *viewController = [segue destinationViewController];
+    viewController.place = [_places objectAtIndex:[self.tableView indexPathForSelectedRow].row];
 }
 
 #pragma mark - Table view data source
@@ -55,9 +62,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"NearbyCell";
-    LKNearbyCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
+    static NSString *cellIdentifier = @"NearbyCell";
+    LKNearbyCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    if (cell == nil) {
+        cell = [[LKNearbyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    cell.place = [_places objectAtIndex:indexPath.row];
     
     return cell;
 }
@@ -66,14 +76,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+}
+
+#pragma mark - Helper Functions
+
+- (void)_fetchData
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"input" ofType:@"json"];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:path] options:kNilOptions error:nil];
+    NSArray *array = [json objectForKey:@"objects"];
+    _places = [[NSMutableArray alloc] initWithCapacity:[array count]];
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
+    }];
+    [_places enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSLog(@"%@", obj);
+    }];
 }
 
 @end
