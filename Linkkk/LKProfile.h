@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface LKProfile : NSObject
+@interface LKProfile : NSObject <CLLocationManagerDelegate>
 
-@property (strong, nonatomic) NSString *csrf;
+@property (strong, nonatomic, readonly) NSString *csrf;
+@property (strong, nonatomic, readonly) NSString *cookie;
+@property (strong, nonatomic, readonly) CLLocation *location;
+@property (strong, nonatomic, readonly) CLPlacemark *placemark;
 
 + (LKProfile *)profile;
 - (void)login;

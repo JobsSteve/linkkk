@@ -10,6 +10,7 @@
 #import "LKNearbyCell.h"
 #import "LKPlaceViewController.h"
 #import "LKPlace.h"
+#import "LKProfile.h"
 
 @interface LKNearbyViewController ()
 {
@@ -57,7 +58,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return _places.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,6 +73,12 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    // This will create a "invisible" footer. Eliminates extra separators
+    return 0.01f;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,15 +89,21 @@
 
 - (void)_fetchData
 {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"input" ofType:@"json"];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:path] options:kNilOptions error:nil];
+    
+    LKProfile *profile = [LKProfile profile];
+    CLLocationCoordinate2D coord = profile.location.coordinate;
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=0&order_by=-score&format=json", coord.latitude, coord.longitude];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
+    NSHTTPURLResponse *response;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    NSLog(@"Fetch data: %d", response.statusCode);
+
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSArray *array = [json objectForKey:@"objects"];
     _places = [[NSMutableArray alloc] initWithCapacity:[array count]];
     [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
-    }];
-    [_places enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSLog(@"%@", obj);
     }];
 }
 

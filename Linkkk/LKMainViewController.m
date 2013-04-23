@@ -45,6 +45,9 @@
 {
     if (![self _sinaweibo].isAuthValid)
         [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+    else {
+        [self _login];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
