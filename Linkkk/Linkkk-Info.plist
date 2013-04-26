@@ -66,5 +66,10 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>entypo.ttf</string>
+		<string>entypo-social.ttf</string>
+	</array>
 </dict>
 </plist>

@@ -15,4 +15,8 @@
 
 @interface LKMainViewController : UIViewController <SinaWeiboDelegate, LKShakeProtocol>
 
+@property (nonatomic, strong) IBOutlet UIButton *nearbyButton;
+@property (nonatomic, strong) IBOutlet UIButton *createButton;
+@property (nonatomic, strong) IBOutlet UIButton *profileButton;
+
 @end

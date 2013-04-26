@@ -46,12 +46,23 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     
+    // Custom Title
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.font = [UIFont boldSystemFontOfSize:20.0];
     label.textColor = [UIColor colorWithRed:0 green:137.0/255.0 blue:170.0/255.0 alpha:1.0];
     self.navigationItem.titleView = label;
     label.text = @"当前：未知地址";
     [label sizeToFit];
+    
+    // Custom fonts
+    _nearbyButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
+    _nearbyButton.titleLabel.text = @"";
+    
+    _createButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
+    _createButton.titleLabel.text = @"✎";
+    
+    _profileButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
+    _profileButton.titleLabel.text = @"👤";
 }
 
 - (void)viewDidAppear:(BOOL)animated

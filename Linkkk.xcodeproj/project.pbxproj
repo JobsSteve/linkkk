@@ -42,6 +42,12 @@
 		2BD2720A172AB79700C757E9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD27209172AB79700C757E9 /* QuartzCore.framework */; };
 		2BD2723E172AC26600C757E9 /* navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD2723D172AC26600C757E9 /* navbar.png */; };
 		2BD27240172AC48700C757E9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD2723F172AC48700C757E9 /* Default-568h@2x.png */; };
+		2BD27246172AD86E00C757E9 /* shakehome_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD27242172AD86E00C757E9 /* shakehome_normal.png */; };
+		2BD27247172AD86E00C757E9 /* shakehome_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD27243172AD86E00C757E9 /* shakehome_normal@2x.png */; };
+		2BD27248172AD86E00C757E9 /* shakehome_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD27244172AD86E00C757E9 /* shakehome_pressed.png */; };
+		2BD27249172AD86E00C757E9 /* shakehome_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD27245172AD86E00C757E9 /* shakehome_pressed@2x.png */; };
+		2BD2724C172ADDB000C757E9 /* entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BD2724A172AD9F500C757E9 /* entypo.ttf */; };
+		2BD2724D172ADDB800C757E9 /* entypo-social.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BD2724B172AD9F500C757E9 /* entypo-social.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +106,12 @@
 		2BD27209172AB79700C757E9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2BD2723D172AC26600C757E9 /* navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar.png; sourceTree = "<group>"; };
 		2BD2723F172AC48700C757E9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		2BD27242172AD86E00C757E9 /* shakehome_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shakehome_normal.png; sourceTree = "<group>"; };
+		2BD27243172AD86E00C757E9 /* shakehome_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shakehome_normal@2x.png"; sourceTree = "<group>"; };
+		2BD27244172AD86E00C757E9 /* shakehome_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shakehome_pressed.png; sourceTree = "<group>"; };
+		2BD27245172AD86E00C757E9 /* shakehome_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shakehome_pressed@2x.png"; sourceTree = "<group>"; };
+		2BD2724A172AD9F500C757E9 /* entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = entypo.ttf; sourceTree = "<group>"; };
+		2BD2724B172AD9F500C757E9 /* entypo-social.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "entypo-social.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +241,12 @@
 		2BD1DB27171DC6C50029949F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				2BD2724A172AD9F500C757E9 /* entypo.ttf */,
+				2BD2724B172AD9F500C757E9 /* entypo-social.ttf */,
+				2BD27242172AD86E00C757E9 /* shakehome_normal.png */,
+				2BD27243172AD86E00C757E9 /* shakehome_normal@2x.png */,
+				2BD27244172AD86E00C757E9 /* shakehome_pressed.png */,
+				2BD27245172AD86E00C757E9 /* shakehome_pressed@2x.png */,
 				2BD27241172ACC0500C757E9 /* Splash Screen */,
 				2BD2723D172AC26600C757E9 /* navbar.png */,
 				2BD27205172AB34A00C757E9 /* weibo_login.png */,
@@ -313,6 +331,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BD2724D172ADDB800C757E9 /* entypo-social.ttf in Resources */,
+				2BD2724C172ADDB000C757E9 /* entypo.ttf in Resources */,
 				2BA510D8171C2856009A6547 /* InfoPlist.strings in Resources */,
 				2BA510E7171C2856009A6547 /* MainStoryboard.storyboard in Resources */,
 				2BA51102171C39D2009A6547 /* SinaWeibo.bundle in Resources */,
@@ -325,6 +345,10 @@
 				2BD27208172AB34A00C757E9 /* weibo_login@2x.png in Resources */,
 				2BD2723E172AC26600C757E9 /* navbar.png in Resources */,
 				2BD27240172AC48700C757E9 /* Default-568h@2x.png in Resources */,
+				2BD27246172AD86E00C757E9 /* shakehome_normal.png in Resources */,
+				2BD27247172AD86E00C757E9 /* shakehome_normal@2x.png in Resources */,
+				2BD27248172AD86E00C757E9 /* shakehome_pressed.png in Resources */,
+				2BD27249172AD86E00C757E9 /* shakehome_pressed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
