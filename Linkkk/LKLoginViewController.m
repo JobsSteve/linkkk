@@ -21,6 +21,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    CGRect frame = [UIScreen mainScreen].bounds;
+    frame.origin.y = -20;
+    _splashView.frame = frame;
+    _splashView.image = [UIImage imageNamed:((CGRectGetHeight(frame) == 480) ? @"Default" : @"Default-568h")];
 }
 
 - (void)viewDidAppear:(BOOL)animated

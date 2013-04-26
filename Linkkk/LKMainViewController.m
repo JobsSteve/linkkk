@@ -16,6 +16,8 @@
 
 #import "SinaWeibo.h"
 
+#import <QuartzCore/CALayer.h>
+
 @interface LKMainViewController ()
 {
 }
@@ -36,9 +38,20 @@
 {
     [super viewDidLoad];
     
+    ((LKMainView *)self.view).delegate = self;
+    
     self.title = @"首页";
     
-    ((LKMainView *)self.view).delegate = self;
+    // Custom Navigation Bar
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.font = [UIFont boldSystemFontOfSize:20.0];
+    label.textColor = [UIColor colorWithRed:0 green:137.0/255.0 blue:170.0/255.0 alpha:1.0];
+    self.navigationItem.titleView = label;
+    label.text = @"当前：未知地址";
+    [label sizeToFit];
 }
 
 - (void)viewDidAppear:(BOOL)animated

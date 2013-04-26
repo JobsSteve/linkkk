@@ -17,7 +17,8 @@
 @implementation LKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{    
+    // Sina Weibo Defaults
     _sinaweibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI ssoCallbackScheme:@"linkkk.weibo" andDelegate:nil];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *auth = [defaults objectForKey:@"SinaWeiboAuthData"];

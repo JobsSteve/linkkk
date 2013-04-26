@@ -19,9 +19,6 @@
 		2BA510D8171C2856009A6547 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510D6171C2856009A6547 /* InfoPlist.strings */; };
 		2BA510DA171C2856009A6547 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510D9171C2856009A6547 /* main.m */; };
 		2BA510DE171C2856009A6547 /* LKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510DD171C2856009A6547 /* LKAppDelegate.m */; };
-		2BA510E0171C2856009A6547 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510DF171C2856009A6547 /* Default.png */; };
-		2BA510E2171C2856009A6547 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510E1171C2856009A6547 /* Default@2x.png */; };
-		2BA510E4171C2856009A6547 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510E3171C2856009A6547 /* Default-568h@2x.png */; };
 		2BA510E7171C2856009A6547 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BA510E5171C2856009A6547 /* MainStoryboard.storyboard */; };
 		2BA510EA171C2856009A6547 /* LKMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510E9171C2856009A6547 /* LKMainViewController.m */; };
 		2BA51101171C39D2009A6547 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA510F7171C39D2009A6547 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
@@ -36,6 +33,15 @@
 		2BD1DB26171DA0660029949F /* LKNearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB25171DA0660029949F /* LKNearbyViewController.m */; };
 		2BD1DB2A171DCACA0029949F /* LKProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB29171DCACA0029949F /* LKProfileViewController.m */; };
 		2BD1DB31171DD1AF0029949F /* LKProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB30171DD1AF0029949F /* LKProfile.m */; };
+		2BD271FE172AB0DC00C757E9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD271FD172AB0DC00C757E9 /* Icon.png */; };
+		2BD27200172AB0E000C757E9 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD271FF172AB0E000C757E9 /* Icon@2x.png */; };
+		2BD27202172AB16300C757E9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD27201172AB16300C757E9 /* Default.png */; };
+		2BD27204172AB16900C757E9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD27203172AB16900C757E9 /* Default@2x.png */; };
+		2BD27207172AB34A00C757E9 /* weibo_login.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD27205172AB34A00C757E9 /* weibo_login.png */; };
+		2BD27208172AB34A00C757E9 /* weibo_login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD27206172AB34A00C757E9 /* weibo_login@2x.png */; };
+		2BD2720A172AB79700C757E9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD27209172AB79700C757E9 /* QuartzCore.framework */; };
+		2BD2723E172AC26600C757E9 /* navbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD2723D172AC26600C757E9 /* navbar.png */; };
+		2BD27240172AC48700C757E9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD2723F172AC48700C757E9 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,9 +65,6 @@
 		2BA510DB171C2856009A6547 /* Linkkk-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Linkkk-Prefix.pch"; sourceTree = "<group>"; };
 		2BA510DC171C2856009A6547 /* LKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKAppDelegate.h; sourceTree = "<group>"; };
 		2BA510DD171C2856009A6547 /* LKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LKAppDelegate.m; sourceTree = "<group>"; };
-		2BA510DF171C2856009A6547 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		2BA510E1171C2856009A6547 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		2BA510E3171C2856009A6547 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2BA510E6171C2856009A6547 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		2BA510E8171C2856009A6547 /* LKMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LKMainViewController.h; sourceTree = "<group>"; };
 		2BA510E9171C2856009A6547 /* LKMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LKMainViewController.m; sourceTree = "<group>"; };
@@ -88,6 +91,15 @@
 		2BD1DB29171DCACA0029949F /* LKProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKProfileViewController.m; sourceTree = "<group>"; };
 		2BD1DB2F171DD1AE0029949F /* LKProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKProfile.h; sourceTree = "<group>"; };
 		2BD1DB30171DD1AF0029949F /* LKProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKProfile.m; sourceTree = "<group>"; };
+		2BD271FD172AB0DC00C757E9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		2BD271FF172AB0E000C757E9 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		2BD27201172AB16300C757E9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		2BD27203172AB16900C757E9 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		2BD27205172AB34A00C757E9 /* weibo_login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weibo_login.png; sourceTree = "<group>"; };
+		2BD27206172AB34A00C757E9 /* weibo_login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo_login@2x.png"; sourceTree = "<group>"; };
+		2BD27209172AB79700C757E9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2BD2723D172AC26600C757E9 /* navbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbar.png; sourceTree = "<group>"; };
+		2BD2723F172AC48700C757E9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BD2720A172AB79700C757E9 /* QuartzCore.framework in Frameworks */,
 				2B286FAA1724610A00A454FE /* CoreLocation.framework in Frameworks */,
 				2BBD25C2171EEF7C002BA661 /* MapKit.framework in Frameworks */,
 				2BA510CE171C2856009A6547 /* UIKit.framework in Frameworks */,
@@ -127,6 +140,7 @@
 		2BA510CC171C2856009A6547 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BD27209172AB79700C757E9 /* QuartzCore.framework */,
 				2BBD25C1171EEF7C002BA661 /* MapKit.framework */,
 				2B286FA91724610A00A454FE /* CoreLocation.framework */,
 				2BA510CD171C2856009A6547 /* UIKit.framework */,
@@ -174,9 +188,6 @@
 				2BA510D6171C2856009A6547 /* InfoPlist.strings */,
 				2BA510D9171C2856009A6547 /* main.m */,
 				2BA510DB171C2856009A6547 /* Linkkk-Prefix.pch */,
-				2BA510DF171C2856009A6547 /* Default.png */,
-				2BA510E1171C2856009A6547 /* Default@2x.png */,
-				2BA510E3171C2856009A6547 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -218,6 +229,12 @@
 		2BD1DB27171DC6C50029949F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				2BD27241172ACC0500C757E9 /* Splash Screen */,
+				2BD2723D172AC26600C757E9 /* navbar.png */,
+				2BD27205172AB34A00C757E9 /* weibo_login.png */,
+				2BD27206172AB34A00C757E9 /* weibo_login@2x.png */,
+				2BD271FF172AB0E000C757E9 /* Icon@2x.png */,
+				2BD271FD172AB0DC00C757E9 /* Icon.png */,
 				2B29ECF8171D92C900235616 /* input.json */,
 			);
 			name = Resource;
@@ -232,6 +249,16 @@
 				2B286FA71724600D00A454FE /* LKPlace.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		2BD27241172ACC0500C757E9 /* Splash Screen */ = {
+			isa = PBXGroup;
+			children = (
+				2BD27201172AB16300C757E9 /* Default.png */,
+				2BD27203172AB16900C757E9 /* Default@2x.png */,
+				2BD2723F172AC48700C757E9 /* Default-568h@2x.png */,
+			);
+			name = "Splash Screen";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,12 +314,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BA510D8171C2856009A6547 /* InfoPlist.strings in Resources */,
-				2BA510E0171C2856009A6547 /* Default.png in Resources */,
-				2BA510E2171C2856009A6547 /* Default@2x.png in Resources */,
-				2BA510E4171C2856009A6547 /* Default-568h@2x.png in Resources */,
 				2BA510E7171C2856009A6547 /* MainStoryboard.storyboard in Resources */,
 				2BA51102171C39D2009A6547 /* SinaWeibo.bundle in Resources */,
 				2B29ECF9171D92C900235616 /* input.json in Resources */,
+				2BD271FE172AB0DC00C757E9 /* Icon.png in Resources */,
+				2BD27200172AB0E000C757E9 /* Icon@2x.png in Resources */,
+				2BD27202172AB16300C757E9 /* Default.png in Resources */,
+				2BD27204172AB16900C757E9 /* Default@2x.png in Resources */,
+				2BD27207172AB34A00C757E9 /* weibo_login.png in Resources */,
+				2BD27208172AB34A00C757E9 /* weibo_login@2x.png in Resources */,
+				2BD2723E172AC26600C757E9 /* navbar.png in Resources */,
+				2BD27240172AC48700C757E9 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +434,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -414,6 +447,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
