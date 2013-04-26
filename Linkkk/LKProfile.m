@@ -66,20 +66,18 @@
     request.HTTPBody = postData;
     [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSHTTPURLResponse *response;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-    NSLog(@"%d, %@", response.statusCode, string);
-    
-    NSString *cookie = [response.allHeaderFields objectForKey:@"Set-Cookie"];
-    _cookie = cookie;
-    NSLog(@"%@", cookie);
-    NSRange range = [cookie rangeOfString:@"XSRF-TOKEN="];
-    cookie = [cookie substringFromIndex:range.location + range.length];
-    range = [cookie rangeOfString:@";"];
-    _csrf = [cookie substringToIndex:range.location];
-    NSLog(@"%@", _csrf);
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        
+        NSString *cookie = [httpResponse.allHeaderFields objectForKey:@"Set-Cookie"];
+        _cookie = cookie;
+        NSRange range = [cookie rangeOfString:@"XSRF-TOKEN="];
+        cookie = [cookie substringFromIndex:range.location + range.length];
+        range = [cookie rangeOfString:@";"];
+        _csrf = [cookie substringToIndex:range.location];
+        NSLog(@"%d, %@, %@", httpResponse.statusCode, string, cookie);
+    }];
 }
 
 #pragma mark - Location Manager Delegate

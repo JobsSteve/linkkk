@@ -30,7 +30,7 @@
 {
     _place = place;
     _titleLabel.text = _place.title;
-    _addressLabel.text = [NSString stringWithFormat:@"%@, 距离: %d米", _place.address, _place.distance];
+    _addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.address];
 }
 
 @end

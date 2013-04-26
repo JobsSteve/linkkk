@@ -45,7 +45,7 @@
     
     // Custom Navigation Bar
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     
     // Custom Title
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -113,6 +113,7 @@
     } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
         LKProfileViewController *profileViewController = ((LKProfileViewController *)segue.destinationViewController);
         profileViewController.sinaweibo = [self _sinaweibo];
+        NSLog(@"%@", profileViewController);
     } else {
         // DO NOTHING
     }

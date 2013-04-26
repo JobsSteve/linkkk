@@ -22,6 +22,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    // TODO: button floats up
     CGRect frame = [UIScreen mainScreen].bounds;
     frame.origin.y = -20;
     _splashView.frame = frame;

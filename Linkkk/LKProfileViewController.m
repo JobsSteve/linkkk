@@ -26,7 +26,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    backButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
+    [backButton setTitle:@"" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor colorWithRed:0 green:137.0/255.0 blue:170.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,6 +47,11 @@
 - (IBAction)logout:(id)sender
 {
     [_sinaweibo logOut];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)backButtonSelected:(UIButton *)sender
+{
     [self.navigationController popViewControllerAnimated:YES];
 }
 

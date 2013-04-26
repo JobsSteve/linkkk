@@ -12,6 +12,8 @@
 #import "LKPlace.h"
 #import "LKProfile.h"
 
+#import <QuartzCore/CALayer.h>
+
 @interface LKNearbyViewController ()
 {
     int _selectedRow;
@@ -21,11 +23,10 @@
 
 @implementation LKNearbyViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithCoder:(NSCoder *)coder
 {
-    self = [super initWithStyle:style];
+    self = [super initWithCoder:coder];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -33,6 +34,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    backButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
+    [backButton setTitle:@"" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor colorWithRed:0 green:137.0/255.0 blue:170.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(backButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    self.navigationItem.leftBarButtonItem = backItem;
     
     [self _fetchData];
 }
@@ -85,26 +94,43 @@
 {
 }
 
+#pragma mark - Callbacks
+
+- (void)backButtonSelected:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Helper Functions
 
 - (void)_fetchData
 {
-    
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.location.coordinate;
     NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=0&order_by=-score&format=json", coord.latitude, coord.longitude];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    
-    NSHTTPURLResponse *response;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    NSLog(@"Fetch data: %d", response.statusCode);
-
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSArray *array = [json objectForKey:@"objects"];
-    _places = [[NSMutableArray alloc] initWithCapacity:[array count]];
-    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[[NSOperationQueue alloc] init]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+    {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        NSLog(@"Fetch data: %d", ((NSHTTPURLResponse *)response).statusCode);
+        
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSArray *array = [json objectForKey:@"objects"];
+        _places = [[NSMutableArray alloc] initWithCapacity:[array count]];
+        [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
+        }];
+        // TODO: refactor threading
+        [self performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:NO];
     }];
+}
+
+- (void)reload
+{
+    [self.tableView reloadData];
 }
 
 @end
