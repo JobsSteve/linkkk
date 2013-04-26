@@ -13,6 +13,7 @@
 #import "LKProfileViewController.h"
 #import "LKAppDelegate.h"
 #import "LKProfile.h"
+#import "LKPlace.h"
 
 #import "SinaWeibo.h"
 
@@ -63,6 +64,10 @@
     
     _profileButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
     _profileButton.titleLabel.text = @"👤";
+    
+    // Update Location
+    LKProfile *profile = [LKProfile profile];
+    profile.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -188,6 +193,11 @@
 {
     LKProfile *profile = [LKProfile profile];
     [profile login];
+}
+
+- (void)locationUpdated:(NSString *)placemark
+{
+    ((UILabel *)self.navigationItem.titleView).text = [NSString stringWithFormat:@"当前：%@", placemark];
 }
 
 @end

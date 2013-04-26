@@ -8,6 +8,7 @@
 
 #import "LKProfile.h"
 #import "LKAppDelegate.h"
+#import "LKMainViewController.h"
 
 #import "SinaWeibo.h"
 
@@ -86,10 +87,8 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation* location = [locations lastObject];
-    NSDate* timestamp = location.timestamp;
     _location = location;
     [manager stopUpdatingLocation];
-    NSLog(@"%@: latitude %+.6f, longitude %+.6f\n", timestamp, location.coordinate.latitude, location.coordinate.longitude);
     
     [self _reverseGeocoding];
 }
@@ -104,6 +103,9 @@
         if ([placemarks count] > 0)
         {
             _placemark = [placemarks objectAtIndex:0];
+            
+            // TODO: refactor into block?
+            [_delegate locationUpdated:_placemark.locality];
         }
     }];
 }
