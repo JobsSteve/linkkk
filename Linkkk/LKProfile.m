@@ -66,7 +66,9 @@
     request.HTTPBody = postData;
     [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         
