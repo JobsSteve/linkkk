@@ -18,6 +18,9 @@
 @property (strong, nonatomic, readonly) CLLocation *location;
 @property (strong, nonatomic, readonly) CLPlacemark *placemark;
 
+@property (strong, nonatomic) NSString *avatarURL;
+@property (strong, nonatomic) NSString *username;
+
 @property (assign, nonatomic) id<LKLocationDelegate> delegate;
 
 + (LKProfile *)profile;

@@ -7,8 +7,9 @@
 //
 
 #import "LKCreateViewController.h"
-
 #import "LKProfile.h"
+
+#import "UIBarButtonItem+Linkkk.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -35,6 +36,8 @@
     
     CLPlacemark *placemark = _profile.placemark;
     _placemarkLabel.text = [NSString stringWithFormat:@"%@, %@, %@", placemark.name, placemark.thoroughfare, placemark.locality];
+    
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,6 +72,13 @@
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"%d, %@, %@", response.statusCode, response, string);
+}
+
+#pragma mark - Callbacks
+
+- (void)backButtonSelected:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

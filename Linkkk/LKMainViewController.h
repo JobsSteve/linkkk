@@ -23,4 +23,6 @@
 @property (nonatomic, strong) IBOutlet UIButton *createButton;
 @property (nonatomic, strong) IBOutlet UIButton *profileButton;
 
+- (IBAction)nearbyButtonSelected:(id)sender;
+
 @end

@@ -12,6 +12,8 @@
 #import "LKPlace.h"
 #import "LKProfile.h"
 
+#import "UIBarButtonItem+Linkkk.h"
+
 #import <QuartzCore/CALayer.h>
 
 @interface LKNearbyViewController ()
@@ -35,13 +37,7 @@
 {
     [super viewDidLoad];
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    backButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
-    [backButton setTitle:@"" forState:UIControlStateNormal];
-    [backButton setTitleColor:[UIColor colorWithRed:0 green:137.0/255.0 blue:170.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backItem;
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
     
     [self _fetchData];
 }
@@ -107,7 +103,7 @@
 {
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.location.coordinate;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=0&order_by=-score&format=json", coord.latitude, coord.longitude];
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=300&la=%f&lo=%f&limit=10&offset=0&order_by=-score&format=json", coord.latitude, coord.longitude];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:request

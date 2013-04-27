@@ -9,6 +9,16 @@
 #import "LKPlaceViewController.h"
 #import "LKPlace.h"
 #import "LKPlaceView.h"
+#import "LKProfile.h"
+#import "LKAppDelegate.h"
+
+#import "UIBarButtonItem+Linkkk.h"
+
+#import "UIImageView+WebCache.h"
+
+#import "SinaWeibo.h"
+
+#import <CoreLocation/CoreLocation.h>
 
 @interface LKPlaceViewController ()
 
@@ -28,17 +38,89 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
+    self.navigationItem.titleView = [UIBarButtonItem customTitleLabelWithString:@"攻略"];
     
     _placeView.titleLabel.text = _place.title;
-    _placeView.addressLabel.text = _place.address;
+    _placeView.addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.address];
     _placeView.textView.text = _place.content;
+    
+    _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _mapButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    
+    NSArray *album = _place.album;
+    if (album.count > 0) {
+        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:0] objectForKey:@"small"]];
+        [_placeView.photoView1 setImageWithURL:url];
+    }
+    if (album.count > 1) {
+        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:1] objectForKey:@"small"]];
+        [_placeView.photoView2 setImageWithURL:url];
+    }
+    if (album.count > 2) {
+        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:2] objectForKey:@"small"]];
+        [_placeView.photoView3 setImageWithURL:url];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Sina Weibo Delegates
+
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"失败" message:error.description delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+    [alertView show];
+    NSLog(@"FAILED: %@", error);
+}
+
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"成功" message:nil delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+    [alertView show];
+    NSLog(@"SUCCESS: %@", result);
+}
+
+#pragma mark - Callbacks
+
+- (void)backButtonSelected:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)navButtonSelected:(UIButton *)sender
+{
+    CLLocationCoordinate2D coord = [LKProfile profile].location.coordinate;
+    NSString *string = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%f,%f&daddr=%f,%f", coord.latitude, coord.longitude, _place.location.latitude, _place.location.longitude];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
+}
+
+- (IBAction)shareButtonSelected:(UIButton *)sender
+{
+    SinaWeibo *weibo = ((LKAppDelegate *)[UIApplication sharedApplication].delegate).sinaweibo;
+    
+    if (_place.album.count > 0) {
+        NSString *string = _place.content;
+        if (string.length > 118) {
+            string = [string substringToIndex:120];
+            string = [string stringByAppendingString:@"..."];
+        }
+        string = [NSString stringWithFormat:@"#大中华经历地图# %@ @连客Link", string];
+        [weibo requestWithURL:@"statuses/upload.json"
+                       params:[NSMutableDictionary dictionaryWithObjectsAndKeys:string, @"status", _placeView.photoView1.image, @"pic", nil]
+                   httpMethod:@"POST"
+                     delegate:self];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"失败" message:@"暂不能分享无图碎片" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+        [alertView show];
+    }
 }
 
 @end

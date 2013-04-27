@@ -11,11 +11,11 @@
 
 @implementation LKPlaceView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithCoder:(NSCoder *)coder
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithCoder:coder];
     if (self) {
-        // Initialization code
+        self.alwaysBounceVertical = YES;
     }
     return self;
 }
@@ -29,11 +29,11 @@
     _textView.frame = textViewFrame;
     
     CGRect containerFrame = _containerView.frame;
-    containerFrame.origin.y = CGRectGetMaxY(textViewFrame) + 20;
+    containerFrame.origin.y = CGRectGetMaxY(textViewFrame) + 10;
     _containerView.frame = containerFrame;
     
     CGSize size = self.frame.size;
-    size.height = CGRectGetHeight(self.frame) + CGRectGetHeight(_textView.frame) - 100;
+    size.height = CGRectGetHeight(self.frame) + CGRectGetHeight(_textView.frame) - 180;
     self.contentSize = size;
 }
 

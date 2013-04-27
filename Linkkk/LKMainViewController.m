@@ -10,10 +10,15 @@
 #import "LKMainView.h"
 
 #import "LKLoginViewController.h"
+#import "LKNearbyViewController.h"
+#import "LKCreateViewController.h"
 #import "LKProfileViewController.h"
+
 #import "LKAppDelegate.h"
 #import "LKProfile.h"
 #import "LKPlace.h"
+
+#import "UIBarButtonItem+Linkkk.h"
 
 #import "SinaWeibo.h"
 
@@ -21,6 +26,9 @@
 
 @interface LKMainViewController ()
 {
+    LKNearbyViewController *_nearbyViewController;
+    LKCreateViewController *_createViewController;
+    LKProfileViewController *_profileViewController;
 }
 @end
 
@@ -48,22 +56,12 @@
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     
     // Custom Title
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.font = [UIFont boldSystemFontOfSize:20.0];
-    label.textColor = [UIColor colorWithRed:0 green:137.0/255.0 blue:170.0/255.0 alpha:1.0];
-    self.navigationItem.titleView = label;
-    label.text = @"当前：未知地址";
-    [label sizeToFit];
+    self.navigationItem.titleView = [UIBarButtonItem customTitleLabelWithString:@"当前：未知地址"];
     
     // Custom fonts
     _nearbyButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
-    _nearbyButton.titleLabel.text = @"";
-    
     _createButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
-    _createButton.titleLabel.text = @"✎";
-    
     _profileButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
-    _profileButton.titleLabel.text = @"👤";
     
     // Update Location
     LKProfile *profile = [LKProfile profile];
@@ -103,20 +101,15 @@
     [self performSegueWithIdentifier:@"NearbySegue" sender:nil];
 }
 
-#pragma mark - Story Board Code
+#pragma mark - Push View Controllers
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)nearbyButtonSelected:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"LoginSegue"]) {
-        LKLoginViewController *loginViewController = ((LKLoginViewController *)segue.destinationViewController);
-        loginViewController.sinaweibo = [self _sinaweibo];
-    } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
-        LKProfileViewController *profileViewController = ((LKProfileViewController *)segue.destinationViewController);
-        profileViewController.sinaweibo = [self _sinaweibo];
-        NSLog(@"%@", profileViewController);
-    } else {
-        // DO NOTHING
+    if (_nearbyViewController == nil) {
+        _nearbyViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"NearbyScene"];
     }
+    
+    [self.navigationController pushViewController:_nearbyViewController animated:YES];
 }
 
 #pragma mark - Sina Weibo Handlers
@@ -198,7 +191,9 @@
 
 - (void)locationUpdated:(NSString *)placemark
 {
-    ((UILabel *)self.navigationItem.titleView).text = [NSString stringWithFormat:@"当前：%@", placemark];
+    UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+    titleLabel.text = [NSString stringWithFormat:@"当前：%@", placemark];
+    [titleLabel sizeToFit];
 }
 
 @end

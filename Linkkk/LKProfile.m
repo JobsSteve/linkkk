@@ -54,7 +54,10 @@
 
 - (void)login
 {
-    if ([self isLoggedIn]) return;
+    if ([self isLoggedIn]) {
+        [self getProfile];
+        return;
+    }
     
     SinaWeibo *weibo = ((LKAppDelegate *)[UIApplication sharedApplication].delegate).sinaweibo;
     
@@ -79,6 +82,28 @@
         range = [cookie rangeOfString:@";"];
         _csrf = [cookie substringToIndex:range.location];
         NSLog(@"%d, %@, %@", httpResponse.statusCode, string, cookie);
+        
+        [self getProfile];
+        
+        // Parse user info
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"%@", json);
+        //NSArray *array = [json objectForKey:@"objects"];
+    }];
+}
+
+- (void)getProfile
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/myself/"]];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        // Parse user info
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSDictionary *profile = [[json objectForKey:@"objects"] objectAtIndex:0];
+        _avatarURL = [profile objectForKey:@"avatar_url"];
+        _username = [profile objectForKey:@"nickname"];
+        NSLog(@"%@", profile);
     }];
 }
 

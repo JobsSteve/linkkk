@@ -7,6 +7,11 @@
 //
 
 #import "LKProfileViewController.h"
+#import "LKProfile.h"
+
+#import "UIBarButtonItem+Linkkk.h"
+
+#import "UIImageView+WebCache.h"
 
 @interface LKProfileViewController ()
 
@@ -26,14 +31,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithName:@"注销" target:self action:@selector(logout:)];
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    backButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
-    [backButton setTitle:@"" forState:UIControlStateNormal];
-    [backButton setTitleColor:[UIColor colorWithRed:0 green:137.0/255.0 blue:170.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(backButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = backItem;
+    LKProfile *profile = [LKProfile profile];
+    _username.text = profile.username;
+    [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
 }
 
 - (void)didReceiveMemoryWarning

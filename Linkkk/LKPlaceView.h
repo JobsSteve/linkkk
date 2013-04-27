@@ -15,4 +15,8 @@
 @property (strong, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
 
+@property (strong, nonatomic) IBOutlet UIImageView *photoView1;
+@property (strong, nonatomic) IBOutlet UIImageView *photoView2;
+@property (strong, nonatomic) IBOutlet UIImageView *photoView3;
+
 @end

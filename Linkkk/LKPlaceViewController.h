@@ -7,11 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SinaWeiboRequest.h"
 
 @class LKPlace;
 @class LKPlaceView;
 
-@interface LKPlaceViewController : UIViewController
+@interface LKPlaceViewController : UIViewController <SinaWeiboRequestDelegate>
+
 @property (nonatomic, strong) LKPlace *place;
 @property (nonatomic, strong) IBOutlet LKPlaceView *placeView;
+
+@property (nonatomic, strong) IBOutlet UIButton *flagButton;
+@property (nonatomic, strong) IBOutlet UIButton *favButton;
+@property (nonatomic, strong) IBOutlet UIButton *mapButton;
+@property (nonatomic, strong) IBOutlet UIButton *shareButton;
+
+- (IBAction)navButtonSelected:(UIButton *)sender;
+- (IBAction)shareButtonSelected:(UIButton *)sender;
+
 @end
