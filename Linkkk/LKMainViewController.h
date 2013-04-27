@@ -10,7 +10,8 @@
 #import "SinaWeibo.h"
 
 @protocol LKShakeProtocol <NSObject>
-- (void)viewDidShake;
+- (void)mainViewDidShake;
+- (void)shakeViewDidShake;
 @end
 
 @protocol LKLocationDelegate <NSObject>

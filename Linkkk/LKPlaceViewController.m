@@ -42,28 +42,20 @@
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
     self.navigationItem.titleView = [UIBarButtonItem customTitleLabelWithString:@"攻略"];
     
-    _placeView.titleLabel.text = _place.title;
-    _placeView.addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.address];
-    _placeView.textView.text = _place.content;
+    self.placeView.shakeDelegate = _shakeDelegate;
     
-    _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
-    _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
-    _mapButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
-    _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
-    
-    NSArray *album = _place.album;
-    if (album.count > 0) {
-        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:0] objectForKey:@"small"]];
-        [_placeView.photoView1 setImageWithURL:url];
-    }
-    if (album.count > 1) {
-        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:1] objectForKey:@"small"]];
-        [_placeView.photoView2 setImageWithURL:url];
-    }
-    if (album.count > 2) {
-        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:2] objectForKey:@"small"]];
-        [_placeView.photoView3 setImageWithURL:url];
-    }
+    [self updateView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.placeView becomeFirstResponder];
+    [super viewWillAppear:animated];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self.placeView resignFirstResponder];
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,6 +113,34 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"失败" message:@"暂不能分享无图碎片" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
         [alertView show];
     }
+}
+
+- (void)updateView
+{
+    _placeView.titleLabel.text = _place.title;
+    _placeView.addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.address];
+    _placeView.textView.text = _place.content;
+    
+    _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _mapButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    
+    NSArray *album = _place.album;
+    if (album.count > 0) {
+        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:0] objectForKey:@"small"]];
+        [_placeView.photoView1 setImageWithURL:url];
+    }
+    if (album.count > 1) {
+        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:1] objectForKey:@"small"]];
+        [_placeView.photoView2 setImageWithURL:url];
+    }
+    if (album.count > 2) {
+        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:2] objectForKey:@"small"]];
+        [_placeView.photoView3 setImageWithURL:url];
+    }
+    
+    [_placeView setNeedsLayout];
 }
 
 @end

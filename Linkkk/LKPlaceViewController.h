@@ -12,6 +12,8 @@
 @class LKPlace;
 @class LKPlaceView;
 
+@protocol LKShakeProtocol;
+
 @interface LKPlaceViewController : UIViewController <SinaWeiboRequestDelegate>
 
 @property (nonatomic, strong) LKPlace *place;
@@ -22,7 +24,11 @@
 @property (nonatomic, strong) IBOutlet UIButton *mapButton;
 @property (nonatomic, strong) IBOutlet UIButton *shareButton;
 
+@property (nonatomic, assign) id<LKShakeProtocol> shakeDelegate;
+
 - (IBAction)navButtonSelected:(UIButton *)sender;
 - (IBAction)shareButtonSelected:(UIButton *)sender;
+
+- (void)updateView;
 
 @end

@@ -10,6 +10,7 @@
 #import "LKMainView.h"
 
 #import "LKLoginViewController.h"
+#import "LKPlaceViewController.h"
 #import "LKNearbyViewController.h"
 #import "LKCreateViewController.h"
 #import "LKProfileViewController.h"
@@ -17,6 +18,7 @@
 #import "LKAppDelegate.h"
 #import "LKProfile.h"
 #import "LKPlace.h"
+#import "LKPlaceView.h"
 
 #import "UIBarButtonItem+Linkkk.h"
 
@@ -29,6 +31,9 @@
     LKNearbyViewController *_nearbyViewController;
     LKCreateViewController *_createViewController;
     LKProfileViewController *_profileViewController;
+    LKPlaceViewController *_shakeViewController;
+    
+    NSMutableArray *_places;
 }
 @end
 
@@ -38,7 +43,7 @@
 {
     self = [super initWithCoder:decoder];
     if (self) {
-
+        _places = [NSMutableArray arrayWithCapacity:10];
     }
     return self;
 }
@@ -96,9 +101,46 @@
 
 #pragma mark - Shake View Delegate
 
-- (void)viewDidShake
+- (void)mainViewDidShake
 {
     [self performSegueWithIdentifier:@"NearbySegue" sender:nil];
+}
+
+- (void)shakeViewDidShake
+{
+    if (_places.count == 0) {
+        [self _fetchData];
+    }
+    else {
+        _shakeViewController.place = [_places objectAtIndex:0];
+        [_places removeObjectAtIndex:0];
+        [self _updateView];
+    }
+}
+
+#pragma mark - Story Board
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"LoginSegue"]) {
+        LKLoginViewController *loginViewController = ((LKLoginViewController *)segue.destinationViewController);
+        loginViewController.sinaweibo = [self _sinaweibo];
+    } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
+        LKProfileViewController *profileViewController = ((LKProfileViewController *)segue.destinationViewController);
+        profileViewController.sinaweibo = [self _sinaweibo];
+    } else if ([segue.identifier isEqualToString:@"NearbySegue"]) {
+        _shakeViewController = ((LKPlaceViewController *)segue.destinationViewController);
+        _shakeViewController.shakeDelegate = self;
+        if (_places.count == 0) {
+            [self _fetchData];
+        }
+        else {
+            _shakeViewController.place = [_places objectAtIndex:0];
+            [_places removeObjectAtIndex:0];
+        }
+    } else {
+        // DO NOTHING
+    }
 }
 
 #pragma mark - Push View Controllers
@@ -194,6 +236,41 @@
     UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
     titleLabel.text = [NSString stringWithFormat:@"当前：%@", placemark];
     [titleLabel sizeToFit];
+}
+
+- (void)_fetchData
+{
+    static int offset = 0;
+    LKProfile *profile = [LKProfile profile];
+    CLLocationCoordinate2D coord = profile.location.coordinate;
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=100&la=%f&lo=%f&limit=10&offset=%d&order_by=-score&format=json", coord.latitude, coord.longitude, offset];
+    offset += 10;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[[NSOperationQueue alloc] init]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+     {
+         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+         NSLog(@"Fetch data: %d", ((NSHTTPURLResponse *)response).statusCode);
+         
+         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+         NSArray *array = [json objectForKey:@"objects"];
+         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+             [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
+         }];
+         // TODO: refactor threading
+         [self performSelectorOnMainThread:@selector(_updateView) withObject:nil waitUntilDone:NO];
+     }];
+}
+
+- (void)_updateView
+{
+    if (_places.count > 0) {
+        _shakeViewController.place = [_places objectAtIndex:0];
+        [_places removeObjectAtIndex:0];
+        [_shakeViewController updateView];
+    }
 }
 
 @end

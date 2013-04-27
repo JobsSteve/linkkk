@@ -9,6 +9,8 @@
 #import "LKPlaceView.h"
 #import "LKPlace.h"
 
+#import "LKMainViewController.h"
+
 @implementation LKPlaceView
 
 - (id)initWithCoder:(NSCoder *)coder
@@ -35,6 +37,19 @@
     CGSize size = self.frame.size;
     size.height = CGRectGetHeight(self.frame) + CGRectGetHeight(_textView.frame) - 180;
     self.contentSize = size;
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if (motion == UIEventSubtypeMotionShake)
+    {
+        [_shakeDelegate shakeViewDidShake];
+    }
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
 }
 
 @end

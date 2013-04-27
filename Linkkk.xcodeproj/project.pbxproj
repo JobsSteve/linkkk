@@ -14,6 +14,7 @@
 		2B29ECF9171D92C900235616 /* input.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B29ECF8171D92C900235616 /* input.json */; };
 		2B8C74F91726AA230075F2D1 /* LKCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C74F81726AA230075F2D1 /* LKCreateViewController.m */; };
 		2B97EE7A172B83CA004A1FCB /* avatar_overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B97EE79172B83CA004A1FCB /* avatar_overlay.png */; };
+		2B97EE7C172BFD11004A1FCB /* avatar_overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B97EE7B172BFD11004A1FCB /* avatar_overlay@2x.png */; };
 		2BA510CE171C2856009A6547 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CD171C2856009A6547 /* UIKit.framework */; };
 		2BA510D0171C2856009A6547 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CF171C2856009A6547 /* Foundation.framework */; };
 		2BA510D2171C2856009A6547 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510D1171C2856009A6547 /* CoreGraphics.framework */; };
@@ -77,6 +78,7 @@
 		2B8C74F71726AA230075F2D1 /* LKCreateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKCreateViewController.h; sourceTree = "<group>"; };
 		2B8C74F81726AA230075F2D1 /* LKCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKCreateViewController.m; sourceTree = "<group>"; };
 		2B97EE79172B83CA004A1FCB /* avatar_overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_overlay.png; sourceTree = "<group>"; };
+		2B97EE7B172BFD11004A1FCB /* avatar_overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_overlay@2x.png"; sourceTree = "<group>"; };
 		2BA510C9171C2856009A6547 /* Linkkk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Linkkk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA510CD171C2856009A6547 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2BA510CF171C2856009A6547 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -302,6 +304,7 @@
 				2BD27205172AB34A00C757E9 /* weibo_login.png */,
 				2BD27206172AB34A00C757E9 /* weibo_login@2x.png */,
 				2B97EE79172B83CA004A1FCB /* avatar_overlay.png */,
+				2B97EE7B172BFD11004A1FCB /* avatar_overlay@2x.png */,
 				2B29ECF8171D92C900235616 /* input.json */,
 			);
 			name = Resource;
@@ -447,6 +450,7 @@
 				2BD27249172AD86E00C757E9 /* shakehome_pressed@2x.png in Resources */,
 				2BD2724F172B016600C757E9 /* navbar@2x.png in Resources */,
 				2B97EE7A172B83CA004A1FCB /* avatar_overlay.png in Resources */,
+				2B97EE7C172BFD11004A1FCB /* avatar_overlay@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

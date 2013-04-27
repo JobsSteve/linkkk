@@ -12,6 +12,6 @@
 
 @interface LKMainView : UIView
 
-@property (nonatomic, strong) id<LKShakeProtocol> delegate;
+@property (nonatomic, assign) id<LKShakeProtocol> delegate;
 
 @end

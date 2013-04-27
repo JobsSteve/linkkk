@@ -24,7 +24,7 @@
 {
     if (motion == UIEventSubtypeMotionShake)
     {
-        [_delegate viewDidShake];
+        [_delegate mainViewDidShake];
     }
 }
 
