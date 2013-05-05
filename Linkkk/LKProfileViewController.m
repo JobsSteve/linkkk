@@ -38,6 +38,8 @@
     LKProfile *profile = [LKProfile profile];
     _username.text = profile.username;
     [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
+    
+    [self _fetchFav];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,6 +59,18 @@
 - (void)backButtonSelected:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)_fetchFav
+{
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/favourited/"]];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        // Parse user info
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"%@", json);
+    }];
 }
 
 @end

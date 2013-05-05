@@ -41,6 +41,7 @@
         _content = [[dict objectForKey:@"content"] copy];
         _address = [[dict objectForKey:@"location"] copy];
         _album = [[dict objectForKey:@"album"] copy];
+        _placeID = [[dict objectForKey:@"id"] intValue];
         _distance = [[dict objectForKey:@"distance"] intValue];
         _fav_count = [[dict objectForKey:@"count_favourite"] intValue];
         _like_count = [[dict objectForKey:@"count_like"] intValue];

@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) NSArray *album;
 
+@property (nonatomic, assign) int placeID;
 @property (nonatomic, assign) int fav_count;
 @property (nonatomic, assign) int like_count;
 @property (nonatomic, assign) int comment_count;

@@ -87,6 +87,31 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)flagButtonSelected:(UIButton *)sender
+{
+    
+}
+
+- (IBAction)favButtonSelected:(UIButton *)sender
+{
+    NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json", _place.placeID];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/v5/favourite/"]];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = postData;
+    [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[LKProfile profile].csrf forHTTPHeaderField:@"X-XSRF-TOKEN"];
+    [request setValue:[LKProfile profile].cookie forHTTPHeaderField:@"Cookie"];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"%@", string);
+    }];
+}
+
 - (IBAction)navButtonSelected:(UIButton *)sender
 {
     CLLocationCoordinate2D coord = [LKProfile profile].location.coordinate;

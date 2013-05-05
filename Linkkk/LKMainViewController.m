@@ -69,6 +69,7 @@
     _profileButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
     
     // Update Location
+    // TODO: only call once
     LKProfile *profile = [LKProfile profile];
     profile.delegate = self;
 }
