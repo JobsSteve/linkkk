@@ -33,11 +33,15 @@
     [super viewDidLoad];
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithName:@"注销" target:self action:@selector(logout:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithName:@"注销" target:self action:@selector(logoutButtonSelected:)];
     
     LKProfile *profile = [LKProfile profile];
-    _username.text = profile.username;
-    [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
+    if (profile.username == nil) {
+        [profile addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:NULL];
+    } else {
+        _username.text = profile.username;
+        [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
+    }
     
     [self _fetchFav];
 }
@@ -48,9 +52,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - KVO Handlers
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    [self performSelectorOnMainThread:@selector(updateUI:) withObject:nil waitUntilDone:NO];
+}
+
+- (void)updateUI:(id)sender
+{
+    LKProfile *profile = [LKProfile profile];
+    _username.text = profile.username;
+    [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
+}
+
 #pragma mark - Callbacks
 
-- (IBAction)logout:(id)sender
+- (void)logoutButtonSelected:(UIButton *)sender
 {
     [_sinaweibo logOut];
     [self.navigationController popViewControllerAnimated:YES];
@@ -68,8 +86,10 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         // Parse user info
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"%@", json);
+        if (data != nil) {
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSLog(@"%@", json);
+        }
     }];
 }
 

@@ -19,6 +19,7 @@
 #import "LKProfile.h"
 #import "LKPlace.h"
 #import "LKPlaceView.h"
+#import "LKLoadingView.h"
 
 #import "UIBarButtonItem+Linkkk.h"
 
@@ -70,9 +71,8 @@
     _profileButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
     
     // Update Location
-    // TODO: only call once
     LKProfile *profile = [LKProfile profile];
-    profile.delegate = self;
+    [profile addObserver:self forKeyPath:@"placemark" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -105,7 +105,7 @@
 
 - (void)mainViewDidShake
 {
-    [self performSegueWithIdentifier:@"NearbySegue" sender:nil];
+    [self performSegueWithIdentifier:@"ShakeSegue" sender:nil];
 }
 
 - (void)shakeViewDidShake
@@ -114,9 +114,7 @@
         [self _fetchData];
     }
     else {
-        _shakeViewController.place = [_places objectAtIndex:0];
-        [_places removeObjectAtIndex:0];
-        [self _updateView];
+        [self _updateView:nil];
     }
 }
 
@@ -130,16 +128,11 @@
     } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
         LKProfileViewController *profileViewController = ((LKProfileViewController *)segue.destinationViewController);
         profileViewController.sinaweibo = [self _sinaweibo];
-    } else if ([segue.identifier isEqualToString:@"NearbySegue"]) {
+    } else if ([segue.identifier isEqualToString:@"ShakeSegue"]) {
         _shakeViewController = ((LKPlaceViewController *)segue.destinationViewController);
         _shakeViewController.shakeDelegate = self;
-        if (_places.count == 0) {
-            [self _fetchData];
-        }
-        else {
-            _shakeViewController.place = [_places objectAtIndex:0];
-            [_places removeObjectAtIndex:0];
-        }
+        [_shakeViewController view];
+        [self shakeViewDidShake];
     } else {
         // DO NOTHING
     }
@@ -163,6 +156,25 @@
     }
     
     [self.navigationController pushViewController:_createViewController animated:YES];
+}
+
+#pragma mark - KVO Handlers
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"placemark"]) {
+        CLPlacemark *placemark = [LKProfile profile].placemark;
+        NSString *name = placemark.locality;
+        if (name == nil) name = placemark.subLocality;
+        if (name == nil) name = placemark.subAdministrativeArea;
+        if (name == nil) name = placemark.administrativeArea;
+        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+        if (placemark == nil)
+            titleLabel.text = @"当前：未知地址";
+        else
+            titleLabel.text = [NSString stringWithFormat:@"当前：%@", name];
+        [titleLabel sizeToFit];
+    }
 }
 
 #pragma mark - Sina Weibo Handlers
@@ -250,16 +262,6 @@
     [profile login];
 }
 
-- (void)locationUpdated:(NSString *)placemark
-{
-    UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-    if (placemark == nil)
-        titleLabel.text = @"当前：未知地址";
-    else
-        titleLabel.text = [NSString stringWithFormat:@"当前：%@", placemark];
-    [titleLabel sizeToFit];
-}
-
 - (void)_fetchData
 {
     static int offset = 0;
@@ -269,11 +271,16 @@
     offset += 10;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    _shakeViewController.placeView.hidden = YES;
+    LKLoadingView *loadingView = [[LKLoadingView alloc] init];
+    [_shakeViewController.view addSubview:loadingView];
+    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[[NSOperationQueue alloc] init]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+         
          NSLog(@"Fetch data: %d", ((NSHTTPURLResponse *)response).statusCode);
          
          NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -281,13 +288,15 @@
          [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
              [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
          }];
-         // TODO: refactor threading
-         [self performSelectorOnMainThread:@selector(_updateView) withObject:nil waitUntilDone:NO];
+         [self performSelectorOnMainThread:@selector(_updateView:) withObject:loadingView waitUntilDone:NO];
      }];
 }
 
-- (void)_updateView
+- (void)_updateView:(UIView *)loadingView
 {
+    _shakeViewController.placeView.hidden = NO;
+    [loadingView removeFromSuperview];
+    
     if (_places.count > 0) {
         _shakeViewController.place = [_places objectAtIndex:0];
         [_places removeObjectAtIndex:0];

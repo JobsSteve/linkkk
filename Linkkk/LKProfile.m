@@ -52,9 +52,16 @@
     return _csrf;
 }
 
+- (BOOL)hasProfile
+{
+    return _username;
+}
+
 - (void)login
 {
     if ([self isLoggedIn]) {
+        if ([self hasProfile])
+            return;
         [self getProfile];
         return;
     }
@@ -81,14 +88,13 @@
         cookie = [cookie substringFromIndex:range.location + range.length];
         range = [cookie rangeOfString:@";"];
         _csrf = [cookie substringToIndex:range.location];
-        NSLog(@"%d, %@, Cookie: %@|", httpResponse.statusCode, string, cookie);
+        NSLog(@"%d, %@, Cookie: %@", httpResponse.statusCode, string, cookie);
         
         [self getProfile];
         
         // Parse user info
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSLog(@"%@", json);
-        //NSArray *array = [json objectForKey:@"objects"];
     }];
 }
 
@@ -102,7 +108,7 @@
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSDictionary *profile = [[json objectForKey:@"objects"] objectAtIndex:0];
         _avatarURL = [profile objectForKey:@"avatar_url"];
-        _username = [profile objectForKey:@"nickname"];
+        self.username = [profile objectForKey:@"nickname"];
         NSLog(@"%@", profile);
     }];
 }
@@ -127,14 +133,7 @@
     {
         if ([placemarks count] > 0)
         {
-            _placemark = [placemarks objectAtIndex:0];
-            
-            // TODO: refactor into block?
-            NSString *name = _placemark.locality;
-            if (name == nil) name = _placemark.subLocality;
-            if (name == nil) name = _placemark.subAdministrativeArea;
-            if (name == nil) name = _placemark.administrativeArea;
-            [_delegate locationUpdated:name];
+            self.placemark = [placemarks objectAtIndex:0];
         }
     }];
 }

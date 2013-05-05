@@ -11,6 +11,7 @@
 #import "LKPlaceViewController.h"
 #import "LKPlace.h"
 #import "LKProfile.h"
+#import "LKLoadingView.h"
 
 #import "UIBarButtonItem+Linkkk.h"
 
@@ -106,11 +107,14 @@
     NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=0&order_by=-score&format=json", coord.latitude, coord.longitude];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    LKLoadingView *loadingView = [[LKLoadingView alloc] init];
+    [self.view addSubview:loadingView];
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[[NSOperationQueue alloc] init]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
     {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [loadingView removeFromSuperview];
         NSLog(@"Fetch data: %d", ((NSHTTPURLResponse *)response).statusCode);
         
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
@@ -119,7 +123,6 @@
         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
         }];
-        // TODO: refactor threading
         [self performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:NO];
     }];
 }

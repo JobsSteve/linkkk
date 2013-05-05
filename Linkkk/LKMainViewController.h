@@ -14,11 +14,7 @@
 - (void)shakeViewDidShake;
 @end
 
-@protocol LKLocationDelegate <NSObject>
-- (void)locationUpdated:(NSString *)placemark;
-@end
-
-@interface LKMainViewController : UIViewController <SinaWeiboDelegate, LKShakeProtocol, LKLocationDelegate>
+@interface LKMainViewController : UIViewController <SinaWeiboDelegate, LKShakeProtocol>
 
 @property (nonatomic, strong) IBOutlet UIButton *nearbyButton;
 @property (nonatomic, strong) IBOutlet UIButton *createButton;

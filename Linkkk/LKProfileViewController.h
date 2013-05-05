@@ -15,6 +15,4 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UILabel *username;
 
-- (IBAction)logout:(id)sender;
-
 @end

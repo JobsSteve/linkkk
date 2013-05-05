@@ -16,7 +16,7 @@
 @property (strong, nonatomic, readonly) NSString *csrf;
 @property (strong, nonatomic, readonly) NSString *cookie;
 @property (strong, nonatomic, readonly) CLLocation *location;
-@property (strong, nonatomic, readonly) CLPlacemark *placemark;
+@property (strong, nonatomic) CLPlacemark *placemark; // KVO
 
 @property (strong, nonatomic) NSString *avatarURL;
 @property (strong, nonatomic) NSString *username;
