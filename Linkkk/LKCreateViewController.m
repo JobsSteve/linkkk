@@ -34,10 +34,29 @@
 {
     [super viewDidLoad];
     
+    // Keyboard setup
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapScreen:)];
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+    [_titleField becomeFirstResponder];
+    
+    // Register for keyboard notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:self.view.window];
+    
+    _photoButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _locationButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    
     CLPlacemark *placemark = _profile.placemark;
     _placemarkLabel.text = [NSString stringWithFormat:@"%@, %@, %@", placemark.name, placemark.thoroughfare, placemark.locality];
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"✓" Target:self action:@selector(doneButtonSelected:)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,8 +65,47 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Keyboard Handlers
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if (range.location + text.length <= 140) {
+        _charCountLabel.text = [NSString stringWithFormat:@"%d/140", range.location + text.length];
+        return YES;
+    } else {
+        _charCountLabel.text = [NSString stringWithFormat:@"%d/140", range.location];
+        return NO;
+    }
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    // TODO: animation
+    _scrollView.frame = self.view.frame;
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGRect keyboardRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect frame = self.view.frame;
+    frame.size.height -= CGRectGetHeight(keyboardRect);
+    _scrollView.frame = frame;
+}
+
+- (void)didTapScreen:(id)sender
+{
+    [_titleField resignFirstResponder];
+    [_textView resignFirstResponder];
+}
+
 #pragma mark - Callback Handlers
 
+- (void)doneButtonSelected:(id)sender
+{
+    NSLog(@"done");
+}
+
+/*
 - (IBAction)doneButtonDidSelect:(id)sender
 {
     CLLocationCoordinate2D coord = _profile.location.coordinate;
@@ -73,6 +131,7 @@
     NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"%d, %@, %@", response.statusCode, response, string);
 }
+ */
 
 #pragma mark - Callbacks
 

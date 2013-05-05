@@ -12,9 +12,14 @@
 
 + (UIBarButtonItem *)customBackButtonWithTarget:(id)target action:(SEL)action
 {
+    return [UIBarButtonItem customButtonWithIcon:@"" Target:target action:action];
+}
+
++ (UIBarButtonItem *)customButtonWithIcon:(NSString *)icon Target:(id)target action:(SEL)action
+{
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
     backButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
-    [backButton setTitle:@"" forState:UIControlStateNormal];
+    [backButton setTitle:icon forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor colorWithRed:0 green:137.0/255.0 blue:170.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     [backButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return [[UIBarButtonItem alloc] initWithCustomView:backButton];

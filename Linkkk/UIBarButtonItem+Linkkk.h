@@ -11,6 +11,7 @@
 @interface UIBarButtonItem (Linkkk)
 
 + (UIBarButtonItem *)customBackButtonWithTarget:(id)target action:(SEL)action;
++ (UIBarButtonItem *)customButtonWithIcon:(NSString *)icon Target:(id)target action:(SEL)action;
 + (UIBarButtonItem *)customButtonWithName:(NSString *)name target:(id)target action:(SEL)action;
 + (UILabel *)customTitleLabelWithString:(NSString *)title;
 

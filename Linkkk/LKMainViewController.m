@@ -155,6 +155,15 @@
     [self.navigationController pushViewController:_nearbyViewController animated:YES];
 }
 
+- (IBAction)createButtonSelected:(id)sender
+{
+    if (_createViewController == nil) {
+        _createViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateScene"];
+    }
+    
+    [self.navigationController pushViewController:_createViewController animated:YES];
+}
+
 #pragma mark - Sina Weibo Handlers
 
 - (SinaWeibo *)_sinaweibo
