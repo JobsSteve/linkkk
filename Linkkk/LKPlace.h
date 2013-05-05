@@ -23,6 +23,7 @@
 @property (nonatomic, assign) int like_count;
 @property (nonatomic, assign) int comment_count;
 @property (nonatomic, assign) int distance;
+@property (nonatomic, assign) BOOL hasFaved;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 
 - (id)initWithJSON:(NSDictionary *)dict;

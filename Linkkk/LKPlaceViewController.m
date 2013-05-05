@@ -13,12 +13,14 @@
 #import "LKAppDelegate.h"
 
 #import "UIBarButtonItem+Linkkk.h"
+#import "UIColor+Linkkk.h"
 
 #import "UIImageView+WebCache.h"
 
 #import "SinaWeibo.h"
 
 #import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
 @interface LKPlaceViewController ()
 
@@ -97,7 +99,8 @@
     NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json", _place.placeID];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/v5/favourite/"]];
+    NSString *urlString = _place.hasFaved ? @"http://map.linkkk.com/v5/unfavourite/exp/" : @"http://map.linkkk.com/v5/favourite/exp/";
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
     request.HTTPBody = postData;
     [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
@@ -106,17 +109,30 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"%@", string);
+        if (error != nil || json == nil || ![[json objectForKey:@"status"] isEqualToString:@"okay"]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Operation failed %@", error] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+            [alertView show];
+        } else {
+            _place.hasFaved = !_place.hasFaved;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _favButton.titleLabel.textColor = _place.hasFaved ? [UIColor redColor] : [UIColor specialBlue];
+            });
+        }
     }];
 }
 
 - (IBAction)navButtonSelected:(UIButton *)sender
 {
-    CLLocationCoordinate2D coord = [LKProfile profile].location.coordinate;
-    NSString *string = [NSString stringWithFormat:@"http://maps.apple.com/?saddr=%f,%f&daddr=%f,%f", coord.latitude, coord.longitude, _place.location.latitude, _place.location.longitude];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:[[CLLocation alloc] initWithLatitude:_place.location.latitude longitude:_place.location.longitude] completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks.count == 0)
+            return;
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
+        MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+        // Pass the map item to the Maps app
+        [mapItem openInMapsWithLaunchOptions:nil];
+    }];
 }
 
 - (IBAction)shareButtonSelected:(UIButton *)sender
@@ -150,6 +166,9 @@
     _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
     _mapButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
     _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    
+    if (_place.hasFaved)
+        _favButton.titleLabel.textColor = [UIColor redColor];
     
     NSArray *album = _place.album;
     if (album.count > 0) {

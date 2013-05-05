@@ -56,14 +56,11 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [self performSelectorOnMainThread:@selector(updateUI:) withObject:nil waitUntilDone:NO];
-}
-
-- (void)updateUI:(id)sender
-{
-    LKProfile *profile = [LKProfile profile];
-    _username.text = profile.username;
-    [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        LKProfile *profile = [LKProfile profile];
+        _username.text = profile.username;
+        [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
+    });
 }
 
 #pragma mark - Callbacks

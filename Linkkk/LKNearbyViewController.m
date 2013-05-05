@@ -123,13 +123,10 @@
         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
         }];
-        [self performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:NO];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
     }];
-}
-
-- (void)reload
-{
-    [self.tableView reloadData];
 }
 
 @end
