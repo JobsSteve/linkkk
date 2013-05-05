@@ -32,6 +32,7 @@
     LKCreateViewController *_createViewController;
     LKProfileViewController *_profileViewController;
     LKPlaceViewController *_shakeViewController;
+    LKLoginViewController *_loginViewController;
     
     NSMutableArray *_places;
 }
@@ -124,8 +125,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"LoginSegue"]) {
-        LKLoginViewController *loginViewController = ((LKLoginViewController *)segue.destinationViewController);
-        loginViewController.sinaweibo = [self _sinaweibo];
+        _loginViewController = ((LKLoginViewController *)segue.destinationViewController);
+        _loginViewController.sinaweibo = [self _sinaweibo];
     } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
         LKProfileViewController *profileViewController = ((LKProfileViewController *)segue.destinationViewController);
         profileViewController.sinaweibo = [self _sinaweibo];
@@ -213,6 +214,7 @@
 - (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo
 {
     NSLog(@"WEIBO: did cancel");
+    [self _restoreButtons];
 }
 
 - (void)sinaweibo:(SinaWeibo *)sinaweibo accessTokenInvalidOrExpired:(NSError *)error
@@ -225,6 +227,7 @@
 - (void)sinaweibo:(SinaWeibo *)sinaweibo logInDidFailWithError:(NSError *)error
 {
     NSLog(@"WEIBO: login failed: %@", error);
+    [self _restoreButtons];
 }
 
 #pragma mark - Helper Functions
@@ -232,6 +235,12 @@
 - (void)_dismiss
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)_restoreButtons
+{
+    _loginViewController.spinner.hidden = YES;
+    _loginViewController.loginButton.enabled = YES;
 }
 
 // Linkkk login
@@ -244,7 +253,10 @@
 - (void)locationUpdated:(NSString *)placemark
 {
     UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
-    titleLabel.text = [NSString stringWithFormat:@"当前：%@", placemark];
+    if (placemark == nil)
+        titleLabel.text = @"当前：未知地址";
+    else
+        titleLabel.text = [NSString stringWithFormat:@"当前：%@", placemark];
     [titleLabel sizeToFit];
 }
 

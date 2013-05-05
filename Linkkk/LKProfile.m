@@ -81,7 +81,7 @@
         cookie = [cookie substringFromIndex:range.location + range.length];
         range = [cookie rangeOfString:@";"];
         _csrf = [cookie substringToIndex:range.location];
-        NSLog(@"%d, %@, %@", httpResponse.statusCode, string, cookie);
+        NSLog(@"%d, %@, Cookie: %@|", httpResponse.statusCode, string, cookie);
         
         [self getProfile];
         
@@ -130,7 +130,11 @@
             _placemark = [placemarks objectAtIndex:0];
             
             // TODO: refactor into block?
-            [_delegate locationUpdated:_placemark.locality];
+            NSString *name = _placemark.locality;
+            if (name == nil) name = _placemark.subLocality;
+            if (name == nil) name = _placemark.subAdministrativeArea;
+            if (name == nil) name = _placemark.administrativeArea;
+            [_delegate locationUpdated:name];
         }
     }];
 }

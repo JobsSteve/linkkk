@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LKCreateViewController : UIViewController <UITextFieldDelegate>
+@interface LKCreateViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UITextField *titleField;
@@ -18,6 +18,6 @@
 @property (nonatomic, strong) IBOutlet UIButton *locationButton;
 @property (nonatomic, strong) IBOutlet UIButton *photoButton;
 
-- (void)doneButtonSelected:(id)sender;
+- (IBAction)cameraButtonSelected:(id)sender;
 
 @end

@@ -45,6 +45,8 @@
 - (IBAction)login:(id)sender
 {
     [_sinaweibo logIn];
+    _spinner.hidden = NO;
+    _loginButton.enabled = NO;
 }
 
 #pragma mark -
