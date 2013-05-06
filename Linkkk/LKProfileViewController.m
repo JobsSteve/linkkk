@@ -11,6 +11,7 @@
 #import "LKPlace.h"
 #import "LKNearbyCell.h"
 
+#import "UIViewController+Linkkk.h"
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIColor+Linkkk.h"
 
@@ -95,18 +96,20 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        // Parse user info
-        if (data != nil) {
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSArray *array = [json objectForKey:@"objects"];
-            _places = [[NSMutableArray alloc] initWithCapacity:[array count]];
-            [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                [_places addObject:[[LKPlace alloc] initWithJSON:[obj objectForKey:@"exp"]]];
-            }];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [_favTableView reloadData];
-            });
+        if (data == nil || error != nil) {
+            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            return;
         }
+        // Parse user info
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSArray *array = [json objectForKey:@"objects"];
+        _places = [[NSMutableArray alloc] initWithCapacity:[array count]];
+        [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [_places addObject:[[LKPlace alloc] initWithJSON:[obj objectForKey:@"exp"]]];
+        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_favTableView reloadData];
+        });
     }];
 }
 

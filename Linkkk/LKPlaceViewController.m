@@ -12,6 +12,7 @@
 #import "LKProfile.h"
 #import "LKAppDelegate.h"
 
+#import "UIViewController+Linkkk.h"
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIColor+Linkkk.h"
 
@@ -99,16 +100,19 @@
     [request setValue:[LKProfile profile].csrf forHTTPHeaderField:@"X-XSRF-TOKEN"];
     [request setValue:[LKProfile profile].cookie forHTTPHeaderField:@"Cookie"];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        if (data == nil || error != nil) {
+            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            return;
+        }
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         if ([[json objectForKey:@"status"] isEqualToString:@"okay"]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"成功" message:@"举报成功" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
-                [alertView show];
-            });
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"成功" message:@"举报成功" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+            [alertView show];
         }
-    }];}
+    }];
+}
 
 #pragma mark - Callbacks
 
@@ -138,17 +142,19 @@
     [request setValue:[LKProfile profile].csrf forHTTPHeaderField:@"X-XSRF-TOKEN"];
     [request setValue:[LKProfile profile].cookie forHTTPHeaderField:@"Cookie"];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        if (data == nil || error != nil) {
+            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            return;
+        }
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        if (error != nil || json == nil || ![[json objectForKey:@"status"] isEqualToString:@"okay"]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Operation failed %@", error] delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-            [alertView show];
+        NSLog(@"%@", json);
+        if (![[json objectForKey:@"status"] isEqualToString:@"okay"]) {
+            [self showErrorView:@"Server failure"];
         } else {
             _place.hasFaved = !_place.hasFaved;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                _favButton.titleLabel.textColor = _place.hasFaved ? [UIColor redColor] : [UIColor specialBlue];
-            });
+            _favButton.titleLabel.textColor = _place.hasFaved ? [UIColor redColor] : [UIColor specialBlue];
         }
     }];
 }

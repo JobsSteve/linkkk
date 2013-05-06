@@ -7,6 +7,7 @@
 //
 
 #import "LKCreateViewController.h"
+#import "LKPlacePickerViewController.h"
 #import "LKProfile.h"
 
 #import "UIBarButtonItem+Linkkk.h"
@@ -97,8 +98,18 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (void)didTapScreen:(id)sender
 {
-    [_titleField resignFirstResponder];
-    [_textView resignFirstResponder];
+//    [_titleField resignFirstResponder];
+//    [_textView resignFirstResponder];
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"PlacePickerScene"]) {
+        LKPlacePickerViewController *viewController = (LKPlacePickerViewController *)segue.destinationViewController;
+        viewController.placemarkLabel = _placemarkLabel;
+    }
 }
 
 #pragma mark - Callback Handlers

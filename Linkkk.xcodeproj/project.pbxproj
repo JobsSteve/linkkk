@@ -72,6 +72,11 @@
 		2BD532CA17374D060050EDF7 /* profile_seg_fg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD532C717374D060050EDF7 /* profile_seg_fg@2x.png */; };
 		2BD532CD17374DF40050EDF7 /* profile_seg_div.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD532CB17374DF40050EDF7 /* profile_seg_div.png */; };
 		2BD532CE17374DF40050EDF7 /* profile_seg_div@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD532CC17374DF40050EDF7 /* profile_seg_div@2x.png */; };
+		2BD532D41737D1680050EDF7 /* LKPlacePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD532D31737D1680050EDF7 /* LKPlacePickerViewController.m */; };
+		2BD532D71737D70B0050EDF7 /* UIViewController+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD532D61737D70B0050EDF7 /* UIViewController+Linkkk.m */; };
+		2BD532DA1737E4870050EDF7 /* searchbar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD532D81737E4870050EDF7 /* searchbar_bg.png */; };
+		2BD532DB1737E4870050EDF7 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD532D91737E4870050EDF7 /* searchbar_bg@2x.png */; };
+		2BD532DE1737E5260050EDF7 /* LKPlacePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD532DD1737E5260050EDF7 /* LKPlacePickerCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -174,6 +179,14 @@
 		2BD532C717374D060050EDF7 /* profile_seg_fg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_seg_fg@2x.png"; sourceTree = "<group>"; };
 		2BD532CB17374DF40050EDF7 /* profile_seg_div.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_seg_div.png; sourceTree = "<group>"; };
 		2BD532CC17374DF40050EDF7 /* profile_seg_div@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_seg_div@2x.png"; sourceTree = "<group>"; };
+		2BD532D21737D1680050EDF7 /* LKPlacePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPlacePickerViewController.h; sourceTree = "<group>"; };
+		2BD532D31737D1680050EDF7 /* LKPlacePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPlacePickerViewController.m; sourceTree = "<group>"; };
+		2BD532D51737D70B0050EDF7 /* UIViewController+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Linkkk.h"; sourceTree = "<group>"; };
+		2BD532D61737D70B0050EDF7 /* UIViewController+Linkkk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Linkkk.m"; sourceTree = "<group>"; };
+		2BD532D81737E4870050EDF7 /* searchbar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchbar_bg.png; sourceTree = "<group>"; };
+		2BD532D91737E4870050EDF7 /* searchbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchbar_bg@2x.png"; sourceTree = "<group>"; };
+		2BD532DC1737E5260050EDF7 /* LKPlacePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPlacePickerCell.h; sourceTree = "<group>"; };
+		2BD532DD1737E5260050EDF7 /* LKPlacePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPlacePickerCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +264,10 @@
 				2BD1DB1F171D978F0029949F /* LKPlaceView.m */,
 				2B8C74F71726AA230075F2D1 /* LKCreateViewController.h */,
 				2B8C74F81726AA230075F2D1 /* LKCreateViewController.m */,
+				2BD532D21737D1680050EDF7 /* LKPlacePickerViewController.h */,
+				2BD532D31737D1680050EDF7 /* LKPlacePickerViewController.m */,
+				2BD532DC1737E5260050EDF7 /* LKPlacePickerCell.h */,
+				2BD532DD1737E5260050EDF7 /* LKPlacePickerCell.m */,
 				2BD1DB28171DCACA0029949F /* LKProfileViewController.h */,
 				2BD1DB29171DCACA0029949F /* LKProfileViewController.m */,
 				2B647AFA1736C89B0063F431 /* LKLoadingView.h */,
@@ -311,6 +328,8 @@
 		2BD1DB27171DC6C50029949F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				2BD532D81737E4870050EDF7 /* searchbar_bg.png */,
+				2BD532D91737E4870050EDF7 /* searchbar_bg@2x.png */,
 				2BD532CB17374DF40050EDF7 /* profile_seg_div.png */,
 				2BD532CC17374DF40050EDF7 /* profile_seg_div@2x.png */,
 				2B6B3BCB1737179400916D44 /* profile_seg_bg@2x.png */,
@@ -398,6 +417,8 @@
 		2BD27278172B125200C757E9 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				2BD532D51737D70B0050EDF7 /* UIViewController+Linkkk.h */,
+				2BD532D61737D70B0050EDF7 /* UIViewController+Linkkk.m */,
 				2BD27275172B124E00C757E9 /* UIBarButtonItem+Linkkk.h */,
 				2BD27276172B124E00C757E9 /* UIBarButtonItem+Linkkk.m */,
 				2B6B3BC81737104600916D44 /* UIColor+Linkkk.h */,
@@ -485,6 +506,8 @@
 				2BD532CA17374D060050EDF7 /* profile_seg_fg@2x.png in Resources */,
 				2BD532CD17374DF40050EDF7 /* profile_seg_div.png in Resources */,
 				2BD532CE17374DF40050EDF7 /* profile_seg_div@2x.png in Resources */,
+				2BD532DA1737E4870050EDF7 /* searchbar_bg.png in Resources */,
+				2BD532DB1737E4870050EDF7 /* searchbar_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +548,9 @@
 				2BD27277172B124F00C757E9 /* UIBarButtonItem+Linkkk.m in Sources */,
 				2B647AFC1736C89C0063F431 /* LKLoadingView.m in Sources */,
 				2B6B3BCA1737104600916D44 /* UIColor+Linkkk.m in Sources */,
+				2BD532D41737D1680050EDF7 /* LKPlacePickerViewController.m in Sources */,
+				2BD532D71737D70B0050EDF7 /* UIViewController+Linkkk.m in Sources */,
+				2BD532DE1737E5260050EDF7 /* LKPlacePickerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

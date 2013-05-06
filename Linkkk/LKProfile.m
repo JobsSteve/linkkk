@@ -92,6 +92,10 @@
         
         [self getProfile];
         
+        if (data == nil || error != nil) {
+            NSLog(@"ERROR: login failed");
+            return;
+        }
         // Parse user info
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSLog(@"%@", json);
@@ -104,6 +108,10 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        if (data == nil || error != nil) {
+            NSLog(@"ERROR: failed to retrieve profile");
+            return;
+        }
         // Parse user info
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSDictionary *profile = [[json objectForKey:@"objects"] objectAtIndex:0];

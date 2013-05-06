@@ -14,6 +14,7 @@
 #import "LKLoadingView.h"
 
 #import "UIBarButtonItem+Linkkk.h"
+#import "UIViewController+Linkkk.h"
 
 #import <QuartzCore/CALayer.h>
 
@@ -110,12 +111,16 @@
     LKLoadingView *loadingView = [[LKLoadingView alloc] init];
     [self.view addSubview:loadingView];
     [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[[NSOperationQueue alloc] init]
+                                       queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
     {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [loadingView removeFromSuperview];
-        NSLog(@"Fetch data: %d", ((NSHTTPURLResponse *)response).statusCode);
+        
+        if (data == nil || error != nil) {
+            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            return;
+        }
         
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSArray *array = [json objectForKey:@"objects"];
@@ -123,9 +128,7 @@
         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
         }];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
+        [self.tableView reloadData];
     }];
 }
 
