@@ -82,6 +82,34 @@
     NSLog(@"SUCCESS: %@", result);
 }
 
+#pragma mark - Alert View Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+        return;
+    
+    NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json&reason=%@", _place.placeID, [alertView textFieldAtIndex:0].text];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/v5/report/exp/"]];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = postData;
+    [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[LKProfile profile].csrf forHTTPHeaderField:@"X-XSRF-TOKEN"];
+    [request setValue:[LKProfile profile].cookie forHTTPHeaderField:@"Cookie"];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        if ([[json objectForKey:@"status"] isEqualToString:@"okay"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"成功" message:@"举报成功" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+                [alertView show];
+            });
+        }
+    }];}
+
 #pragma mark - Callbacks
 
 - (void)backButtonSelected:(UIButton *)sender
@@ -91,7 +119,10 @@
 
 - (IBAction)flagButtonSelected:(UIButton *)sender
 {
-    
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"举报" message:@"请输入原因" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"提交", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alertView.delegate = self;
+    [alertView show];
 }
 
 - (IBAction)favButtonSelected:(UIButton *)sender

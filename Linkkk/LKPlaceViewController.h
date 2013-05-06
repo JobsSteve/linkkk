@@ -14,7 +14,7 @@
 
 @protocol LKShakeProtocol;
 
-@interface LKPlaceViewController : UIViewController <SinaWeiboRequestDelegate>
+@interface LKPlaceViewController : UIViewController <SinaWeiboRequestDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) LKPlace *place;
 @property (nonatomic, strong) IBOutlet LKPlaceView *placeView;

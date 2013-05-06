@@ -110,6 +110,7 @@
 
 - (void)shakeViewDidShake
 {
+    // TODO: update bottom controls (fav)
     if (_places.count == 0) {
         [self _fetchData];
     }

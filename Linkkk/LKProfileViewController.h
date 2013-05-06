@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
 
-@interface LKProfileViewController : UIViewController
+@interface LKProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) SinaWeibo *sinaweibo;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UILabel *username;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *segControl;
+@property (strong, nonatomic) IBOutlet UITableView *favTableView;
 
 @end
