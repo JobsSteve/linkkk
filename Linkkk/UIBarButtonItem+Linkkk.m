@@ -46,4 +46,18 @@
     return label;
 }
 
++ (UIButton *)customTitleButtonWithString:(NSString *)title
+{
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor specialBlue] forState:UIControlStateNormal];
+//    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:title];
+//    NSRange range = NSMakeRange(title.length - 1, 1);
+//    [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Entypo" size:30.0] range:range];
+//    [button setAttributedTitle:string forState:UIControlStateNormal];
+    [button sizeToFit];
+    return button;
+}
+
 @end

@@ -14,5 +14,6 @@
 + (UIBarButtonItem *)customButtonWithIcon:(NSString *)icon Target:(id)target action:(SEL)action;
 + (UIBarButtonItem *)customButtonWithName:(NSString *)name target:(id)target action:(SEL)action;
 + (UILabel *)customTitleLabelWithString:(NSString *)title;
++ (UIButton *)customTitleButtonWithString:(NSString *)title;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "LKPlacePickerViewController.h"
 #import "LKPlacePickerCell.h"
+#import "LKCreateViewController.h"
 
 #import "LKProfile.h"
 #import "UIBarButtonItem+Linkkk.h"
@@ -75,9 +76,9 @@
         return cell;
     cell.headingLabel.text = [[terms objectAtIndex:0] objectForKey:@"value"];
     NSString *address = @"";
-    if (terms.count > 1) address = [address stringByAppendingString:[[terms objectAtIndex:1] objectForKey:@"value"]];
-    if (terms.count > 2) address = [address stringByAppendingString:[[terms objectAtIndex:2] objectForKey:@"value"]];
-    if (terms.count > 3) address = [address stringByAppendingString:[[terms objectAtIndex:3] objectForKey:@"value"]];
+    if (terms.count > 1) address = [[terms objectAtIndex:1] objectForKey:@"value"];
+    if (terms.count > 2) address = [address stringByAppendingFormat:@", %@", [[terms objectAtIndex:2] objectForKey:@"value"]];
+    if (terms.count > 3) address = [address stringByAppendingFormat:@", %@", [[terms objectAtIndex:3] objectForKey:@"value"]];
     cell.subHeadingLabel.text = address;
     
     return cell;
@@ -88,7 +89,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LKPlacePickerCell *cell = (LKPlacePickerCell *)[tableView cellForRowAtIndexPath:indexPath];
-    _placemarkLabel.text = [cell.headingLabel.text stringByAppendingString:cell.subHeadingLabel.text];
+    _placemarkLabel.text = [cell.headingLabel.text stringByAppendingFormat:@", %@", cell.subHeadingLabel.text];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -97,6 +98,11 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     [self _fetchData];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark - Helper Functions
@@ -111,7 +117,7 @@
     }
     
     CLLocationCoordinate2D coord = [LKProfile profile].location.coordinate;
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&language=zh-CH&types=establishment&location=%f,%f&radius=500&sensor=true&key=AIzaSyCc1TGG_Fb-er_y74L0zL8-10euOTr352k", _searchBar.text, coord.latitude, coord.longitude];
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&language=zh-CH&types=establishment&location=%f,%f&radius=500&sensor=true&key=AIzaSyCc1TGG_Fb-er_y74L0zL8-10euOTr352k", [_searchBar.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding], coord.latitude, coord.longitude];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         if (data == nil || error != nil) {

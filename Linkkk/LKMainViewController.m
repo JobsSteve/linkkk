@@ -64,7 +64,9 @@
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     
     // Custom Title
-    self.navigationItem.titleView = [UIBarButtonItem customTitleLabelWithString:@"当前：未知地址"];
+    UIButton *navButton = [UIBarButtonItem customTitleButtonWithString:@"当前：未知地址"];
+    [navButton addTarget:self action:@selector(_navButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView = navButton;
     
     // Custom fonts
     _nearbyButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
@@ -170,12 +172,12 @@
         if (name == nil) name = placemark.subLocality;
         if (name == nil) name = placemark.subAdministrativeArea;
         if (name == nil) name = placemark.administrativeArea;
-        UILabel *titleLabel = (UILabel *)self.navigationItem.titleView;
+        UIButton *titleButton = (UIButton *)self.navigationItem.titleView;
         if (placemark == nil)
-            titleLabel.text = @"当前：未知地址";
+            [titleButton setTitle:@"当前：未知地址" forState:UIControlStateNormal];
         else
-            titleLabel.text = [NSString stringWithFormat:@"当前：%@", name];
-        [titleLabel sizeToFit];
+            [titleButton setTitle:[NSString stringWithFormat:@"当前：%@", name] forState:UIControlStateNormal];
+        [titleButton sizeToFit];
     }
 }
 
@@ -245,6 +247,17 @@
 }
 
 #pragma mark - Helper Functions
+
+- (void)_navButtonSelected:(id)sender
+{
+//    CGRect frame = self.view.frame;
+//    frame.origin.y += 20;
+//    self.view.frame = frame;
+//    
+//    frame = self.navigationController.navigationBar.frame;
+//    frame.origin.y += 20;
+//    self.navigationController.navigationBar.frame = frame;
+}
 
 - (void)_dismiss
 {

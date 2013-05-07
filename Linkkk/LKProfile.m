@@ -40,7 +40,7 @@
     if (self) {
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         _locationManager.distanceFilter = 500; // movement threshold for new events
         [_locationManager startUpdatingLocation];
     }
