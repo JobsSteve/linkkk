@@ -28,6 +28,7 @@
     }
 }
 
+// For shake
 - (BOOL)canBecomeFirstResponder
 {
     return YES;

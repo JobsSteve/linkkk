@@ -60,11 +60,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     _photoButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
     _locationButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
     
-    CLPlacemark *placemark = _profile.placemark;
-    _placemarkLabel.text = [NSString stringWithFormat:@"%@, %@, %@", placemark.thoroughfare, placemark.subLocality, placemark.locality];
-    
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"✓" Target:self action:@selector(doneButtonSelected:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"✓" size:50.0 target:self action:@selector(doneButtonSelected:)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -242,13 +239,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (CLLocationCoordinate2D)_geocode
 {
-    CLPlacemark *placemark = _profile.placemark;
-    NSString *defaultAddress = [NSString stringWithFormat:@"%@, %@, %@", placemark.thoroughfare, placemark.subLocality, placemark.locality];
-    if ([defaultAddress isEqualToString:_placemarkLabel.text]) {
-        return _profile.location.coordinate;
-    }
-    
-    NSString *urlString = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", [_placemarkLabel.text stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
+    NSString *urlString = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", [_placemarkLabel.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     NSURLResponse *response;
     NSError *error;

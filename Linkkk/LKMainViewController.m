@@ -10,6 +10,7 @@
 #import "LKMainView.h"
 
 #import "LKLoginViewController.h"
+#import "LKSettingViewController.h"
 #import "LKPlaceViewController.h"
 #import "LKNearbyViewController.h"
 #import "LKCreateViewController.h"
@@ -20,13 +21,16 @@
 #import "LKPlace.h"
 #import "LKPlaceView.h"
 #import "LKLoadingView.h"
+#import "LKPlacePickerCell.h"
 
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIViewController+Linkkk.h"
+#import "UIColor+Linkkk.h"
+#import "CLPlacemark+Linkkk.h"
 
 #import "SinaWeibo.h"
 
-#import <QuartzCore/CALayer.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface LKMainViewController ()
 {
@@ -35,8 +39,12 @@
     LKProfileViewController *_profileViewController;
     LKPlaceViewController *_shakeViewController;
     LKLoginViewController *_loginViewController;
+    LKSettingViewController *_settingViewController;
+    UISearchBar *_searchBar;
+    BOOL _isShowingSearchBar;
     
     NSMutableArray *_places;
+    NSMutableArray *_results;
 }
 @end
 
@@ -47,6 +55,7 @@
     self = [super initWithCoder:decoder];
     if (self) {
         _places = [NSMutableArray arrayWithCapacity:10];
+        _results = [NSMutableArray arrayWithCapacity:10];
     }
     return self;
 }
@@ -63,8 +72,10 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"⚙" size:50.0 target:self action:@selector(_settingButtonSelected:)];
+    
     // Custom Title
-    UIButton *navButton = [UIBarButtonItem customTitleButtonWithString:@"当前：未知地址"];
+    UIButton *navButton = [UIBarButtonItem customTitleButtonWithString:@"当前：未知地址 "];
     [navButton addTarget:self action:@selector(_navButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = navButton;
     
@@ -85,6 +96,17 @@
     else {
         [self _login];
     }
+    
+    // Search Bar
+    if (_searchBar == nil) {
+        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, -24, 320, 44)];
+        _searchBar.tintColor = [UIColor whiteColor];
+        _searchBar.delegate = self;
+        _searchBar.placeholder = @"输入想要查询的地址...";
+        [_searchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"searchbar_bg"] forState:UIControlStateNormal];
+        _isShowingSearchBar = NO;
+        [[[UIApplication sharedApplication] keyWindow] addSubview:_searchBar];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,6 +114,7 @@
     [self.view becomeFirstResponder];
     [super viewWillAppear:animated];
 }
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [self.view resignFirstResponder];
@@ -142,7 +165,85 @@
     }
 }
 
-#pragma mark - Push View Controllers
+#pragma mark - Callbacks
+
+- (void)_settingButtonSelected:(id)sender
+{
+    if (_settingViewController == nil) {
+        _settingViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingScene"];
+    }
+    
+    [self.navigationController pushViewController:_settingViewController animated:YES];
+}
+
+- (void)_navButtonSelected:(id)sender
+{
+    _isShowingSearchBar = !_isShowingSearchBar;
+    
+    if (_isShowingSearchBar) {
+        CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"position"];
+        CGPoint position = self.view.layer.position;
+        animation1.fromValue = [NSValue valueWithCGPoint:position];
+        position.y += 44;
+        animation1.toValue = [NSValue valueWithCGPoint:position];
+        self.view.layer.position = position;
+        animation1.duration = 0.2;
+        
+        CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"position"];
+        position = self.navigationController.navigationBar.layer.position;
+        animation2.fromValue = [NSValue valueWithCGPoint:position];
+        position.y += 44;
+        animation2.toValue = [NSValue valueWithCGPoint:position];
+        self.navigationController.navigationBar.layer.position = position;
+        animation2.duration = 0.2;
+        
+        CABasicAnimation *animation3 = [CABasicAnimation animationWithKeyPath:@"position"];
+        position = _searchBar.layer.position;
+        animation3.fromValue = [NSValue valueWithCGPoint:position];
+        position.y += 44;
+        animation3.toValue = [NSValue valueWithCGPoint:position];
+        _searchBar.layer.position = position;
+        animation3.duration = 0.2;
+        
+        [self.view.layer addAnimation:animation1 forKey:@"animation1"];
+        [self.navigationController.navigationBar.layer addAnimation:animation2 forKey:@"animation2"];
+        [_searchBar.layer addAnimation:animation3 forKey:@"animation3"];
+        
+        _tableView.hidden = NO;
+        [_searchBar becomeFirstResponder];
+    } else {
+        CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"position"];
+        CGPoint position = self.view.layer.position;
+        animation1.fromValue = [NSValue valueWithCGPoint:position];
+        position.y -= 44;
+        animation1.toValue = [NSValue valueWithCGPoint:position];
+        self.view.layer.position = position;
+        animation1.duration = 0.2;
+        
+        CABasicAnimation *animation2 = [CABasicAnimation animationWithKeyPath:@"position"];
+        position = self.navigationController.navigationBar.layer.position;
+        animation2.fromValue = [NSValue valueWithCGPoint:position];
+        position.y -= 44;
+        animation2.toValue = [NSValue valueWithCGPoint:position];
+        self.navigationController.navigationBar.layer.position = position;
+        animation2.duration = 0.2;
+        
+        CABasicAnimation *animation3 = [CABasicAnimation animationWithKeyPath:@"position"];
+        position = _searchBar.layer.position;
+        animation3.fromValue = [NSValue valueWithCGPoint:position];
+        position.y -= 44;
+        animation3.toValue = [NSValue valueWithCGPoint:position];
+        _searchBar.layer.position = position;
+        animation3.duration = 0.2;
+        
+        [self.view.layer addAnimation:animation1 forKey:@"animation1"];
+        [self.navigationController.navigationBar.layer addAnimation:animation2 forKey:@"animation2"];
+        [_searchBar.layer addAnimation:animation3 forKey:@"animation3"];
+        
+        _tableView.hidden = YES;
+        [_searchBar resignFirstResponder];
+    }
+}
 
 - (IBAction)nearbyButtonSelected:(id)sender
 {
@@ -168,16 +269,18 @@
 {
     if ([keyPath isEqualToString:@"placemark"]) {
         CLPlacemark *placemark = [LKProfile profile].placemark;
-        NSString *name = placemark.locality;
-        if (name == nil) name = placemark.subLocality;
-        if (name == nil) name = placemark.subAdministrativeArea;
-        if (name == nil) name = placemark.administrativeArea;
+        NSString *name = placemark.city;
         UIButton *titleButton = (UIButton *)self.navigationItem.titleView;
-        if (placemark == nil)
-            [titleButton setTitle:@"当前：未知地址" forState:UIControlStateNormal];
-        else
-            [titleButton setTitle:[NSString stringWithFormat:@"当前：%@", name] forState:UIControlStateNormal];
-        [titleButton sizeToFit];
+        NSString *title = (placemark == nil) ? @"当前：未知地址 " : [NSString stringWithFormat:@"当前：%@ ", name];
+        [titleButton setTitleWithString:title];
+        
+        LKPlacePickerCell *cell = (LKPlacePickerCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        if (cell != nil) {
+            name = (placemark.thoroughfare == nil) ? @"" : placemark.thoroughfare;
+            if (placemark.subLocality != nil) name = [name stringByAppendingFormat:@", %@", placemark.subLocality];
+            if (placemark.locality != nil) name = [name stringByAppendingFormat:@", %@", placemark.locality];
+            cell.subHeadingLabel.text = name;
+        }
     }
 }
 
@@ -246,18 +349,76 @@
     [self _restoreButtons];
 }
 
-#pragma mark - Helper Functions
+#pragma mark - Table view data source
 
-- (void)_navButtonSelected:(id)sender
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//    CGRect frame = self.view.frame;
-//    frame.origin.y += 20;
-//    self.view.frame = frame;
-//    
-//    frame = self.navigationController.navigationBar.frame;
-//    frame.origin.y += 20;
-//    self.navigationController.navigationBar.frame = frame;
+    return 2;
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return section == 0 ? 1 : _results.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    // This will create a "invisible" footer. Eliminates extra separators
+    return 0.01f;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"PlacePickerCell";
+    LKPlacePickerCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if (indexPath.section == 0) {
+        cell.headingLabel.text = @"当前地址";
+        cell.subHeadingLabel.text = @"未知";
+        return cell;
+    }
+    NSArray *terms = [[_results objectAtIndex:indexPath.row] objectForKey:@"terms"];
+    if (terms == nil || terms.count == 0)
+        return cell;
+    cell.headingLabel.text = [[terms objectAtIndex:0] objectForKey:@"value"];
+    NSString *address = @"";
+    if (terms.count > 1) address = [[terms objectAtIndex:1] objectForKey:@"value"];
+    if (terms.count > 2) address = [address stringByAppendingFormat:@", %@", [[terms objectAtIndex:2] objectForKey:@"value"]];
+    if (terms.count > 3) address = [address stringByAppendingFormat:@", %@", [[terms objectAtIndex:3] objectForKey:@"value"]];
+    cell.subHeadingLabel.text = address;
+    
+    return cell;
+}
+
+#pragma mark Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        
+    } else {
+        LKPlacePickerCell *cell = (LKPlacePickerCell *)[tableView cellForRowAtIndexPath:indexPath];
+        NSString *string = [cell.headingLabel.text stringByAppendingFormat:@", %@", cell.subHeadingLabel.text];
+        NSString *title = [NSString stringWithFormat:@"当前：%@ ", cell.headingLabel.text];
+        [(UIButton *)self.navigationItem.titleView setTitleWithString:title];
+        [self _geocode:string];
+        [self _navButtonSelected:nil];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+#pragma mark - Search Bar Delegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    [self _fetchCities];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+#pragma mark - Helper Functions
 
 - (void)_dismiss
 {
@@ -319,6 +480,56 @@
         [_places removeObjectAtIndex:0];
         [_shakeViewController updateView];
     }
+}
+
+- (void)_fetchCities
+{
+    if (_searchBar.text.length == 0)
+    {
+        [_results removeAllObjects];
+        [self.tableView reloadData];
+        return;
+    }
+    
+    CLLocationCoordinate2D coord = [LKProfile profile].location.coordinate;
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&language=zh-CH&types=(cities)&location=%f,%f&radius=500&sensor=true&key=AIzaSyCc1TGG_Fb-er_y74L0zL8-10euOTr352k", [_searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], coord.latitude, coord.longitude];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (data == nil || error != nil) {
+            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            return;
+        }
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        [_results removeAllObjects];
+        NSArray *predictions = [json objectForKey:@"predictions"];
+        [predictions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [_results addObject:obj];
+        }];
+        [self.tableView reloadData];
+    }];
+}
+
+- (CLLocationCoordinate2D)_geocode:(NSString *)name
+{
+    NSString *urlString = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSURLResponse *response;
+    NSError *error;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    if (data == nil || error != nil) {
+        [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+        return CLLocationCoordinateZero;
+    }
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    NSArray *results = [json objectForKey:@"results"];
+    if (results.count == 0)
+        return CLLocationCoordinateZero;
+    NSDictionary *location = [[[results objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
+    NSLog(@"%@", location);
+    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([[location objectForKey:@"lat"] floatValue], [[location objectForKey:@"lng"] floatValue]);
+    if (coord.latitude == 0 || coord.longitude == 0)
+        return CLLocationCoordinateZero;
+    return coord;
 }
 
 @end

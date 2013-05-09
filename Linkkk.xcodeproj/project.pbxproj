@@ -33,6 +33,13 @@
 		2BA51105171C39D2009A6547 /* SinaWeiboRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2BA5110B171C413E009A6547 /* LKLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5110A171C413E009A6547 /* LKLoginViewController.m */; };
 		2BBD25C2171EEF7C002BA661 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBD25C1171EEF7C002BA661 /* MapKit.framework */; };
+		2BCE7724173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE7723173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m */; };
+		2BCE7727173B23F900EBBE95 /* LKSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE7726173B23F800EBBE95 /* LKSettingViewController.m */; };
+		2BCE772A173B26AF00EBBE95 /* LKLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE7729173B26AF00EBBE95 /* LKLocation.m */; };
+		2BCE772D173B35E700EBBE95 /* vertical.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE772B173B35E700EBBE95 /* vertical.png */; };
+		2BCE772E173B35E700EBBE95 /* vertical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE772C173B35E700EBBE95 /* vertical@2x.png */; };
+		2BCE7731173B36F300EBBE95 /* verticalpixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE772F173B36F300EBBE95 /* verticalpixel.png */; };
+		2BCE7732173B36F300EBBE95 /* verticalpixel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE7730173B36F300EBBE95 /* verticalpixel@2x.png */; };
 		2BD1DB20171D978F0029949F /* LKPlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB1F171D978F0029949F /* LKPlaceView.m */; };
 		2BD1DB23171D9FE80029949F /* LKNearbyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB22171D9FE80029949F /* LKNearbyCell.m */; };
 		2BD1DB26171DA0660029949F /* LKNearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB25171DA0660029949F /* LKNearbyViewController.m */; };
@@ -123,6 +130,16 @@
 		2BA51109171C413E009A6547 /* LKLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLoginViewController.h; sourceTree = "<group>"; };
 		2BA5110A171C413E009A6547 /* LKLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLoginViewController.m; sourceTree = "<group>"; };
 		2BBD25C1171EEF7C002BA661 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		2BCE7722173AE8BA00EBBE95 /* CLPlacemark+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLPlacemark+Linkkk.h"; sourceTree = "<group>"; };
+		2BCE7723173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLPlacemark+Linkkk.m"; sourceTree = "<group>"; };
+		2BCE7725173B23F800EBBE95 /* LKSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSettingViewController.h; sourceTree = "<group>"; };
+		2BCE7726173B23F800EBBE95 /* LKSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSettingViewController.m; sourceTree = "<group>"; };
+		2BCE7728173B26AF00EBBE95 /* LKLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLocation.h; sourceTree = "<group>"; };
+		2BCE7729173B26AF00EBBE95 /* LKLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLocation.m; sourceTree = "<group>"; };
+		2BCE772B173B35E700EBBE95 /* vertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vertical.png; sourceTree = "<group>"; };
+		2BCE772C173B35E700EBBE95 /* vertical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vertical@2x.png"; sourceTree = "<group>"; };
+		2BCE772F173B36F300EBBE95 /* verticalpixel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verticalpixel.png; sourceTree = "<group>"; };
+		2BCE7730173B36F300EBBE95 /* verticalpixel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "verticalpixel@2x.png"; sourceTree = "<group>"; };
 		2BD1DB1E171D978F0029949F /* LKPlaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPlaceView.h; sourceTree = "<group>"; };
 		2BD1DB1F171D978F0029949F /* LKPlaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPlaceView.m; sourceTree = "<group>"; };
 		2BD1DB21171D9FE80029949F /* LKNearbyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNearbyCell.h; sourceTree = "<group>"; };
@@ -248,12 +265,14 @@
 				2BA510DD171C2856009A6547 /* LKAppDelegate.m */,
 				2BA510E5171C2856009A6547 /* MainStoryboard.storyboard */,
 				2BD1DB32171DD1C00029949F /* Model */,
+				2BA51109171C413E009A6547 /* LKLoginViewController.h */,
+				2BA5110A171C413E009A6547 /* LKLoginViewController.m */,
+				2BCE7725173B23F800EBBE95 /* LKSettingViewController.h */,
+				2BCE7726173B23F800EBBE95 /* LKSettingViewController.m */,
 				2BA510E8171C2856009A6547 /* LKMainViewController.h */,
 				2BA510E9171C2856009A6547 /* LKMainViewController.m */,
 				2B286FAE1724CAF900A454FE /* LKMainView.h */,
 				2B286FAF1724CAF900A454FE /* LKMainView.m */,
-				2BA51109171C413E009A6547 /* LKLoginViewController.h */,
-				2BA5110A171C413E009A6547 /* LKLoginViewController.m */,
 				2BD1DB24171DA0660029949F /* LKNearbyViewController.h */,
 				2BD1DB25171DA0660029949F /* LKNearbyViewController.m */,
 				2BD1DB21171D9FE80029949F /* LKNearbyCell.h */,
@@ -328,6 +347,10 @@
 		2BD1DB27171DC6C50029949F /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				2BCE772B173B35E700EBBE95 /* vertical.png */,
+				2BCE772C173B35E700EBBE95 /* vertical@2x.png */,
+				2BCE772F173B36F300EBBE95 /* verticalpixel.png */,
+				2BCE7730173B36F300EBBE95 /* verticalpixel@2x.png */,
 				2BD532D81737E4870050EDF7 /* searchbar_bg.png */,
 				2BD532D91737E4870050EDF7 /* searchbar_bg@2x.png */,
 				2BD532CB17374DF40050EDF7 /* profile_seg_div.png */,
@@ -362,6 +385,8 @@
 				2BD1DB30171DD1AF0029949F /* LKProfile.m */,
 				2B286FA61724600D00A454FE /* LKPlace.h */,
 				2B286FA71724600D00A454FE /* LKPlace.m */,
+				2BCE7728173B26AF00EBBE95 /* LKLocation.h */,
+				2BCE7729173B26AF00EBBE95 /* LKLocation.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -423,6 +448,8 @@
 				2BD27276172B124E00C757E9 /* UIBarButtonItem+Linkkk.m */,
 				2B6B3BC81737104600916D44 /* UIColor+Linkkk.h */,
 				2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */,
+				2BCE7722173AE8BA00EBBE95 /* CLPlacemark+Linkkk.h */,
+				2BCE7723173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -508,6 +535,10 @@
 				2BD532CE17374DF40050EDF7 /* profile_seg_div@2x.png in Resources */,
 				2BD532DA1737E4870050EDF7 /* searchbar_bg.png in Resources */,
 				2BD532DB1737E4870050EDF7 /* searchbar_bg@2x.png in Resources */,
+				2BCE772D173B35E700EBBE95 /* vertical.png in Resources */,
+				2BCE772E173B35E700EBBE95 /* vertical@2x.png in Resources */,
+				2BCE7731173B36F300EBBE95 /* verticalpixel.png in Resources */,
+				2BCE7732173B36F300EBBE95 /* verticalpixel@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +582,9 @@
 				2BD532D41737D1680050EDF7 /* LKPlacePickerViewController.m in Sources */,
 				2BD532D71737D70B0050EDF7 /* UIViewController+Linkkk.m in Sources */,
 				2BD532DE1737E5260050EDF7 /* LKPlacePickerCell.m in Sources */,
+				2BCE7724173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m in Sources */,
+				2BCE7727173B23F900EBBE95 /* LKSettingViewController.m in Sources */,
+				2BCE772A173B26AF00EBBE95 /* LKLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,13 +664,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Si Wen";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B49495C8-8BA5-41C6-AD23-05DC8B7D31AF";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -645,13 +679,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Si Wen";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B49495C8-8BA5-41C6-AD23-05DC8B7D31AF";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
