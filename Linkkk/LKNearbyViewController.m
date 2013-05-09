@@ -72,9 +72,6 @@
 {
     static NSString *cellIdentifier = @"NearbyCell";
     LKNearbyCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[LKNearbyCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    }
     cell.place = [_places objectAtIndex:indexPath.row];
     
     return cell;

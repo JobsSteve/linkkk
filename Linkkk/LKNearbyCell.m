@@ -44,10 +44,14 @@
     if (album.count > 1) {
         NSURL *url = [NSURL URLWithString:[[album objectAtIndex:1] objectForKey:@"small"]];
         [_photoView2 setImageWithURL:url];
+    } else {
+        _photoView2.image = nil;
     }
     if (album.count > 2) {
         NSURL *url = [NSURL URLWithString:[[album objectAtIndex:2] objectForKey:@"small"]];
         [_photoView3 setImageWithURL:url];
+    } else {
+        _photoView3.image = nil;
     }
 }
 

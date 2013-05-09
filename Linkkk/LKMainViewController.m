@@ -210,6 +210,7 @@
         [_searchBar.layer addAnimation:animation3 forKey:@"animation3"];
         
         _tableView.hidden = NO;
+        self.navigationItem.rightBarButtonItem.customView.hidden = YES;
         [_searchBar becomeFirstResponder];
     } else {
         CABasicAnimation *animation1 = [CABasicAnimation animationWithKeyPath:@"position"];
@@ -241,6 +242,7 @@
         [_searchBar.layer addAnimation:animation3 forKey:@"animation3"];
         
         _tableView.hidden = YES;
+        self.navigationItem.rightBarButtonItem.customView.hidden = NO;
         [_searchBar resignFirstResponder];
     }
 }
