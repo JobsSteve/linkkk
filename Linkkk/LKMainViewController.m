@@ -213,6 +213,7 @@
         [_searchBar.layer addAnimation:animation3 forKey:@"animation3"];
         
         _tableView.hidden = NO;
+        _searchBar.hidden = NO;
         self.navigationItem.rightBarButtonItem.customView.hidden = YES;
         [_searchBar becomeFirstResponder];
     } else {
@@ -239,6 +240,7 @@
         animation3.toValue = [NSValue valueWithCGPoint:position];
         _searchBar.layer.position = position;
         animation3.duration = 0.2;
+        animation3.delegate = self;
         
         [self.view.layer addAnimation:animation1 forKey:@"animation1"];
         [self.navigationController.navigationBar.layer addAnimation:animation2 forKey:@"animation2"];
@@ -264,6 +266,13 @@
     }
     
     [self.navigationController pushViewController:_createViewController animated:YES];
+}
+
+#pragma mark - Animation Delegate
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    _searchBar.hidden = YES;
 }
 
 #pragma mark - KVO Handlers
