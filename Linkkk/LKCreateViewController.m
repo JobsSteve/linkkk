@@ -27,6 +27,9 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     LKProfile *_profile;
     UIImage *_image;
     int _imageID;
+    NSArray *_imageViews;
+    NSArray *_assets;
+    CGRect _textViewFrame;
     
     BMKPoiInfo *_poi;
 }
@@ -46,7 +49,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     // Keyboard setup
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapScreen:)];
     [self.view addGestureRecognizer:tapGestureRecognizer];
@@ -65,9 +68,25 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     _photoButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:50.0];
     _locationButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:50.0];
     
+    // Custom navigation
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"✓" size:50.0 target:self action:@selector(doneButtonSelected:)];
     self.navigationItem.titleView = [UIBarButtonItem customTitleLabelWithString:@"创建经历"];
+    
+    // Image Views
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:5];
+    for (int i=0;i<5;i++) {
+        [array addObject:[self.view viewWithTag:100+i]];
+    }
+    _imageViews = [NSArray arrayWithArray:array];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (CGRectIsEmpty(_textViewFrame))
+        _textViewFrame = _textView.frame;
 }
 
 - (void)didReceiveMemoryWarning
@@ -204,9 +223,13 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     if (buttonIndex == 1) {
         AGImagePickerController *imagePickerController = [[AGImagePickerController alloc] initWithFailureBlock:^(NSError *error)
         {
-            if (error == nil)
+            if (error == nil) // remove all selected images
             {
-                NSLog(@"User has cancelled.");
+                [_imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    ((UIImageView *)obj).image = nil;
+                }];
+                _assets = [NSArray array];
+                [self _adjustTextViewFrame];
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else
             {
@@ -216,13 +239,24 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
                 double delayInSeconds = 0.5;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [self _adjustTextViewFrame];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 });
             }
         } andSuccessBlock:^(NSArray *info) {
-            NSLog(@"Info: %@", info);
+            [_imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                ((UIImageView *)obj).image = nil;
+            }];
+            _assets = info;
+            [_assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                ALAsset *asset = obj;
+                UIImageView *imageView = [_imageViews objectAtIndex:idx];
+                imageView.image = [UIImage imageWithCGImage:asset.thumbnail];
+            }];
+            [self _adjustTextViewFrame];
             [self dismissViewControllerAnimated:YES completion:nil];
         }];
+        imagePickerController.maximumNumberOfPhotosToBeSelected = 5;
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }
 }
@@ -244,6 +278,17 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 }
 
 #pragma mark - Helper
+
+- (void)_adjustTextViewFrame
+{
+    if (_assets.count == 0) {
+        _textView.frame = _textViewFrame;
+    } else {
+        CGRect frame = _textViewFrame;
+        frame.size.height -= 60;
+        _textView.frame = frame;
+    }
+}
 
 - (void)_uploadImage
 {

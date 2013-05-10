@@ -32,7 +32,7 @@
 #define SHOULD_CHANGE_STATUS_BAR_STYLE                                          0
 #define SHOULD_DISPLAY_SELECTION_INFO                                           1
 #define SHOULD_SHOW_SAVED_PHOTOS_ON_TOP                                         1
-#define SHOULD_SHOW_TOOLBAR_FOR_MANAGING_THE_SELECTION                          1
+#define SHOULD_SHOW_TOOLBAR_FOR_MANAGING_THE_SELECTION                          0
 #define SELECTION_BEHAVIOR_IN_SINGLE_SELECTION_MODE                             0
 
 // Size in points
