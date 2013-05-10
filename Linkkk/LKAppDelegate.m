@@ -7,12 +7,15 @@
 //
 
 #import "LKAppDelegate.h"
+#import "LKMapManager.h"
 
 #import "SinaWeibo.h"
+#import "BMapKit.h"
 
 #define kAppKey             @"2279872707"
 #define kAppSecret          @"e0a3ff6db611f960c7e3f1765407c9d7"
 #define kAppRedirectURI     @"http://map.linkkk.com"
+#define kMapKey             @"FB1C88AF3B39EB16C330E6F5841C4D3D387AD96E"
 
 @implementation LKAppDelegate
 
@@ -27,6 +30,16 @@
         _sinaweibo.accessToken = [auth objectForKey:@"AccessTokenKey"];
         _sinaweibo.expirationDate = [auth objectForKey:@"ExpirationDateKey"];
         _sinaweibo.userID = [auth objectForKey:@"UserIDKey"];
+    }
+    
+    // Initialize Baidu Map
+    _mapManager = [[BMKMapManager alloc] init];
+    if (![_mapManager start:kMapKey generalDelegate:nil])
+    {
+        NSLog(@"ERROR: baidu map manager failed to load");
+    } else {
+        LKMapManager *manager = [LKMapManager sharedInstance];
+        [manager initSearch];
     }
     
     return YES;

@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @class SinaWeibo;
+@class BMKMapManager;
 
 @interface LKAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (readonly, nonatomic) SinaWeibo *sinaweibo;
+@property (readonly, nonatomic) BMKMapManager *mapManager;
 
 @end

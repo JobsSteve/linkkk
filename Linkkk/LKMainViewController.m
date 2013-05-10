@@ -18,6 +18,7 @@
 
 #import "LKAppDelegate.h"
 #import "LKProfile.h"
+#import "LKMapManager.h"
 #import "LKPlace.h"
 #import "LKPlaceView.h"
 #import "LKLoadingView.h"
@@ -29,6 +30,7 @@
 #import "CLPlacemark+Linkkk.h"
 
 #import "SinaWeibo.h"
+#import "BMapKit.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -44,7 +46,7 @@
     BOOL _isShowingSearchBar;
     
     NSMutableArray *_places;
-    NSMutableArray *_results;
+    NSArray *_results;
 }
 @end
 
@@ -54,8 +56,9 @@
 {
     self = [super initWithCoder:decoder];
     if (self) {
+        [LKProfile profile];
         _places = [NSMutableArray arrayWithCapacity:10];
-        _results = [NSMutableArray arrayWithCapacity:10];
+        [LKMapManager sharedInstance];
     }
     return self;
 }
@@ -86,7 +89,7 @@
     
     // Update Location
     LKProfile *profile = [LKProfile profile];
-    [profile addObserver:self forKeyPath:@"placemark" options:NSKeyValueObservingOptionNew context:NULL];
+    [profile addObserver:self forKeyPath:@"address" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -269,19 +272,18 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"placemark"]) {
-        CLPlacemark *placemark = [LKProfile profile].placemark;
-        NSString *name = placemark.city;
+    if ([keyPath isEqualToString:@"address"]) {
+        BMKAddrInfo *address = [LKProfile profile].address;
         UIButton *titleButton = (UIButton *)self.navigationItem.titleView;
-        NSString *title = (placemark == nil) ? @"当前：未知地址 " : [NSString stringWithFormat:@"当前：%@ ", name];
+        NSString *name = address.addressComponent.streetName;
+        if (name == nil) name = address.addressComponent.district;
+        NSString *title = [NSString stringWithFormat:@"当前：%@ ", name];
         [titleButton setTitleWithString:title];
         
         LKPlacePickerCell *cell = (LKPlacePickerCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         if (cell != nil) {
-            name = (placemark.thoroughfare == nil) ? @"" : placemark.thoroughfare;
-            if (placemark.subLocality != nil) name = [name stringByAppendingFormat:@", %@", placemark.subLocality];
-            if (placemark.locality != nil) name = [name stringByAppendingFormat:@", %@", placemark.locality];
-            cell.subHeadingLabel.text = name;
+            cell.headingLabel.text = address.addressComponent.district;
+            cell.subHeadingLabel.text = address.strAddr;
         }
     }
 }
@@ -378,15 +380,9 @@
         cell.subHeadingLabel.text = @"未知";
         return cell;
     }
-    NSArray *terms = [[_results objectAtIndex:indexPath.row] objectForKey:@"terms"];
-    if (terms == nil || terms.count == 0)
-        return cell;
-    cell.headingLabel.text = [[terms objectAtIndex:0] objectForKey:@"value"];
-    NSString *address = @"";
-    if (terms.count > 1) address = [[terms objectAtIndex:1] objectForKey:@"value"];
-    if (terms.count > 2) address = [address stringByAppendingFormat:@", %@", [[terms objectAtIndex:2] objectForKey:@"value"]];
-    if (terms.count > 3) address = [address stringByAppendingFormat:@", %@", [[terms objectAtIndex:3] objectForKey:@"value"]];
-    cell.subHeadingLabel.text = address;
+    BMKPoiInfo *poi = [_results objectAtIndex:indexPath.row];
+    cell.headingLabel.text = poi.name;
+    cell.subHeadingLabel.text = poi.address;
     
     return cell;
 }
@@ -396,13 +392,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } else {
-        LKPlacePickerCell *cell = (LKPlacePickerCell *)[tableView cellForRowAtIndexPath:indexPath];
-        NSString *string = [cell.headingLabel.text stringByAppendingFormat:@", %@", cell.subHeadingLabel.text];
-        NSString *title = [NSString stringWithFormat:@"当前：%@ ", cell.headingLabel.text];
-        [(UIButton *)self.navigationItem.titleView setTitleWithString:title];
-        [self _geocode:string];
+        BMKPoiInfo *poi = (BMKPoiInfo *)[_results objectAtIndex:indexPath.row];
+        [[LKMapManager sharedInstance] reverseGeocode:poi.pt withCompletionHandler:^(BMKAddrInfo *address) {
+            [LKProfile profile].address = address;
+        }];
         [self _navButtonSelected:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
@@ -412,7 +407,17 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [self _fetchCities];
+    if (searchText.length == 0)
+    {
+        _results = nil;
+        [self.tableView reloadData];
+        return;
+    }
+    
+    [[LKMapManager sharedInstance] poiSearchNearby:searchText withCompletionHandler:^(NSArray *results) {
+        _results = results;
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -444,7 +449,7 @@
 {
     static int offset = 0;
     LKProfile *profile = [LKProfile profile];
-    CLLocationCoordinate2D coord = profile.location.coordinate;
+    CLLocationCoordinate2D coord = profile.address.geoPt;
     NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=100&la=%f&lo=%f&limit=10&offset=%d&order_by=-score&format=json", coord.latitude, coord.longitude, offset];
     offset += 10;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -482,56 +487,6 @@
         [_places removeObjectAtIndex:0];
         [_shakeViewController updateView];
     }
-}
-
-- (void)_fetchCities
-{
-    if (_searchBar.text.length == 0)
-    {
-        [_results removeAllObjects];
-        [self.tableView reloadData];
-        return;
-    }
-    
-    CLLocationCoordinate2D coord = [LKProfile profile].location.coordinate;
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&language=zh-CH&types=(cities)&location=%f,%f&radius=500&sensor=true&key=AIzaSyCc1TGG_Fb-er_y74L0zL8-10euOTr352k", [_searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], coord.latitude, coord.longitude];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        if (data == nil || error != nil) {
-            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
-            return;
-        }
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        [_results removeAllObjects];
-        NSArray *predictions = [json objectForKey:@"predictions"];
-        [predictions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [_results addObject:obj];
-        }];
-        [self.tableView reloadData];
-    }];
-}
-
-- (CLLocationCoordinate2D)_geocode:(NSString *)name
-{
-    NSString *urlString = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLResponse *response;
-    NSError *error;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    if (data == nil || error != nil) {
-        [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
-        return CLLocationCoordinateZero;
-    }
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSArray *results = [json objectForKey:@"results"];
-    if (results.count == 0)
-        return CLLocationCoordinateZero;
-    NSDictionary *location = [[[results objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
-    NSLog(@"%@", location);
-    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([[location objectForKey:@"lat"] floatValue], [[location objectForKey:@"lng"] floatValue]);
-    if (coord.latitude == 0 || coord.longitude == 0)
-        return CLLocationCoordinateZero;
-    return coord;
 }
 
 @end

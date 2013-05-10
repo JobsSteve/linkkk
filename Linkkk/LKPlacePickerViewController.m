@@ -15,6 +15,7 @@
 #import "UIViewController+Linkkk.h"
 
 #import <CoreLocation/CoreLocation.h>
+#import "BMapKit.h"
 
 @interface LKPlacePickerViewController ()
 {
@@ -117,7 +118,7 @@
         return;
     }
     
-    CLLocationCoordinate2D coord = [LKProfile profile].location.coordinate;
+    CLLocationCoordinate2D coord = [LKProfile profile].address.geoPt;
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&language=zh-CH&types=establishment&location=%f,%f&radius=500&sensor=true&key=AIzaSyCc1TGG_Fb-er_y74L0zL8-10euOTr352k", [_searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], coord.latitude, coord.longitude];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {

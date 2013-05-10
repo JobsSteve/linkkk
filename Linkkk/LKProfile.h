@@ -9,14 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+@class BMKAddrInfo;
 @protocol LKLocationDelegate;
 
-@interface LKProfile : NSObject <CLLocationManagerDelegate>
+@interface LKProfile : NSObject
 
 @property (strong, nonatomic, readonly) NSString *csrf;
 @property (strong, nonatomic, readonly) NSString *cookie;
-@property (strong, nonatomic, readonly) CLLocation *location;
-@property (strong, nonatomic) CLPlacemark *placemark; // KVO
+@property (strong, nonatomic) BMKAddrInfo *address; // KVO
 
 @property (strong, nonatomic) NSString *avatarURL;
 @property (strong, nonatomic) NSString *username;

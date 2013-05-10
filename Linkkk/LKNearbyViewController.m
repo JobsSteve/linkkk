@@ -16,6 +16,8 @@
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIViewController+Linkkk.h"
 
+#import "BMapKit.h"
+
 #import <QuartzCore/CALayer.h>
 
 @interface LKNearbyViewController ()
@@ -101,7 +103,7 @@
 - (void)_fetchData
 {
     LKProfile *profile = [LKProfile profile];
-    CLLocationCoordinate2D coord = profile.location.coordinate;
+    CLLocationCoordinate2D coord = profile.address.geoPt;
     NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=0&order_by=-score&format=json", coord.latitude, coord.longitude];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];

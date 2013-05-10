@@ -10,6 +10,8 @@
 
 #import "UIBarButtonItem+Linkkk.h"
 
+#import "BMapKit.h"
+
 @interface LKSettingViewController ()
 
 @end
@@ -30,6 +32,17 @@
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"设置" target:self action:@selector(backButtonSelected:)];
+    
+    BMKMapView *mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    self.view = mapView;
+    [mapView setShowsUserLocation:YES];
+    [mapView addObserver:self forKeyPath:@"centerCoordinate" options:NSKeyValueObservingOptionNew context:nil];
+    mapView.centerCoordinate = CLLocationCoordinate2DMake(1, 1);
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    NSLog(@"%@", object);
 }
 
 - (void)didReceiveMemoryWarning

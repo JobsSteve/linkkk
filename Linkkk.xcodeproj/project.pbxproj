@@ -35,11 +35,14 @@
 		2BBD25C2171EEF7C002BA661 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BBD25C1171EEF7C002BA661 /* MapKit.framework */; };
 		2BCE7724173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE7723173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m */; };
 		2BCE7727173B23F900EBBE95 /* LKSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE7726173B23F800EBBE95 /* LKSettingViewController.m */; };
-		2BCE772A173B26AF00EBBE95 /* LKLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE7729173B26AF00EBBE95 /* LKLocation.m */; };
 		2BCE772D173B35E700EBBE95 /* vertical.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE772B173B35E700EBBE95 /* vertical.png */; };
 		2BCE772E173B35E700EBBE95 /* vertical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE772C173B35E700EBBE95 /* vertical@2x.png */; };
 		2BCE7731173B36F300EBBE95 /* verticalpixel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE772F173B36F300EBBE95 /* verticalpixel.png */; };
 		2BCE7732173B36F300EBBE95 /* verticalpixel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE7730173B36F300EBBE95 /* verticalpixel@2x.png */; };
+		2BCE7781173C3D5D00EBBE95 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCE7780173C3D5D00EBBE95 /* libbaidumapapi.a */; };
+		2BCE7783173C3D6300EBBE95 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2BCE7782173C3D6300EBBE95 /* mapapi.bundle */; };
+		2BCE7785173C3FAF00EBBE95 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BCE7784173C3FAF00EBBE95 /* libc++.dylib */; };
+		2BCE7788173C787600EBBE95 /* LKMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BCE7787173C787600EBBE95 /* LKMapManager.m */; };
 		2BD1DB20171D978F0029949F /* LKPlaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB1F171D978F0029949F /* LKPlaceView.m */; };
 		2BD1DB23171D9FE80029949F /* LKNearbyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB22171D9FE80029949F /* LKNearbyCell.m */; };
 		2BD1DB26171DA0660029949F /* LKNearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD1DB25171DA0660029949F /* LKNearbyViewController.m */; };
@@ -134,12 +137,44 @@
 		2BCE7723173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLPlacemark+Linkkk.m"; sourceTree = "<group>"; };
 		2BCE7725173B23F800EBBE95 /* LKSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKSettingViewController.h; sourceTree = "<group>"; };
 		2BCE7726173B23F800EBBE95 /* LKSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKSettingViewController.m; sourceTree = "<group>"; };
-		2BCE7728173B26AF00EBBE95 /* LKLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLocation.h; sourceTree = "<group>"; };
-		2BCE7729173B26AF00EBBE95 /* LKLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLocation.m; sourceTree = "<group>"; };
 		2BCE772B173B35E700EBBE95 /* vertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vertical.png; sourceTree = "<group>"; };
 		2BCE772C173B35E700EBBE95 /* vertical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vertical@2x.png"; sourceTree = "<group>"; };
 		2BCE772F173B36F300EBBE95 /* verticalpixel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = verticalpixel.png; sourceTree = "<group>"; };
 		2BCE7730173B36F300EBBE95 /* verticalpixel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "verticalpixel@2x.png"; sourceTree = "<group>"; };
+		2BCE7763173C3BCE00EBBE95 /* BMapKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
+		2BCE7764173C3BCE00EBBE95 /* BMKAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKAnnotation.h; sourceTree = "<group>"; };
+		2BCE7765173C3BCE00EBBE95 /* BMKAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKAnnotationView.h; sourceTree = "<group>"; };
+		2BCE7766173C3BCE00EBBE95 /* BMKCircle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKCircle.h; sourceTree = "<group>"; };
+		2BCE7767173C3BCE00EBBE95 /* BMKCircleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKCircleView.h; sourceTree = "<group>"; };
+		2BCE7768173C3BCE00EBBE95 /* BMKGeneralDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKGeneralDelegate.h; sourceTree = "<group>"; };
+		2BCE7769173C3BCE00EBBE95 /* BMKGeocodeType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKGeocodeType.h; sourceTree = "<group>"; };
+		2BCE776A173C3BCE00EBBE95 /* BMKGeometry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKGeometry.h; sourceTree = "<group>"; };
+		2BCE776B173C3BCE00EBBE95 /* BMKMapManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKMapManager.h; sourceTree = "<group>"; };
+		2BCE776C173C3BCE00EBBE95 /* BMKMapView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKMapView.h; sourceTree = "<group>"; };
+		2BCE776D173C3BCE00EBBE95 /* BMKMultiPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKMultiPoint.h; sourceTree = "<group>"; };
+		2BCE776E173C3BCE00EBBE95 /* BMKOfflineMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKOfflineMap.h; sourceTree = "<group>"; };
+		2BCE776F173C3BCE00EBBE95 /* BMKOfflineMapType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKOfflineMapType.h; sourceTree = "<group>"; };
+		2BCE7770173C3BCE00EBBE95 /* BMKOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKOverlay.h; sourceTree = "<group>"; };
+		2BCE7771173C3BCE00EBBE95 /* BMKOverlayPathView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKOverlayPathView.h; sourceTree = "<group>"; };
+		2BCE7772173C3BCE00EBBE95 /* BMKOverlayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKOverlayView.h; sourceTree = "<group>"; };
+		2BCE7773173C3BCE00EBBE95 /* BMKPinAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKPinAnnotationView.h; sourceTree = "<group>"; };
+		2BCE7774173C3BCE00EBBE95 /* BMKPointAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKPointAnnotation.h; sourceTree = "<group>"; };
+		2BCE7775173C3BCE00EBBE95 /* BMKPoiSearchType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKPoiSearchType.h; sourceTree = "<group>"; };
+		2BCE7776173C3BCE00EBBE95 /* BMKPolygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKPolygon.h; sourceTree = "<group>"; };
+		2BCE7777173C3BCE00EBBE95 /* BMKPolygonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKPolygonView.h; sourceTree = "<group>"; };
+		2BCE7778173C3BCE00EBBE95 /* BMKPolyline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKPolyline.h; sourceTree = "<group>"; };
+		2BCE7779173C3BCE00EBBE95 /* BMKPolylineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKPolylineView.h; sourceTree = "<group>"; };
+		2BCE777A173C3BCE00EBBE95 /* BMKRouteSearchType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKRouteSearchType.h; sourceTree = "<group>"; };
+		2BCE777B173C3BCE00EBBE95 /* BMKSearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKSearch.h; sourceTree = "<group>"; };
+		2BCE777C173C3BCE00EBBE95 /* BMKShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKShape.h; sourceTree = "<group>"; };
+		2BCE777D173C3BCE00EBBE95 /* BMKTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKTypes.h; sourceTree = "<group>"; };
+		2BCE777E173C3BCE00EBBE95 /* BMKUserLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKUserLocation.h; sourceTree = "<group>"; };
+		2BCE777F173C3BCE00EBBE95 /* BMKVersion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BMKVersion.h; sourceTree = "<group>"; };
+		2BCE7780173C3D5D00EBBE95 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
+		2BCE7782173C3D6300EBBE95 /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = "<group>"; };
+		2BCE7784173C3FAF00EBBE95 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		2BCE7786173C787600EBBE95 /* LKMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKMapManager.h; sourceTree = "<group>"; };
+		2BCE7787173C787600EBBE95 /* LKMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKMapManager.m; sourceTree = "<group>"; };
 		2BD1DB1E171D978F0029949F /* LKPlaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPlaceView.h; sourceTree = "<group>"; };
 		2BD1DB1F171D978F0029949F /* LKPlaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPlaceView.m; sourceTree = "<group>"; };
 		2BD1DB21171D9FE80029949F /* LKNearbyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNearbyCell.h; sourceTree = "<group>"; };
@@ -211,6 +246,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BCE7785173C3FAF00EBBE95 /* libc++.dylib in Frameworks */,
 				2BD27274172B038400C757E9 /* ImageIO.framework in Frameworks */,
 				2BD27272172B037F00C757E9 /* CoreImage.framework in Frameworks */,
 				2BD2720A172AB79700C757E9 /* QuartzCore.framework in Frameworks */,
@@ -219,6 +255,7 @@
 				2BA510CE171C2856009A6547 /* UIKit.framework in Frameworks */,
 				2BA510D0171C2856009A6547 /* Foundation.framework in Frameworks */,
 				2BA510D2171C2856009A6547 /* CoreGraphics.framework in Frameworks */,
+				2BCE7781173C3D5D00EBBE95 /* libbaidumapapi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +349,7 @@
 		2BA510F4171C39B2009A6547 /* Third Parties */ = {
 			isa = PBXGroup;
 			children = (
+				2BCE7762173C3BB600EBBE95 /* BMKMapKit */,
 				2BD27251172B02A100C757E9 /* SDWebImage */,
 				2BA510F5171C39D2009A6547 /* JSONKit */,
 				2BA510F8171C39D2009A6547 /* SinaWeibo */,
@@ -342,6 +380,45 @@
 				2BA51100171C39D2009A6547 /* SinaWeiboRequest.m */,
 			);
 			path = SinaWeibo;
+			sourceTree = "<group>";
+		};
+		2BCE7762173C3BB600EBBE95 /* BMKMapKit */ = {
+			isa = PBXGroup;
+			children = (
+				2BCE7782173C3D6300EBBE95 /* mapapi.bundle */,
+				2BCE7780173C3D5D00EBBE95 /* libbaidumapapi.a */,
+				2BCE7784173C3FAF00EBBE95 /* libc++.dylib */,
+				2BCE7763173C3BCE00EBBE95 /* BMapKit.h */,
+				2BCE7764173C3BCE00EBBE95 /* BMKAnnotation.h */,
+				2BCE7765173C3BCE00EBBE95 /* BMKAnnotationView.h */,
+				2BCE7766173C3BCE00EBBE95 /* BMKCircle.h */,
+				2BCE7767173C3BCE00EBBE95 /* BMKCircleView.h */,
+				2BCE7768173C3BCE00EBBE95 /* BMKGeneralDelegate.h */,
+				2BCE7769173C3BCE00EBBE95 /* BMKGeocodeType.h */,
+				2BCE776A173C3BCE00EBBE95 /* BMKGeometry.h */,
+				2BCE776B173C3BCE00EBBE95 /* BMKMapManager.h */,
+				2BCE776C173C3BCE00EBBE95 /* BMKMapView.h */,
+				2BCE776D173C3BCE00EBBE95 /* BMKMultiPoint.h */,
+				2BCE776E173C3BCE00EBBE95 /* BMKOfflineMap.h */,
+				2BCE776F173C3BCE00EBBE95 /* BMKOfflineMapType.h */,
+				2BCE7770173C3BCE00EBBE95 /* BMKOverlay.h */,
+				2BCE7771173C3BCE00EBBE95 /* BMKOverlayPathView.h */,
+				2BCE7772173C3BCE00EBBE95 /* BMKOverlayView.h */,
+				2BCE7773173C3BCE00EBBE95 /* BMKPinAnnotationView.h */,
+				2BCE7774173C3BCE00EBBE95 /* BMKPointAnnotation.h */,
+				2BCE7775173C3BCE00EBBE95 /* BMKPoiSearchType.h */,
+				2BCE7776173C3BCE00EBBE95 /* BMKPolygon.h */,
+				2BCE7777173C3BCE00EBBE95 /* BMKPolygonView.h */,
+				2BCE7778173C3BCE00EBBE95 /* BMKPolyline.h */,
+				2BCE7779173C3BCE00EBBE95 /* BMKPolylineView.h */,
+				2BCE777A173C3BCE00EBBE95 /* BMKRouteSearchType.h */,
+				2BCE777B173C3BCE00EBBE95 /* BMKSearch.h */,
+				2BCE777C173C3BCE00EBBE95 /* BMKShape.h */,
+				2BCE777D173C3BCE00EBBE95 /* BMKTypes.h */,
+				2BCE777E173C3BCE00EBBE95 /* BMKUserLocation.h */,
+				2BCE777F173C3BCE00EBBE95 /* BMKVersion.h */,
+			);
+			name = BMKMapKit;
 			sourceTree = "<group>";
 		};
 		2BD1DB27171DC6C50029949F /* Resource */ = {
@@ -385,8 +462,8 @@
 				2BD1DB30171DD1AF0029949F /* LKProfile.m */,
 				2B286FA61724600D00A454FE /* LKPlace.h */,
 				2B286FA71724600D00A454FE /* LKPlace.m */,
-				2BCE7728173B26AF00EBBE95 /* LKLocation.h */,
-				2BCE7729173B26AF00EBBE95 /* LKLocation.m */,
+				2BCE7786173C787600EBBE95 /* LKMapManager.h */,
+				2BCE7787173C787600EBBE95 /* LKMapManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -539,6 +616,7 @@
 				2BCE772E173B35E700EBBE95 /* vertical@2x.png in Resources */,
 				2BCE7731173B36F300EBBE95 /* verticalpixel.png in Resources */,
 				2BCE7732173B36F300EBBE95 /* verticalpixel@2x.png in Resources */,
+				2BCE7783173C3D6300EBBE95 /* mapapi.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +662,7 @@
 				2BD532DE1737E5260050EDF7 /* LKPlacePickerCell.m in Sources */,
 				2BCE7724173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m in Sources */,
 				2BCE7727173B23F900EBBE95 /* LKSettingViewController.m in Sources */,
-				2BCE772A173B26AF00EBBE95 /* LKLocation.m in Sources */,
+				2BCE7788173C787600EBBE95 /* LKMapManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,7 +746,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Linkkk\"",
+				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -683,7 +766,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
 				INFOPLIST_FILE = "Linkkk/Linkkk-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Linkkk\"",
+				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

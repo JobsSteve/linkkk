@@ -17,6 +17,8 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+#import "BMapKit.h"
+
 static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 @interface LKCreateViewController ()
@@ -127,7 +129,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         NSMutableDictionary *dict = [@{@"content":_textView.text,
                                      @"latitude":[NSNumber numberWithFloat:coord.latitude],
                                      @"longitude":[NSNumber numberWithFloat:coord.longitude],
-                                     @"city":_profile.placemark.locality,
+                                     @"city":_profile.address.addressComponent.city,
                                      @"location":_placemarkLabel.text,
                                      @"title":_titleField.text} mutableCopy];
         if (_imageID != 0) {
@@ -246,17 +248,17 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     if (data == nil || error != nil) {
         [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
-        return _profile.location.coordinate;
+        return _profile.address.geoPt;
     }
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
     NSArray *results = [json objectForKey:@"results"];
     if (results.count == 0)
-        return _profile.location.coordinate;
+        return _profile.address.geoPt;
     NSDictionary *location = [[[results objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
     NSLog(@"%@", location);
     CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([[location objectForKey:@"lat"] floatValue], [[location objectForKey:@"lng"] floatValue]);
     if (coord.latitude == 0 || coord.longitude == 0)
-        return _profile.location.coordinate;
+        return _profile.address.geoPt;
     return coord;
 }
 

@@ -9,8 +9,10 @@
 #import "LKProfile.h"
 #import "LKAppDelegate.h"
 #import "LKMainViewController.h"
+#import "LKMapManager.h"
 
 #import "SinaWeibo.h"
+#import "BMapKit.h"
 
 /*
  We have two levels of login - Sina Weibo and Linkkk.
@@ -19,8 +21,10 @@
  We attempt to login to Linkkk whenever the LKProfile is being instantiated.
  */
 
-@interface LKProfile ()
+@interface LKProfile () <CLLocationManagerDelegate>
+
 @property (strong, nonatomic) CLLocationManager *locationManager;
+
 @end
 
 @implementation LKProfile
@@ -28,9 +32,10 @@
 + (LKProfile *)profile
 {
     static LKProfile *profile = nil;
-    if (profile == nil) {
-        profile = [[LKProfile alloc] init];
-    }
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        profile = [[self alloc] init];
+    });
     return profile;
 }
 
@@ -96,9 +101,6 @@
             NSLog(@"ERROR: login failed");
             return;
         }
-        // Parse user info
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        NSLog(@"%@", json);
     }];
 }
 
@@ -117,7 +119,6 @@
         NSDictionary *profile = [[json objectForKey:@"objects"] objectAtIndex:0];
         _avatarURL = [profile objectForKey:@"avatar_url"];
         self.username = [profile objectForKey:@"nickname"];
-        NSLog(@"%@", profile);
     }];
 }
 
@@ -126,23 +127,11 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation* location = [locations lastObject];
-    _location = location;
     [manager stopUpdatingLocation];
     
-    [self _reverseGeocoding];
-}
-
-#pragma mark - Helper Functions
-
-- (void)_reverseGeocoding
-{
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:_location completionHandler:^(NSArray *placemarks, NSError *error)
-    {
-        if ([placemarks count] > 0)
-        {
-            self.placemark = [placemarks objectAtIndex:0];
-        }
+    // Reverse Geocoding
+    [[LKMapManager sharedInstance] reverseGeocode:location.coordinate withCompletionHandler:^(BMKAddrInfo *result) {
+        self.address = result;
     }];
 }
 
