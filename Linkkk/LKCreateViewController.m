@@ -18,6 +18,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "BMapKit.h"
+#import "AGImagePickerController.h"
 
 static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
@@ -201,10 +202,28 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         [self presentViewController:controller animated:YES completion:nil];
     }
     if (buttonIndex == 1) {
-        UIImagePickerController *controller = [[UIImagePickerController alloc] init];
-        controller.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-        controller.delegate = self;
-        [self presentViewController:controller animated:YES completion:nil];
+        AGImagePickerController *imagePickerController = [[AGImagePickerController alloc] initWithFailureBlock:^(NSError *error)
+        {
+            if (error == nil)
+            {
+                NSLog(@"User has cancelled.");
+                [self dismissViewControllerAnimated:YES completion:nil];
+            } else
+            {
+                NSLog(@"Error: %@", error);
+                
+                // Wait for the view controller to show first and hide it after that
+                double delayInSeconds = 0.5;
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                });
+            }
+        } andSuccessBlock:^(NSArray *info) {
+            NSLog(@"Info: %@", info);
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [self presentViewController:imagePickerController animated:YES completion:nil];
     }
 }
 

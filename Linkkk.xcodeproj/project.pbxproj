@@ -18,6 +18,16 @@
 		2B8C74F91726AA230075F2D1 /* LKCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C74F81726AA230075F2D1 /* LKCreateViewController.m */; };
 		2B97EE7A172B83CA004A1FCB /* avatar_overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B97EE79172B83CA004A1FCB /* avatar_overlay.png */; };
 		2B97EE7C172BFD11004A1FCB /* avatar_overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B97EE7B172BFD11004A1FCB /* avatar_overlay@2x.png */; };
+		2BA334C6173D43A700325D25 /* AGImagePickerController+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334B5173D43A700325D25 /* AGImagePickerController+Helper.m */; };
+		2BA334C7173D43A700325D25 /* AGImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2BA334B6173D43A700325D25 /* AGImagePickerController.bundle */; };
+		2BA334C8173D43A700325D25 /* AGImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334B8173D43A700325D25 /* AGImagePickerController.m */; };
+		2BA334C9173D43A700325D25 /* AGIPCAlbumsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334BB173D43A700325D25 /* AGIPCAlbumsController.m */; };
+		2BA334CA173D43A700325D25 /* AGIPCAssetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334BD173D43A700325D25 /* AGIPCAssetsController.m */; };
+		2BA334CB173D43A700325D25 /* AGIPCGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334BF173D43A700325D25 /* AGIPCGridCell.m */; };
+		2BA334CC173D43A700325D25 /* AGIPCGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334C1173D43A700325D25 /* AGIPCGridItem.m */; };
+		2BA334CD173D43A700325D25 /* AGIPCToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334C3173D43A700325D25 /* AGIPCToolbarItem.m */; };
+		2BA334CE173D43A700325D25 /* ALAsset+AGIPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334C5173D43A700325D25 /* ALAsset+AGIPC.m */; };
+		2BA334D0173D43BA00325D25 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA334CF173D43BA00325D25 /* AssetsLibrary.framework */; };
 		2BA510CE171C2856009A6547 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CD171C2856009A6547 /* UIKit.framework */; };
 		2BA510D0171C2856009A6547 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CF171C2856009A6547 /* Foundation.framework */; };
 		2BA510D2171C2856009A6547 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510D1171C2856009A6547 /* CoreGraphics.framework */; };
@@ -107,6 +117,25 @@
 		2B8C74F81726AA230075F2D1 /* LKCreateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKCreateViewController.m; sourceTree = "<group>"; };
 		2B97EE79172B83CA004A1FCB /* avatar_overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar_overlay.png; sourceTree = "<group>"; };
 		2B97EE7B172BFD11004A1FCB /* avatar_overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar_overlay@2x.png"; sourceTree = "<group>"; };
+		2BA334B4173D43A700325D25 /* AGImagePickerController+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AGImagePickerController+Helper.h"; sourceTree = "<group>"; };
+		2BA334B5173D43A700325D25 /* AGImagePickerController+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AGImagePickerController+Helper.m"; sourceTree = "<group>"; };
+		2BA334B6173D43A700325D25 /* AGImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AGImagePickerController.bundle; sourceTree = "<group>"; };
+		2BA334B7173D43A700325D25 /* AGImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGImagePickerController.h; sourceTree = "<group>"; };
+		2BA334B8173D43A700325D25 /* AGImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGImagePickerController.m; sourceTree = "<group>"; };
+		2BA334B9173D43A700325D25 /* AGImagePickerControllerDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGImagePickerControllerDefines.h; sourceTree = "<group>"; };
+		2BA334BA173D43A700325D25 /* AGIPCAlbumsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGIPCAlbumsController.h; sourceTree = "<group>"; };
+		2BA334BB173D43A700325D25 /* AGIPCAlbumsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGIPCAlbumsController.m; sourceTree = "<group>"; };
+		2BA334BC173D43A700325D25 /* AGIPCAssetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGIPCAssetsController.h; sourceTree = "<group>"; };
+		2BA334BD173D43A700325D25 /* AGIPCAssetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGIPCAssetsController.m; sourceTree = "<group>"; };
+		2BA334BE173D43A700325D25 /* AGIPCGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGIPCGridCell.h; sourceTree = "<group>"; };
+		2BA334BF173D43A700325D25 /* AGIPCGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGIPCGridCell.m; sourceTree = "<group>"; };
+		2BA334C0173D43A700325D25 /* AGIPCGridItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGIPCGridItem.h; sourceTree = "<group>"; };
+		2BA334C1173D43A700325D25 /* AGIPCGridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGIPCGridItem.m; sourceTree = "<group>"; };
+		2BA334C2173D43A700325D25 /* AGIPCToolbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AGIPCToolbarItem.h; sourceTree = "<group>"; };
+		2BA334C3173D43A700325D25 /* AGIPCToolbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGIPCToolbarItem.m; sourceTree = "<group>"; };
+		2BA334C4173D43A700325D25 /* ALAsset+AGIPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+AGIPC.h"; sourceTree = "<group>"; };
+		2BA334C5173D43A700325D25 /* ALAsset+AGIPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+AGIPC.m"; sourceTree = "<group>"; };
+		2BA334CF173D43BA00325D25 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		2BA510C9171C2856009A6547 /* Linkkk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Linkkk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA510CD171C2856009A6547 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2BA510CF171C2856009A6547 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -246,6 +275,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BA334D0173D43BA00325D25 /* AssetsLibrary.framework in Frameworks */,
 				2BCE7785173C3FAF00EBBE95 /* libc++.dylib in Frameworks */,
 				2BD27274172B038400C757E9 /* ImageIO.framework in Frameworks */,
 				2BD27272172B037F00C757E9 /* CoreImage.framework in Frameworks */,
@@ -262,6 +292,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2BA334B3173D43A700325D25 /* AGImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				2BA334B6173D43A700325D25 /* AGImagePickerController.bundle */,
+				2BA334B4173D43A700325D25 /* AGImagePickerController+Helper.h */,
+				2BA334B5173D43A700325D25 /* AGImagePickerController+Helper.m */,
+				2BA334B7173D43A700325D25 /* AGImagePickerController.h */,
+				2BA334B8173D43A700325D25 /* AGImagePickerController.m */,
+				2BA334B9173D43A700325D25 /* AGImagePickerControllerDefines.h */,
+				2BA334BA173D43A700325D25 /* AGIPCAlbumsController.h */,
+				2BA334BB173D43A700325D25 /* AGIPCAlbumsController.m */,
+				2BA334BC173D43A700325D25 /* AGIPCAssetsController.h */,
+				2BA334BD173D43A700325D25 /* AGIPCAssetsController.m */,
+				2BA334BE173D43A700325D25 /* AGIPCGridCell.h */,
+				2BA334BF173D43A700325D25 /* AGIPCGridCell.m */,
+				2BA334C0173D43A700325D25 /* AGIPCGridItem.h */,
+				2BA334C1173D43A700325D25 /* AGIPCGridItem.m */,
+				2BA334C2173D43A700325D25 /* AGIPCToolbarItem.h */,
+				2BA334C3173D43A700325D25 /* AGIPCToolbarItem.m */,
+				2BA334C4173D43A700325D25 /* ALAsset+AGIPC.h */,
+				2BA334C5173D43A700325D25 /* ALAsset+AGIPC.m */,
+			);
+			path = AGImagePickerController;
+			sourceTree = "<group>";
+		};
 		2BA510BE171C2856009A6547 = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +338,7 @@
 		2BA510CC171C2856009A6547 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2BA334CF173D43BA00325D25 /* AssetsLibrary.framework */,
 				2BD27273172B038400C757E9 /* ImageIO.framework */,
 				2BD27271172B037E00C757E9 /* CoreImage.framework */,
 				2BD27209172AB79700C757E9 /* QuartzCore.framework */,
@@ -349,6 +405,7 @@
 		2BA510F4171C39B2009A6547 /* Third Parties */ = {
 			isa = PBXGroup;
 			children = (
+				2BA334B3173D43A700325D25 /* AGImagePickerController */,
 				2BCE7762173C3BB600EBBE95 /* BMKMapKit */,
 				2BD27251172B02A100C757E9 /* SDWebImage */,
 				2BA510F5171C39D2009A6547 /* JSONKit */,
@@ -617,6 +674,7 @@
 				2BCE7731173B36F300EBBE95 /* verticalpixel.png in Resources */,
 				2BCE7732173B36F300EBBE95 /* verticalpixel@2x.png in Resources */,
 				2BCE7783173C3D6300EBBE95 /* mapapi.bundle in Resources */,
+				2BA334C7173D43A700325D25 /* AGImagePickerController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,6 +721,14 @@
 				2BCE7724173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m in Sources */,
 				2BCE7727173B23F900EBBE95 /* LKSettingViewController.m in Sources */,
 				2BCE7788173C787600EBBE95 /* LKMapManager.m in Sources */,
+				2BA334C6173D43A700325D25 /* AGImagePickerController+Helper.m in Sources */,
+				2BA334C8173D43A700325D25 /* AGImagePickerController.m in Sources */,
+				2BA334C9173D43A700325D25 /* AGIPCAlbumsController.m in Sources */,
+				2BA334CA173D43A700325D25 /* AGIPCAssetsController.m in Sources */,
+				2BA334CB173D43A700325D25 /* AGIPCGridCell.m in Sources */,
+				2BA334CC173D43A700325D25 /* AGIPCGridItem.m in Sources */,
+				2BA334CD173D43A700325D25 /* AGIPCToolbarItem.m in Sources */,
+				2BA334CE173D43A700325D25 /* ALAsset+AGIPC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
