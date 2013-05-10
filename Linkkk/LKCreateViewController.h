@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LKCreateViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@class BMKPoiInfo;
+
+@protocol LKPlacePickerDelegate <NSObject>
+- (void)didSelectPoi:(BMKPoiInfo *)poi;
+- (void)didCancelPoi;
+@end
+
+@interface LKCreateViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LKPlacePickerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UITextField *titleField;

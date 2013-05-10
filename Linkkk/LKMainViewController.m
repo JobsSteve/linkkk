@@ -252,9 +252,7 @@
 
 - (IBAction)nearbyButtonSelected:(id)sender
 {
-    if (_nearbyViewController == nil) {
-        _nearbyViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"NearbyScene"];
-    }
+    _nearbyViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"NearbyScene"];
     
     [self.navigationController pushViewController:_nearbyViewController animated:YES];
 }
@@ -282,8 +280,8 @@
         
         LKPlacePickerCell *cell = (LKPlacePickerCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         if (cell != nil) {
-            cell.headingLabel.text = address.addressComponent.district;
-            cell.subHeadingLabel.text = address.strAddr;
+            cell.headingLabel.text = @"当前位置";
+            cell.subHeadingLabel.text = [LKProfile profile].current.strAddr;
         }
     }
 }
@@ -376,8 +374,8 @@
     static NSString *CellIdentifier = @"PlacePickerCell";
     LKPlacePickerCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (indexPath.section == 0) {
-        cell.headingLabel.text = @"当前地址";
-        cell.subHeadingLabel.text = @"未知";
+        cell.headingLabel.text = @"当前位置";
+        cell.subHeadingLabel.text = [LKProfile profile].current.strAddr;
         return cell;
     }
     BMKPoiInfo *poi = [_results objectAtIndex:indexPath.row];
@@ -391,15 +389,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    LKProfile *profile = [LKProfile profile];
     if (indexPath.section == 0) {
+        profile.address = profile.current;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self _navButtonSelected:nil];
     } else {
         BMKPoiInfo *poi = (BMKPoiInfo *)[_results objectAtIndex:indexPath.row];
         [[LKMapManager sharedInstance] reverseGeocode:poi.pt withCompletionHandler:^(BMKAddrInfo *address) {
-            [LKProfile profile].address = address;
+            profile.address = address;
         }];
-        [self _navButtonSelected:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self _navButtonSelected:nil];
     }
 }
 
@@ -450,7 +451,7 @@
     static int offset = 0;
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=100&la=%f&lo=%f&limit=10&offset=%d&order_by=-score&format=json", coord.latitude, coord.longitude, offset];
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=%d&order_by=-score&format=json", coord.latitude, coord.longitude, offset];
     offset += 10;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];

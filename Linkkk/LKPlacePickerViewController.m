@@ -11,6 +11,8 @@
 #import "LKCreateViewController.h"
 
 #import "LKProfile.h"
+#import "LKMapManager.h"
+
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIViewController+Linkkk.h"
 
@@ -19,7 +21,8 @@
 
 @interface LKPlacePickerViewController ()
 {
-    NSMutableArray *_results;
+    NSArray *_results;
+    BMKPoiInfo *_poi;
 }
 @end
 
@@ -29,7 +32,7 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        _results = [NSMutableArray arrayWithCapacity:10];
+        _results = [LKProfile profile].address.poiList;
     }
     return self;
 }
@@ -54,6 +57,7 @@
 
 - (void)backButtonSelected:(UIButton *)sender
 {
+    [_delegate didCancelPoi];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -71,17 +75,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     static NSString *CellIdentifier = @"PlacePickerCell";
     LKPlacePickerCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSArray *terms = [[_results objectAtIndex:indexPath.row] objectForKey:@"terms"];
-    if (terms == nil || terms.count == 0)
-        return cell;
-    cell.headingLabel.text = [[terms objectAtIndex:0] objectForKey:@"value"];
-    NSString *address = @"";
-    if (terms.count > 1) address = [[terms objectAtIndex:1] objectForKey:@"value"];
-    if (terms.count > 2) address = [address stringByAppendingFormat:@", %@", [[terms objectAtIndex:2] objectForKey:@"value"]];
-    if (terms.count > 3) address = [address stringByAppendingFormat:@", %@", [[terms objectAtIndex:3] objectForKey:@"value"]];
-    cell.subHeadingLabel.text = address;
+    BMKPoiInfo *poi = [_results objectAtIndex:indexPath.row];
+    cell.headingLabel.text = poi.name;
+    cell.subHeadingLabel.text = poi.address;
     
     return cell;
 }
@@ -90,8 +89,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LKPlacePickerCell *cell = (LKPlacePickerCell *)[tableView cellForRowAtIndexPath:indexPath];
-    _placemarkLabel.text = [cell.headingLabel.text stringByAppendingFormat:@", %@", cell.subHeadingLabel.text];
+    [_delegate didSelectPoi:[_results objectAtIndex:indexPath.row]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -99,7 +97,17 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [self _fetchData];
+    if (searchText.length == 0)
+    {
+        _results = nil;
+        [self.tableView reloadData];
+        return;
+    }
+    
+    [[LKMapManager sharedInstance] poiSearchNearby:searchText withCompletionHandler:^(NSArray *results) {
+        _results = results;
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -109,31 +117,6 @@
 
 #pragma mark - Helper Functions
 
-- (void)_fetchData
-{
-    if (_searchBar.text.length == 0)
-    {
-        [_results removeAllObjects];
-        [self.tableView reloadData];
-        return;
-    }
-    
-    CLLocationCoordinate2D coord = [LKProfile profile].address.geoPt;
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%@&language=zh-CH&types=establishment&location=%f,%f&radius=500&sensor=true&key=AIzaSyCc1TGG_Fb-er_y74L0zL8-10euOTr352k", [_searchBar.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding], coord.latitude, coord.longitude];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        if (data == nil || error != nil) {
-            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
-            return;
-        }
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-        [_results removeAllObjects];
-        NSArray *predictions = [json objectForKey:@"predictions"];
-        [predictions enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [_results addObject:obj];
-        }];
-        [self.tableView reloadData];
-    }];
-}
+
 
 @end

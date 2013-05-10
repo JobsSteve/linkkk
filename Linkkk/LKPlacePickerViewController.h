@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol LKPlacePickerDelegate;
+
 @interface LKPlacePickerViewController : UITableViewController <UISearchBarDelegate>
 
+@property (assign, nonatomic) id<LKPlacePickerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (strong, nonatomic) UILabel *placemarkLabel;
 
 @end

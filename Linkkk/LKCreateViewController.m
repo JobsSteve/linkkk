@@ -26,6 +26,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     LKProfile *_profile;
     UIImage *_image;
     int _imageID;
+    
+    BMKPoiInfo *_poi;
 }
 @end
 
@@ -59,11 +61,12 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
                                                  name:UIKeyboardWillHideNotification
                                                object:self.view.window];
     
-    _photoButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
-    _locationButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _photoButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:50.0];
+    _locationButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:50.0];
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"✓" size:50.0 target:self action:@selector(doneButtonSelected:)];
+    self.navigationItem.titleView = [UIBarButtonItem customTitleLabelWithString:@"创建经历"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -111,7 +114,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 {
     if ([segue.identifier isEqualToString:@"PlacePickerScene"]) {
         LKPlacePickerViewController *viewController = (LKPlacePickerViewController *)segue.destinationViewController;
-        viewController.placemarkLabel = _placemarkLabel;
+        viewController.delegate = self;
     }
 }
 
@@ -160,8 +163,6 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     });
 }
 
-#pragma mark - Callbacks
-
 - (void)backButtonSelected:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -178,7 +179,14 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     _image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    _photoButton.titleLabel.textColor = [UIColor specialBlue];
+    _photoButton.selected = YES;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    _image = nil;
+    _photoButton.selected = NO;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -198,6 +206,22 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         controller.delegate = self;
         [self presentViewController:controller animated:YES completion:nil];
     }
+}
+
+#pragma mark - Place Picker Delegate
+
+- (void)didSelectPoi:(BMKPoiInfo *)poi
+{
+    _poi = poi;
+    _placemarkLabel.text = _poi.name;
+    _locationButton.selected = YES;
+}
+
+- (void)didCancelPoi
+{
+    _poi = nil;
+    _placemarkLabel.text = @"请选择地点";
+    _locationButton.selected = NO;
 }
 
 #pragma mark - Helper

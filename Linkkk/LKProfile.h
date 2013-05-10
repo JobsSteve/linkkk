@@ -17,6 +17,7 @@
 @property (strong, nonatomic, readonly) NSString *csrf;
 @property (strong, nonatomic, readonly) NSString *cookie;
 @property (strong, nonatomic) BMKAddrInfo *address; // KVO
+@property (strong, nonatomic) BMKAddrInfo *current;
 
 @property (strong, nonatomic) NSString *avatarURL;
 @property (strong, nonatomic) NSString *username;
