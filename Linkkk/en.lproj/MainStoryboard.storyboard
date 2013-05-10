@@ -647,7 +647,7 @@
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="navButtonSelected:" destination="qoA-0K-5eQ" eventType="touchUpInside" id="027-w8-ByN"/>
+                                                    <segue destination="DE9-id-DMy" kind="push" identifier="NavSegue" id="dta-UI-zhe"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="jju-ku-ISg">
@@ -694,6 +694,31 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JIe-U4-ZKq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="234" y="-8"/>
+        </scene>
+        <!--Nav View Controller-->
+        <scene sceneID="Lsu-Wg-Rfe">
+            <objects>
+                <viewController storyboardIdentifier="NavScene" id="DE9-id-DMy" customClass="LKNavViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6zg-hZ-Dql">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="k2O-9q-6c2" customClass="BMKMapView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="e9d-SU-rsI"/>
+                    <connections>
+                        <outlet property="mapView" destination="k2O-9q-6c2" id="x4H-Qd-6Xg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zrl-77-X0f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="722" y="-8"/>
         </scene>
         <!--Profile View Controller - Profile-->
         <scene sceneID="ISS-Qc-Jtp">
@@ -822,6 +847,9 @@
         <image name="weibo_login.png" width="110" height="34"/>
     </resources>
     <classes>
+        <class className="BMKMapView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BMKMapView.h"/>
+        </class>
         <class className="LKCreateViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LKCreateViewController.h"/>
             <relationships>
@@ -856,6 +884,12 @@
                 <relationship kind="outlet" name="nearbyButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="profileButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="LKNavViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LKNavViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="mapView" candidateClass="BMKMapView"/>
             </relationships>
         </class>
         <class className="LKNearbyCell" superclassName="UITableViewCell">
@@ -903,7 +937,6 @@
             <relationships>
                 <relationship kind="action" name="favButtonSelected:" candidateClass="UIButton"/>
                 <relationship kind="action" name="flagButtonSelected:" candidateClass="UIButton"/>
-                <relationship kind="action" name="navButtonSelected:" candidateClass="UIButton"/>
                 <relationship kind="action" name="shareButtonSelected:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="favButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="flagButton" candidateClass="UIButton"/>

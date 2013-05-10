@@ -16,6 +16,7 @@
     void (^_reverseGeocodeHandler)(BMKAddrInfo *);
     void (^_suggestionHandler)(BMKSuggestionResult *);
     void (^_poiNearbyHandler)(NSArray *);
+    void (^_driveSearchHandler)(BMKPlanResult *);
 }
 
 @end
@@ -64,19 +65,40 @@
     _poiNearbyHandler = block;
 }
 
+- (void)drivingSearchFrom:(CLLocationCoordinate2D)from to:(CLLocationCoordinate2D)to withCompletionHandler:(void (^)(BMKPlanResult *))block
+{
+	BMKPlanNode *start = [[BMKPlanNode alloc] init];
+	start.pt = from;
+	BMKPlanNode *end = [[BMKPlanNode alloc] init];
+	end.pt = to;
+    [_search drivingSearch:nil startNode:start endCity:nil endNode:end];
+    _driveSearchHandler = block;
+}
+
+#pragma mark Delegates
+
 - (void)onGetSuggestionResult:(BMKSuggestionResult *)result errorCode:(int)error
 {
+    if (error) return;
     _suggestionHandler(result);
 }
 
 - (void)onGetAddrResult:(BMKAddrInfo *)result errorCode:(int)error
 {
+    if (error) return;
     _reverseGeocodeHandler(result);
 }
 
 - (void)onGetPoiResult:(NSArray *)poiResultList searchType:(int)type errorCode:(int)error
 {
+    if (error) return;
     _poiNearbyHandler([[poiResultList objectAtIndex:0] poiInfoList]);
+}
+
+- (void)onGetDrivingRouteResult:(BMKPlanResult *)result errorCode:(int)error
+{
+    if (error) return;
+    _driveSearchHandler(result);
 }
 
 @end

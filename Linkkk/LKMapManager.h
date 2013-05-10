@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 @class BMKAddrInfo;
+@class BMKPlanResult;
 @class BMKSuggestionResult;
 
 @interface LKMapManager : NSObject
@@ -19,5 +20,6 @@
 - (void)suggestionSearch:(NSString *)string withCompletionHandler:(void (^)(BMKSuggestionResult *))block;
 - (void)reverseGeocode:(CLLocationCoordinate2D)coordinate withCompletionHandler:(void (^)(BMKAddrInfo *))block;
 - (void)poiSearchNearby:(NSString *)string withCompletionHandler:(void (^)(NSArray *))block;
+- (void)drivingSearchFrom:(CLLocationCoordinate2D)from to:(CLLocationCoordinate2D)to withCompletionHandler:(void (^)(BMKPlanResult *))block;
 
 @end

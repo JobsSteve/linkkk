@@ -29,8 +29,6 @@
         _location.longitude = [[dict objectForKey:@"longitude"] floatValue];
         
         _author = [[dict objectForKey:@"realuser"] copy];
-        
-        NSLog(@"%@", dict);
     }
     return self;
 }

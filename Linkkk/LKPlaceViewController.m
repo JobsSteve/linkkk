@@ -12,6 +12,8 @@
 #import "LKProfile.h"
 #import "LKAppDelegate.h"
 
+#import "LKNavViewController.h"
+
 #import "UIViewController+Linkkk.h"
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIColor+Linkkk.h"
@@ -19,9 +21,9 @@
 #import "UIImageView+WebCache.h"
 
 #import "SinaWeibo.h"
+#import "BMapKit.h"
 
 #import <CoreLocation/CoreLocation.h>
-#import <MapKit/MapKit.h>
 
 @interface LKPlaceViewController ()
 
@@ -81,6 +83,17 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"成功" message:nil delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
     [alertView show];
     NSLog(@"SUCCESS: %@", result);
+}
+
+#pragma mark - Segue Callbacks
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"NavSegue"]) {
+        LKNavViewController *navViewController = (LKNavViewController *)segue.destinationViewController;
+        navViewController.from = [LKProfile profile].address.geoPt;
+        navViewController.to = _place.location;
+    }
 }
 
 #pragma mark - Alert View Delegate
@@ -156,19 +169,6 @@
             _place.hasFaved = !_place.hasFaved;
             _favButton.titleLabel.textColor = _place.hasFaved ? [UIColor redColor] : [UIColor specialBlue];
         }
-    }];
-}
-
-- (IBAction)navButtonSelected:(UIButton *)sender
-{
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder reverseGeocodeLocation:[[CLLocation alloc] initWithLatitude:_place.location.latitude longitude:_place.location.longitude] completionHandler:^(NSArray *placemarks, NSError *error) {
-        if (placemarks.count == 0)
-            return;
-        MKPlacemark *placemark = [[MKPlacemark alloc] initWithPlacemark:[placemarks objectAtIndex:0]];
-        MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
-        // Pass the map item to the Maps app
-        [mapItem openInMapsWithLaunchOptions:nil];
     }];
 }
 

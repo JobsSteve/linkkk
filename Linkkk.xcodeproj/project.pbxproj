@@ -28,6 +28,7 @@
 		2BA334CD173D43A700325D25 /* AGIPCToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334C3173D43A700325D25 /* AGIPCToolbarItem.m */; };
 		2BA334CE173D43A700325D25 /* ALAsset+AGIPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334C5173D43A700325D25 /* ALAsset+AGIPC.m */; };
 		2BA334D0173D43BA00325D25 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA334CF173D43BA00325D25 /* AssetsLibrary.framework */; };
+		2BA334D3173D569200325D25 /* LKNavViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334D2173D569200325D25 /* LKNavViewController.mm */; };
 		2BA510CE171C2856009A6547 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CD171C2856009A6547 /* UIKit.framework */; };
 		2BA510D0171C2856009A6547 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CF171C2856009A6547 /* Foundation.framework */; };
 		2BA510D2171C2856009A6547 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510D1171C2856009A6547 /* CoreGraphics.framework */; };
@@ -136,6 +137,8 @@
 		2BA334C4173D43A700325D25 /* ALAsset+AGIPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+AGIPC.h"; sourceTree = "<group>"; };
 		2BA334C5173D43A700325D25 /* ALAsset+AGIPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+AGIPC.m"; sourceTree = "<group>"; };
 		2BA334CF173D43BA00325D25 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		2BA334D1173D569200325D25 /* LKNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNavViewController.h; sourceTree = "<group>"; };
+		2BA334D2173D569200325D25 /* LKNavViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LKNavViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		2BA510C9171C2856009A6547 /* Linkkk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Linkkk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA510CD171C2856009A6547 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2BA510CF171C2856009A6547 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -382,6 +385,8 @@
 				2BD532DD1737E5260050EDF7 /* LKPlacePickerCell.m */,
 				2BD1DB28171DCACA0029949F /* LKProfileViewController.h */,
 				2BD1DB29171DCACA0029949F /* LKProfileViewController.m */,
+				2BA334D1173D569200325D25 /* LKNavViewController.h */,
+				2BA334D2173D569200325D25 /* LKNavViewController.mm */,
 				2B647AFA1736C89B0063F431 /* LKLoadingView.h */,
 				2B647AFB1736C89B0063F431 /* LKLoadingView.m */,
 				2BD27278172B125200C757E9 /* Categories */,
@@ -729,6 +734,7 @@
 				2BA334CC173D43A700325D25 /* AGIPCGridItem.m in Sources */,
 				2BA334CD173D43A700325D25 /* AGIPCToolbarItem.m in Sources */,
 				2BA334CE173D43A700325D25 /* ALAsset+AGIPC.m in Sources */,
+				2BA334D3173D569200325D25 /* LKNavViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

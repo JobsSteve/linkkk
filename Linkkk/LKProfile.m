@@ -14,6 +14,8 @@
 #import "SinaWeibo.h"
 #import "BMapKit.h"
 
+#define CUSTOM_LOCATION
+
 /*
  We have two levels of login - Sina Weibo and Linkkk.
  We maintain a Sina Weibo session at all times. Thus, the user is always
@@ -128,6 +130,10 @@
 {
     CLLocation* location = [locations lastObject];
     [manager stopUpdatingLocation];
+    
+#ifdef CUSTOM_LOCATION
+    location = [[CLLocation alloc] initWithLatitude:31.230393 longitude:121.473704];
+#endif
     
     // Reverse Geocoding
     [[LKMapManager sharedInstance] reverseGeocode:location.coordinate withCompletionHandler:^(BMKAddrInfo *result) {

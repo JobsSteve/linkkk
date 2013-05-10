@@ -28,7 +28,6 @@
 
 - (IBAction)flagButtonSelected:(UIButton *)sender;
 - (IBAction)favButtonSelected:(UIButton *)sender;
-- (IBAction)navButtonSelected:(UIButton *)sender;
 - (IBAction)shareButtonSelected:(UIButton *)sender;
 
 - (void)updateView;
