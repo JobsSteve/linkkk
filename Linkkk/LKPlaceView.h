@@ -10,6 +10,7 @@
 
 @class LKPlace;
 @protocol LKShakeProtocol;
+@protocol LKPlaceDelegate;
 
 @interface LKPlaceView : UIScrollView
 
@@ -17,13 +18,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
 @property (strong, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
-
-@property (strong, nonatomic) IBOutlet UIImageView *photoView1;
-@property (strong, nonatomic) IBOutlet UIImageView *photoView2;
-@property (strong, nonatomic) IBOutlet UIImageView *photoView3;
+@property (strong, nonatomic) NSMutableArray *imageButtons;
 
 @property (strong, nonatomic) LKPlace *place;
 
 @property (nonatomic, assign) id<LKShakeProtocol> shakeDelegate;
+@property (nonatomic, assign) id<LKPlaceDelegate> placeDelegate;
 
 @end

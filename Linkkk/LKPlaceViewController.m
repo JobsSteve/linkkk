@@ -22,10 +22,11 @@
 
 #import "SinaWeibo.h"
 #import "BMapKit.h"
+#import "MWPhotoBrowser.h"
 
 #import <CoreLocation/CoreLocation.h>
 
-@interface LKPlaceViewController ()
+@interface LKPlaceViewController () <MWPhotoBrowserDelegate, SinaWeiboRequestDelegate, UIAlertViewDelegate>
 
 @end
 
@@ -183,10 +184,10 @@
             string = [string stringByAppendingString:@"..."];
         }
         string = [NSString stringWithFormat:@"#大中华经历地图# %@ @连客Link", string];
-        [weibo requestWithURL:@"statuses/upload.json"
-                       params:[NSMutableDictionary dictionaryWithObjectsAndKeys:string, @"status", _placeView.photoView1.image, @"pic", nil]
-                   httpMethod:@"POST"
-                     delegate:self];
+//        [weibo requestWithURL:@"statuses/upload.json"
+//                       params:[NSMutableDictionary dictionaryWithObjectsAndKeys:string, @"status", _placeView.photoView1.image, @"pic", nil]
+//                   httpMethod:@"POST"
+//                     delegate:self];
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"失败" message:@"暂不能分享无图碎片" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
         [alertView show];
@@ -195,10 +196,8 @@
 
 - (void)updateView
 {
-    _placeView.titleLabel.text = _place.title;
-    _placeView.addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.address];
-    _placeView.textView.text = _place.content;
-    _placeView.place = _place;
+    _placeView.place = _place; // accessor does the rest
+    _placeView.placeDelegate = self;
     
     _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
     _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
@@ -207,29 +206,33 @@
     
     if (_place.hasFaved)
         _favButton.titleLabel.textColor = [UIColor redColor];
-    
-    _placeView.photoView1.hidden = YES;
-    _placeView.photoView2.hidden = YES;
-    _placeView.photoView3.hidden = YES;
-    
-    NSArray *album = _place.album;
-    if (album.count > 0) {
-        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:0] objectForKey:@"small"]];
-        [_placeView.photoView1 setImageWithURL:url];
-        _placeView.photoView1.hidden = NO;
-    }
-    if (album.count > 1) {
-        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:1] objectForKey:@"small"]];
-        [_placeView.photoView2 setImageWithURL:url];
-        _placeView.photoView2.hidden = NO;
-    }
-    if (album.count > 2) {
-        NSURL *url = [NSURL URLWithString:[[album objectAtIndex:2] objectForKey:@"small"]];
-        [_placeView.photoView3 setImageWithURL:url];
-        _placeView.photoView3.hidden = NO;
-    }
-    
-    [_placeView setNeedsLayout];
+}
+
+- (void)didSelectPhoto:(UIButton *)sender
+{
+    [self presentPhotoGallery:sender];
+}
+
+- (void)presentPhotoGallery:(UIButton *)sender
+{
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    [browser setInitialPageIndex:sender.tag - 100];
+    UINavigationController *controller = [[UINavigationController alloc] initWithRootViewController:browser];
+    controller.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - Photo Gallery Delegate
+
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser
+{
+    // We show a maximum of 3 photos
+    return (_place.album.count > 3) ? 3 : _place.album.count;
+}
+
+- (id<MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index
+{
+    return [MWPhoto photoWithURL:[NSURL URLWithString:[[_place.album objectAtIndex:index] objectForKey:@"raw"]]];
 }
 
 @end

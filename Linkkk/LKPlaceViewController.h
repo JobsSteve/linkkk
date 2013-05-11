@@ -13,8 +13,11 @@
 @class LKPlaceView;
 
 @protocol LKShakeProtocol;
+@protocol LKPlaceDelegate <NSObject>
+- (void)didSelectPhoto:(UIButton *)sender;
+@end
 
-@interface LKPlaceViewController : UIViewController <SinaWeiboRequestDelegate, UIAlertViewDelegate>
+@interface LKPlaceViewController : UIViewController <LKPlaceDelegate>
 
 @property (nonatomic, strong) LKPlace *place;
 @property (nonatomic, strong) IBOutlet LKPlaceView *placeView;
@@ -31,5 +34,6 @@
 - (IBAction)shareButtonSelected:(UIButton *)sender;
 
 - (void)updateView;
+- (void)presentPhotoGallery:(UIButton *)sender;
 
 @end
