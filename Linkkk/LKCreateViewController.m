@@ -17,6 +17,7 @@
 #import "UIColor+Linkkk.h"
 
 #import <CoreLocation/CoreLocation.h>
+#import <QuartzCore/QuartzCore.h>
 
 #import "BMapKit.h"
 #import "AGImagePickerController.h"
@@ -58,6 +59,12 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapScreen:)];
     [self.view addGestureRecognizer:tapGestureRecognizer];
     [_titleField becomeFirstResponder];
+    
+    // Text View setup
+    _textView.delegate = self;
+    _textView.font = [UIFont systemFontOfSize:15.0];
+    _textView.minNumberOfLines = 3;
+    _textView.maxNumberOfLines = 20;
     
     // Register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -110,7 +117,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 #pragma mark - Keyboard Handlers
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     int length = range.location + text.length;
     if (length <= 140) {
@@ -123,24 +130,56 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     }
 }
 
+- (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height
+{
+    CGRect frame = _imageContainerView.frame;
+    frame.origin.y = CGRectGetMaxY(_textView.frame) + 10.0;
+    _imageContainerView.frame = frame;
+    [self _calculateContentSize];
+}
+
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    // TODO: animation
-    _scrollView.frame = self.view.frame;
+    CGRect keyboardRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGRect frame = self.view.frame;
+    frame.size.height -= 40.0; // Toolbar height
+    _scrollView.frame = frame;
+    [self _calculateContentSize];
+    
+    [UIView beginAnimations:nil context:NULL];
+    CGRect toolbarFrame = _toolbarView.frame;
+    toolbarFrame.origin.y = keyboardRect.origin.y - CGRectGetHeight(toolbarFrame) - 64.0; // convert point
+    _toolbarView.frame = toolbarFrame;
+    [UIView setAnimationDuration:[[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    [UIView commitAnimations];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     CGRect keyboardRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGRect frame = self.view.frame;
-    frame.size.height -= CGRectGetHeight(keyboardRect);
+    frame.size.height -= CGRectGetHeight(keyboardRect) + 40.0; // Toolbar height
     _scrollView.frame = frame;
+    [self _calculateContentSize];
+    
+    [UIView beginAnimations:nil context:NULL];
+    CGRect toolbarFrame = _toolbarView.frame;
+    toolbarFrame.origin.y = keyboardRect.origin.y - CGRectGetHeight(toolbarFrame) - 64.0; // convert point
+    _toolbarView.frame = toolbarFrame;
+    [UIView setAnimationDuration:[[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue]];
+    [UIView commitAnimations];
+}
+
+- (void)_calculateContentSize
+{
+    CGFloat maxY = (_assets.count == 0) ? CGRectGetMaxY(_textView.frame) : CGRectGetMaxY(_imageContainerView.frame);
+    _scrollView.contentSize = CGSizeMake(320.0, maxY + 10);
 }
 
 - (void)didTapScreen:(id)sender
 {
-//    [_titleField resignFirstResponder];
-//    [_textView resignFirstResponder];
+    [_titleField resignFirstResponder];
+    [_textView resignFirstResponder];
 }
 
 #pragma mark - Segue
@@ -259,7 +298,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
             [_assets addObject:asset];
             UIButton *imageButton = [_imageButtons objectAtIndex:_assets.count - 1];
             imageButton.image = [UIImage imageWithCGImage:asset.thumbnail];
-            [self _adjustTextViewFrame]; //_photoButton.selected = YES;
+            imageButton.hidden = NO;
+            _photoButton.selected = YES;
             [self dismissViewControllerAnimated:YES completion:nil];
         } failureBlock:^(NSError *error) {
             NSLog(@"ERROR: failed to retrieve photo, %@", error);
@@ -303,8 +343,9 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
                 ALAsset *asset = obj;
                 UIButton *imageButton = [_imageButtons objectAtIndex:idx];
                 imageButton.image = [UIImage imageWithCGImage:asset.thumbnail];
+                imageButton.hidden = NO;
             }];
-            [self _adjustTextViewFrame]; //_photoButton.selected = YES;
+            _photoButton.selected = YES;
             
             // FIX: unbalanced view controller bug
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
@@ -336,19 +377,6 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 #pragma mark - Helper
 
-- (void)_adjustTextViewFrame
-{
-    if (_assets.count == 0) {
-        _textView.frame = _textViewFrame;
-        _photoButton.selected = NO;
-    } else {
-        CGRect frame = _textViewFrame;
-        frame.size.height -= 60;
-        _textView.frame = frame;
-        _photoButton.selected = YES;
-    }
-}
-
 - (void)_discardImage:(UIButton *)sender
 {
     int idx = sender.tag - 100;
@@ -357,10 +385,14 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         UIButton *rightButton = (UIButton *)[_imageButtons objectAtIndex:idx+1];
         leftButton.image = rightButton.image;
     }
-    ((UIButton *)[_imageButtons objectAtIndex:_assets.count-1]).image = nil;
+    UIButton *lastButton = ((UIButton *)[_imageButtons objectAtIndex:_assets.count-1]);
+    lastButton.image = nil;
+    lastButton.hidden = YES;
+    
     [_assets removeObjectAtIndex:idx];
     if (_assets.count == 0) {
         _photoButton.selected = NO;
+        [self _calculateContentSize];
     }
 }
 

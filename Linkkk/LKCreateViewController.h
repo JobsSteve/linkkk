@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HPGrowingTextView.h"
 
 @class BMKPoiInfo;
 
@@ -15,11 +16,13 @@
 - (void)didCancelPoi;
 @end
 
-@interface LKCreateViewController : UIViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LKPlacePickerDelegate>
+@interface LKCreateViewController : UIViewController <HPGrowingTextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LKPlacePickerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UITextField *titleField;
-@property (nonatomic, strong) IBOutlet UITextView *textView;
+@property (nonatomic, strong) IBOutlet UIView *toolbarView;
+@property (nonatomic, strong) IBOutlet UIView *imageContainerView;
+@property (nonatomic, strong) IBOutlet HPGrowingTextView *textView;
 @property (nonatomic, strong) IBOutlet UILabel *placeholderLabel;
 @property (nonatomic, strong) IBOutlet UILabel *charCountLabel;
 @property (nonatomic, strong) IBOutlet UILabel *placemarkLabel;

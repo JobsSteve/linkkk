@@ -13,6 +13,8 @@
 		2B286FB01724CAFA00A454FE /* LKMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B286FAF1724CAF900A454FE /* LKMainView.m */; };
 		2B29ECF9171D92C900235616 /* input.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B29ECF8171D92C900235616 /* input.json */; };
 		2B396C73173EA21300152BA1 /* UIButton+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B396C72173EA21300152BA1 /* UIButton+Linkkk.m */; };
+		2B396C79173EA85D00152BA1 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B396C76173EA85D00152BA1 /* HPGrowingTextView.m */; };
+		2B396C7A173EA85D00152BA1 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B396C78173EA85D00152BA1 /* HPTextViewInternal.m */; };
 		2B647AFC1736C89C0063F431 /* LKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B647AFB1736C89B0063F431 /* LKLoadingView.m */; };
 		2B6B3BCA1737104600916D44 /* UIColor+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */; };
 		2B6B3BCC1737179400916D44 /* profile_seg_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B6B3BCB1737179400916D44 /* profile_seg_bg@2x.png */; };
@@ -118,6 +120,10 @@
 		2B29ECF8171D92C900235616 /* input.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = input.json; sourceTree = "<group>"; };
 		2B396C71173EA21300152BA1 /* UIButton+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Linkkk.h"; sourceTree = "<group>"; };
 		2B396C72173EA21300152BA1 /* UIButton+Linkkk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Linkkk.m"; sourceTree = "<group>"; };
+		2B396C75173EA85D00152BA1 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		2B396C76173EA85D00152BA1 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		2B396C77173EA85D00152BA1 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		2B396C78173EA85D00152BA1 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		2B647AFA1736C89B0063F431 /* LKLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLoadingView.h; sourceTree = "<group>"; };
 		2B647AFB1736C89B0063F431 /* LKLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLoadingView.m; sourceTree = "<group>"; };
 		2B6B3BC81737104600916D44 /* UIColor+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Linkkk.h"; sourceTree = "<group>"; };
@@ -319,6 +325,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2B396C74173EA85D00152BA1 /* HPGrowingTextView */ = {
+			isa = PBXGroup;
+			children = (
+				2B396C75173EA85D00152BA1 /* HPGrowingTextView.h */,
+				2B396C76173EA85D00152BA1 /* HPGrowingTextView.m */,
+				2B396C77173EA85D00152BA1 /* HPTextViewInternal.h */,
+				2B396C78173EA85D00152BA1 /* HPTextViewInternal.m */,
+			);
+			path = HPGrowingTextView;
+			sourceTree = "<group>";
+		};
 		2BA334B3173D43A700325D25 /* AGImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,6 +507,7 @@
 		2BA510F4171C39B2009A6547 /* Third Parties */ = {
 			isa = PBXGroup;
 			children = (
+				2B396C74173EA85D00152BA1 /* HPGrowingTextView */,
 				2BA33508173E093400325D25 /* SDWebImage */,
 				2BA33504173E08CE00325D25 /* MBProgressHUD */,
 				2BA334EE173E08C100325D25 /* MWPhotoBrowser */,
@@ -796,6 +814,8 @@
 				2BA33520173E093400325D25 /* UIButton+WebCache.m in Sources */,
 				2BA33521173E093400325D25 /* UIImageView+WebCache.m in Sources */,
 				2B396C73173EA21300152BA1 /* UIButton+Linkkk.m in Sources */,
+				2B396C79173EA85D00152BA1 /* HPGrowingTextView.m in Sources */,
+				2B396C7A173EA85D00152BA1 /* HPTextViewInternal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
