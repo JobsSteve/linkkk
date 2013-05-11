@@ -28,6 +28,7 @@
     
     CGRect textViewFrame = _textView.frame;
     textViewFrame.size = _textView.contentSize;
+    if (_place.album.count == 0) textViewFrame.origin.y -= 96.0;
     _textView.frame = textViewFrame;
     
     CGRect containerFrame = _containerView.frame;

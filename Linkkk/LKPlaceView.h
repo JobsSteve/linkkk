@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class LKPlace;
 @protocol LKShakeProtocol;
 
 @interface LKPlaceView : UIScrollView
@@ -20,6 +21,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *photoView1;
 @property (strong, nonatomic) IBOutlet UIImageView *photoView2;
 @property (strong, nonatomic) IBOutlet UIImageView *photoView3;
+
+@property (strong, nonatomic) LKPlace *place;
 
 @property (nonatomic, assign) id<LKShakeProtocol> shakeDelegate;
 

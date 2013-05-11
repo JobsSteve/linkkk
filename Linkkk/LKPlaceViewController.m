@@ -198,6 +198,7 @@
     _placeView.titleLabel.text = _place.title;
     _placeView.addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.address];
     _placeView.textView.text = _place.content;
+    _placeView.place = _place;
     
     _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
     _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
@@ -207,18 +208,25 @@
     if (_place.hasFaved)
         _favButton.titleLabel.textColor = [UIColor redColor];
     
+    _placeView.photoView1.hidden = YES;
+    _placeView.photoView2.hidden = YES;
+    _placeView.photoView3.hidden = YES;
+    
     NSArray *album = _place.album;
     if (album.count > 0) {
         NSURL *url = [NSURL URLWithString:[[album objectAtIndex:0] objectForKey:@"small"]];
         [_placeView.photoView1 setImageWithURL:url];
+        _placeView.photoView1.hidden = NO;
     }
     if (album.count > 1) {
         NSURL *url = [NSURL URLWithString:[[album objectAtIndex:1] objectForKey:@"small"]];
         [_placeView.photoView2 setImageWithURL:url];
+        _placeView.photoView2.hidden = NO;
     }
     if (album.count > 2) {
         NSURL *url = [NSURL URLWithString:[[album objectAtIndex:2] objectForKey:@"small"]];
         [_placeView.photoView3 setImageWithURL:url];
+        _placeView.photoView3.hidden = NO;
     }
     
     [_placeView setNeedsLayout];

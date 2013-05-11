@@ -79,6 +79,14 @@
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LKPlace *place = [_places objectAtIndex:indexPath.row];
+    if (place.album.count == 0)
+        return 100.0;
+    return 196.0;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     // This will create a "invisible" footer. Eliminates extra separators

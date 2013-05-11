@@ -36,22 +36,25 @@
     _userLabel.text = [NSString stringWithFormat:@"By@%@", [_place.author objectForKey:@"nickname"]];
     _favLabel.text = [NSString stringWithFormat:@"Likes: %d", _place.like_count];
     
+    _photoView1.hidden = YES;
+    _photoView2.hidden = YES;
+    _photoView3.hidden = YES;
+    
     NSArray *album = _place.album;
     if (album.count > 0) {
         NSURL *url = [NSURL URLWithString:[[album objectAtIndex:0] objectForKey:@"small"]];
         [_photoView1 setImageWithURL:url];
+        _photoView1.hidden = NO;
     }
     if (album.count > 1) {
         NSURL *url = [NSURL URLWithString:[[album objectAtIndex:1] objectForKey:@"small"]];
         [_photoView2 setImageWithURL:url];
-    } else {
-        _photoView2.image = nil;
+        _photoView2.hidden = NO;
     }
     if (album.count > 2) {
         NSURL *url = [NSURL URLWithString:[[album objectAtIndex:2] objectForKey:@"small"]];
         [_photoView3 setImageWithURL:url];
-    } else {
-        _photoView3.image = nil;
+        _photoView3.hidden = NO;
     }
 }
 
