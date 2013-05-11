@@ -22,16 +22,17 @@
 
 static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
-@interface LKCreateViewController ()
+@interface LKCreateViewController () <NSURLConnectionDataDelegate>
 {
     LKProfile *_profile;
-    UIImage *_image;
-    int _imageID;
-    NSArray *_imageViews;
-    NSArray *_assets;
-    CGRect _textViewFrame;
-    
     BMKPoiInfo *_poi;
+    
+    int _imageUploaded;
+    NSArray *_imageViews;
+    NSArray *_progressLabels;
+    NSMutableArray *_assets;
+    
+    CGRect _textViewFrame;
 }
 @end
 
@@ -42,6 +43,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     self = [super initWithCoder:coder];
     if (self) {
         _profile = [LKProfile profile];
+        
+        _assets = [NSMutableArray arrayWithCapacity:5];
     }
     return self;
 }
@@ -79,6 +82,13 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         [array addObject:[self.view viewWithTag:100+i]];
     }
     _imageViews = [NSArray arrayWithArray:array];
+    
+    // Progress Labels
+    array = [NSMutableArray arrayWithCapacity:5];
+    for (int i=0;i<5;i++) {
+        [array addObject:[self.view viewWithTag:200+i]];
+    }
+    _progressLabels = [NSArray arrayWithArray:array];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -99,8 +109,10 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if (range.location + text.length <= 140) {
-        _charCountLabel.text = [NSString stringWithFormat:@"%d/140", range.location + text.length];
+    int length = range.location + text.length;
+    if (length <= 140) {
+        _charCountLabel.text = [NSString stringWithFormat:@"%d/140", length];
+        _placeholderLabel.hidden = length != 0;
         return YES;
     } else {
         _charCountLabel.text = [NSString stringWithFormat:@"%d/140", range.location];
@@ -142,22 +154,52 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (void)doneButtonSelected:(id)sender
 {
+//    if (_titleField.text.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入标题" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+//        [alert show];
+//        return;
+//    }
+//    if (_titleField.text.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入内容" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+//        [alert show];
+//        return;
+//    }
+//    if (_poi == nil)
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择地址" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+//        [alert show];
+//        return;
+//    }
+    
+    [self _enableUI:NO];
+    BOOL hasImage = (_assets.count != 0);
+    if (hasImage) {
+        [self _uploadImage];
+    } else {
+        [self postInfo:hasImage];
+    }
+    
+    return;
+}
+
+- (void)postInfo:(BOOL)hasImage
+{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     LKLoadingView *loadingView = [[LKLoadingView alloc] init];
     [self.view addSubview:loadingView];
-
-    dispatch_async(dispatch_queue_create("queue", NULL), ^{
-        [self _uploadImage];
-        CLLocationCoordinate2D coord = [self _geocode];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *city = _poi.city == nil ? @"未知城市" : _poi.city;
+        NSString *address = _poi.address == nil ? @"未知地址" : _poi.address;
         NSMutableDictionary *dict = [@{@"content":_textView.text,
-                                     @"latitude":[NSNumber numberWithFloat:coord.latitude],
-                                     @"longitude":[NSNumber numberWithFloat:coord.longitude],
-                                     @"city":_profile.address.addressComponent.city,
-                                     @"location":_placemarkLabel.text,
+                                     @"latitude":[NSNumber numberWithFloat:_poi.pt.latitude],
+                                     @"longitude":[NSNumber numberWithFloat:_poi.pt.longitude],
+                                     @"city":city,
+                                     @"location":address,
                                      @"title":_titleField.text} mutableCopy];
-        if (_imageID != 0) {
-            [dict setValue:[NSArray arrayWithObject:[NSNumber numberWithInt:_imageID]] forKey:@"album"];
-        }
+        //    if (hasImage) {
+        //        [dict setValue:[NSArray arrayWithObject:[NSNumber numberWithInt:_imageID]] forKey:@"album"];
+        //    }
         NSData *postData = [NSJSONSerialization dataWithJSONObject:dict options:NULL error:nil];
         
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/experience/"]];
@@ -175,7 +217,9 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             [loadingView removeFromSuperview];
+            // [self _enableUI:YES]; unnecessary as we pop
             [self.navigationController popViewControllerAnimated:YES];
+            [self removeFromParentViewController];
         });
         
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -198,16 +242,26 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    _image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    _photoButton.selected = YES;
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    _image = nil;
-    _photoButton.selected = NO;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library writeImageToSavedPhotosAlbum:[image CGImage] orientation:image.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error) {
+        if (error) {
+            NSLog(@"ERROR: cannot save photo. %@", error);
+            return;
+        }
+        [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+            if (_assets.count >= 5) {
+                return;
+            }
+            [_assets addObject:asset];
+            UIImageView *imageView = [_imageViews objectAtIndex:_assets.count - 1];
+            imageView.image = [UIImage imageWithCGImage:asset.thumbnail];
+            [self _adjustTextViewFrame];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } failureBlock:^(NSError *error) {
+            NSLog(@"ERROR: failed to retrieve photo, %@", error);
+        }];
+    }];
 }
 
 #pragma mark - Action Sheet Delegate
@@ -228,7 +282,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
                 [_imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                     ((UIImageView *)obj).image = nil;
                 }];
-                _assets = [NSArray array];
+                [_assets removeAllObjects];
                 [self _adjustTextViewFrame];
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else
@@ -247,7 +301,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
             [_imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 ((UIImageView *)obj).image = nil;
             }];
-            _assets = info;
+            _assets = [NSMutableArray arrayWithArray:info];
             [_assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 ALAsset *asset = obj;
                 UIImageView *imageView = [_imageViews objectAtIndex:idx];
@@ -283,18 +337,33 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 {
     if (_assets.count == 0) {
         _textView.frame = _textViewFrame;
+        _photoButton.selected = NO;
     } else {
         CGRect frame = _textViewFrame;
         frame.size.height -= 60;
         _textView.frame = frame;
+        _photoButton.selected = YES;
     }
+}
+
+- (void)_enableUI:(BOOL)enabled
+{
+    self.navigationItem.rightBarButtonItem.enabled = enabled;
+    //_textView.userInteractionEnabled = enabled;
+    //_titleField.userInteractionEnabled = enabled;
+    _locationButton.enabled = enabled;
+    _photoButton.enabled = enabled;
 }
 
 - (void)_uploadImage
 {
     // Upload image
-    if (_image == nil)
+    if (_assets.count == 0)
         return;
+    ((UILabel *)[_progressLabels objectAtIndex:0]).hidden = NO;
+    ALAsset *asset = [_assets objectAtIndex:0];
+    UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/winterfell/upload/"]];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [request setTimeoutInterval:30];
@@ -306,7 +375,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     [request setValue:contentType forHTTPHeaderField: @"Content-Type"];
     
     NSMutableData *body = [NSMutableData data];
-    NSData *imageData = UIImageJPEGRepresentation(_image, 1.0);
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
     [body appendData:[[NSString stringWithFormat:@"--%@\r\n", kHTTPBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[@"Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -316,38 +385,38 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     [request setHTTPBody:body];
     [request setValue:[NSString stringWithFormat:@"%d", [body length]] forHTTPHeaderField:@"Content-Length"];
     
-    NSHTTPURLResponse *response;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    if (data == nil) {
-        NSLog(@"ERROR uploading image");
-        return;
-    }
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    _imageID = [[[json objectForKey:@"data"] objectForKey:@"id"] intValue];
-    NSLog(@"%d, %@", response.statusCode, json);
+    [NSURLConnection connectionWithRequest:request delegate:self];
+//    NSData *data = ;
+//    if (data == nil) {
+//        NSLog(@"ERROR uploading image");
+//        return;
+//    }
+//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+////    _imageID = [[[json objectForKey:@"data"] objectForKey:@"id"] intValue];
+//    NSLog(@"%d, %@", response.statusCode, json);
 }
 
-- (CLLocationCoordinate2D)_geocode
+#pragma mark - NSURLConnection Delegate
+
+- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    NSString *urlString = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/geocode/json?address=%@&sensor=true", [_placemarkLabel.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSURLResponse *response;
-    NSError *error;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    if (data == nil || error != nil) {
-        [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
-        return _profile.address.geoPt;
-    }
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    NSArray *results = [json objectForKey:@"results"];
-    if (results.count == 0)
-        return _profile.address.geoPt;
-    NSDictionary *location = [[[results objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"];
-    NSLog(@"%@", location);
-    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([[location objectForKey:@"lat"] floatValue], [[location objectForKey:@"lng"] floatValue]);
-    if (coord.latitude == 0 || coord.longitude == 0)
-        return _profile.address.geoPt;
-    return coord;
+    ((UILabel *)[_progressLabels objectAtIndex:0]).text = [NSString stringWithFormat:@"%d%%", 100*totalBytesWritten/totalBytesExpectedToWrite];
+    NSLog(@"%d, %d", totalBytesWritten, totalBytesExpectedToWrite);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    NSLog(@"%@", response);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    NSLog(@"ERROR: uploading failed %@", error);
 }
 
 @end

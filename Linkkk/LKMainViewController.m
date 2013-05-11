@@ -90,10 +90,16 @@
     // Update Location
     LKProfile *profile = [LKProfile profile];
     [profile addObserver:self forKeyPath:@"address" options:NSKeyValueObservingOptionNew context:NULL];
+    
+    // Register App Resign
+    LKAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate addObserver:self forKeyPath:@"resignActiveNotifier" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     if (![self _sinaweibo].isAuthValid)
         [self performSegueWithIdentifier:@"LoginSegue" sender:self];
     else {
@@ -105,6 +111,7 @@
         _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, -24, 320, 44)];
         _searchBar.tintColor = [UIColor whiteColor];
         _searchBar.delegate = self;
+        _searchBar.hidden = YES;
         _searchBar.placeholder = @"输入想要查询的地址...";
         [_searchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"searchbar_bg"] forState:UIControlStateNormal];
         _isShowingSearchBar = NO;
@@ -114,14 +121,14 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.view becomeFirstResponder];
     [super viewWillAppear:animated];
+    [self.view becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.view resignFirstResponder];
     [super viewWillDisappear:animated];
+    [self.view resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -284,13 +291,18 @@
         UIButton *titleButton = (UIButton *)self.navigationItem.titleView;
         NSString *name = address.addressComponent.streetName;
         if (name == nil) name = address.addressComponent.district;
-        NSString *title = [NSString stringWithFormat:@"当前：%@ ", name];
+        NSString *prefix = ([LKProfile profile].current == address) ? @"当前" : @"设定";
+        NSString *title = [NSString stringWithFormat:@"%@：%@ ", prefix, name];
         [titleButton setTitleWithString:title];
         
         LKPlacePickerCell *cell = (LKPlacePickerCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         if (cell != nil) {
             cell.headingLabel.text = @"当前位置";
             cell.subHeadingLabel.text = [LKProfile profile].current.strAddr;
+        }
+    } else if ([keyPath isEqualToString:@"resignActiveNotifier"]) {
+        if (_isShowingSearchBar) {
+            [self _navButtonSelected:nil];
         }
     }
 }
@@ -369,12 +381,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0 ? 1 : _results.count;
+    if (section == 1)
+        return _results.count;
+    if (_searchBar.text.length == 0 /* && section == 0 */)
+        return 1; // show current
+    return 0; // show nothing when user starts the search
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    // This will create a "invisible" footer. Eliminates extra separators
+    // FIX: eliminates extra separators
     return 0.01f;
 }
 
@@ -432,7 +448,8 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [searchBar resignFirstResponder];
+    // FIX: avoid showing what's under the tableview
+    // [searchBar resignFirstResponder];
 }
 
 #pragma mark - Helper Functions

@@ -15,6 +15,7 @@
 #import "BMapKit.h"
 
 #define CUSTOM_LOCATION
+#define SET_LOCATION(lat,lng) location = [[CLLocation alloc] initWithLatitude:lat longitude:lng]
 
 /*
  We have two levels of login - Sina Weibo and Linkkk.
@@ -132,7 +133,9 @@
     [manager stopUpdatingLocation];
     
 #ifdef CUSTOM_LOCATION
-    location = [[CLLocation alloc] initWithLatitude:31.230393 longitude:121.473704];
+    // 上海静安区 31.230393, 121.473704
+    // 乌鲁木齐 43.88601647043421, 87.5225830078125
+    SET_LOCATION(43.88601647043421, 87.5225830078125);
 #endif
     
     // Reverse Geocoding

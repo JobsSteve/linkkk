@@ -20,6 +20,7 @@
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UITextField *titleField;
 @property (nonatomic, strong) IBOutlet UITextView *textView;
+@property (nonatomic, strong) IBOutlet UILabel *placeholderLabel;
 @property (nonatomic, strong) IBOutlet UILabel *charCountLabel;
 @property (nonatomic, strong) IBOutlet UILabel *placemarkLabel;
 @property (nonatomic, strong) IBOutlet UIButton *locationButton;

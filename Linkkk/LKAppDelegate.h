@@ -14,6 +14,7 @@
 @interface LKAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (assign, nonatomic) BOOL resignActiveNotifier;
 @property (readonly, nonatomic) SinaWeibo *sinaweibo;
 @property (readonly, nonatomic) BMKMapManager *mapManager;
 
