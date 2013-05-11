@@ -12,6 +12,7 @@
 		2B286FAD1724C66E00A454FE /* LKPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B286FAC1724C66D00A454FE /* LKPlaceViewController.m */; };
 		2B286FB01724CAFA00A454FE /* LKMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B286FAF1724CAF900A454FE /* LKMainView.m */; };
 		2B29ECF9171D92C900235616 /* input.json in Resources */ = {isa = PBXBuildFile; fileRef = 2B29ECF8171D92C900235616 /* input.json */; };
+		2B396C73173EA21300152BA1 /* UIButton+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B396C72173EA21300152BA1 /* UIButton+Linkkk.m */; };
 		2B647AFC1736C89C0063F431 /* LKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B647AFB1736C89B0063F431 /* LKLoadingView.m */; };
 		2B6B3BCA1737104600916D44 /* UIColor+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */; };
 		2B6B3BCC1737179400916D44 /* profile_seg_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B6B3BCB1737179400916D44 /* profile_seg_bg@2x.png */; };
@@ -115,6 +116,8 @@
 		2B286FAE1724CAF900A454FE /* LKMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKMainView.h; sourceTree = "<group>"; };
 		2B286FAF1724CAF900A454FE /* LKMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKMainView.m; sourceTree = "<group>"; };
 		2B29ECF8171D92C900235616 /* input.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = input.json; sourceTree = "<group>"; };
+		2B396C71173EA21300152BA1 /* UIButton+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Linkkk.h"; sourceTree = "<group>"; };
+		2B396C72173EA21300152BA1 /* UIButton+Linkkk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Linkkk.m"; sourceTree = "<group>"; };
 		2B647AFA1736C89B0063F431 /* LKLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKLoadingView.h; sourceTree = "<group>"; };
 		2B647AFB1736C89B0063F431 /* LKLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLoadingView.m; sourceTree = "<group>"; };
 		2B6B3BC81737104600916D44 /* UIColor+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Linkkk.h"; sourceTree = "<group>"; };
@@ -635,6 +638,8 @@
 				2BD532D61737D70B0050EDF7 /* UIViewController+Linkkk.m */,
 				2BD27275172B124E00C757E9 /* UIBarButtonItem+Linkkk.h */,
 				2BD27276172B124E00C757E9 /* UIBarButtonItem+Linkkk.m */,
+				2B396C71173EA21300152BA1 /* UIButton+Linkkk.h */,
+				2B396C72173EA21300152BA1 /* UIButton+Linkkk.m */,
 				2B6B3BC81737104600916D44 /* UIColor+Linkkk.h */,
 				2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */,
 				2BCE7722173AE8BA00EBBE95 /* CLPlacemark+Linkkk.h */,
@@ -790,6 +795,7 @@
 				2BA3351F173E093400325D25 /* SDWebImagePrefetcher.m in Sources */,
 				2BA33520173E093400325D25 /* UIButton+WebCache.m in Sources */,
 				2BA33521173E093400325D25 /* UIImageView+WebCache.m in Sources */,
+				2B396C73173EA21300152BA1 /* UIButton+Linkkk.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,9 +18,3 @@
 + (UIButton *)customTitleButtonWithString:(NSString *)title;
 
 @end
-
-@interface UIButton (Linkkk)
-
-- (void)setTitleWithString:(NSString *)string;
-
-@end

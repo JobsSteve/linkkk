@@ -11,6 +11,7 @@
 #import "LKProfile.h"
 #import "LKLoadingView.h"
 
+#import "UIButton+Linkkk.h"
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIViewController+Linkkk.h"
 #import "UIColor+Linkkk.h"
@@ -28,7 +29,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     BMKPoiInfo *_poi;
     
     int _imageUploaded;
-    NSArray *_imageViews;
+    NSArray *_imageButtons;
     NSArray *_progressLabels;
     NSMutableArray *_assets;
     
@@ -79,9 +80,11 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     // Image Views
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:5];
     for (int i=0;i<5;i++) {
-        [array addObject:[self.view viewWithTag:100+i]];
+        UIButton *button = (UIButton *)[self.view viewWithTag:100+i];
+        [button addTarget:self action:@selector(_discardImage:) forControlEvents:UIControlEventTouchUpInside];
+        [array addObject:button];
     }
-    _imageViews = [NSArray arrayWithArray:array];
+    _imageButtons = [NSArray arrayWithArray:array];
     
     // Progress Labels
     array = [NSMutableArray arrayWithCapacity:5];
@@ -243,7 +246,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    ALAssetsLibrary *library = [AGImagePickerController defaultAssetsLibrary];
     [library writeImageToSavedPhotosAlbum:[image CGImage] orientation:image.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error) {
         if (error) {
             NSLog(@"ERROR: cannot save photo. %@", error);
@@ -254,9 +257,9 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
                 return;
             }
             [_assets addObject:asset];
-            UIImageView *imageView = [_imageViews objectAtIndex:_assets.count - 1];
-            imageView.image = [UIImage imageWithCGImage:asset.thumbnail];
-            [self _adjustTextViewFrame];
+            UIButton *imageButton = [_imageButtons objectAtIndex:_assets.count - 1];
+            imageButton.image = [UIImage imageWithCGImage:asset.thumbnail];
+            [self _adjustTextViewFrame]; //_photoButton.selected = YES;
             [self dismissViewControllerAnimated:YES completion:nil];
         } failureBlock:^(NSError *error) {
             NSLog(@"ERROR: failed to retrieve photo, %@", error);
@@ -277,13 +280,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     if (buttonIndex == 1) {
         AGImagePickerController *imagePickerController = [[AGImagePickerController alloc] initWithFailureBlock:^(NSError *error)
         {
-            if (error == nil) // remove all selected images
+            if (error == nil)
             {
-                [_imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    ((UIImageView *)obj).image = nil;
-                }];
-                [_assets removeAllObjects];
-                [self _adjustTextViewFrame];
                 [self dismissViewControllerAnimated:YES completion:nil];
             } else
             {
@@ -293,23 +291,28 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
                 double delayInSeconds = 0.5;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [self _adjustTextViewFrame];
                     [self dismissViewControllerAnimated:YES completion:nil];
                 });
             }
         } andSuccessBlock:^(NSArray *info) {
-            [_imageViews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                ((UIImageView *)obj).image = nil;
+            [_imageButtons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                ((UIButton *)obj).image = nil;
             }];
             _assets = [NSMutableArray arrayWithArray:info];
             [_assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 ALAsset *asset = obj;
-                UIImageView *imageView = [_imageViews objectAtIndex:idx];
-                imageView.image = [UIImage imageWithCGImage:asset.thumbnail];
+                UIButton *imageButton = [_imageButtons objectAtIndex:idx];
+                imageButton.image = [UIImage imageWithCGImage:asset.thumbnail];
             }];
-            [self _adjustTextViewFrame];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self _adjustTextViewFrame]; //_photoButton.selected = YES;
+            
+            // FIX: unbalanced view controller bug
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
         }];
+        imagePickerController.selection = _assets;
         imagePickerController.maximumNumberOfPhotosToBeSelected = 5;
         [self presentViewController:imagePickerController animated:YES completion:nil];
     }
@@ -343,6 +346,21 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         frame.size.height -= 60;
         _textView.frame = frame;
         _photoButton.selected = YES;
+    }
+}
+
+- (void)_discardImage:(UIButton *)sender
+{
+    int idx = sender.tag - 100;
+    for (int i=idx;i<_assets.count-1;i++) {
+        UIButton *leftButton = (UIButton *)[_imageButtons objectAtIndex:idx];
+        UIButton *rightButton = (UIButton *)[_imageButtons objectAtIndex:idx+1];
+        leftButton.image = rightButton.image;
+    }
+    ((UIButton *)[_imageButtons objectAtIndex:_assets.count-1]).image = nil;
+    [_assets removeObjectAtIndex:idx];
+    if (_assets.count == 0) {
+        _photoButton.selected = NO;
     }
 }
 

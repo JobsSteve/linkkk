@@ -24,6 +24,7 @@
 #import "LKLoadingView.h"
 #import "LKPlacePickerCell.h"
 
+#import "UIButton+Linkkk.h"
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIViewController+Linkkk.h"
 #import "UIColor+Linkkk.h"
