@@ -29,6 +29,14 @@
 		2BA334CE173D43A700325D25 /* ALAsset+AGIPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334C5173D43A700325D25 /* ALAsset+AGIPC.m */; };
 		2BA334D0173D43BA00325D25 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA334CF173D43BA00325D25 /* AssetsLibrary.framework */; };
 		2BA334D3173D569200325D25 /* LKNavViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334D2173D569200325D25 /* LKNavViewController.mm */; };
+		2BA334FD173E08C100325D25 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334F0173E08C100325D25 /* MWCaptionView.m */; };
+		2BA334FE173E08C100325D25 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334F2173E08C100325D25 /* MWPhoto.m */; };
+		2BA334FF173E08C100325D25 /* MWPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2BA334F3173E08C100325D25 /* MWPhotoBrowser.bundle */; };
+		2BA33500173E08C100325D25 /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334F5173E08C100325D25 /* MWPhotoBrowser.m */; };
+		2BA33501173E08C100325D25 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334F8173E08C100325D25 /* MWTapDetectingImageView.m */; };
+		2BA33502173E08C100325D25 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334FA173E08C100325D25 /* MWTapDetectingView.m */; };
+		2BA33503173E08C100325D25 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334FC173E08C100325D25 /* MWZoomingScrollView.m */; };
+		2BA33507173E08CE00325D25 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA33506173E08CE00325D25 /* MBProgressHUD.m */; };
 		2BA510CE171C2856009A6547 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CD171C2856009A6547 /* UIKit.framework */; };
 		2BA510D0171C2856009A6547 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510CF171C2856009A6547 /* Foundation.framework */; };
 		2BA510D2171C2856009A6547 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BA510D1171C2856009A6547 /* CoreGraphics.framework */; };
@@ -139,6 +147,22 @@
 		2BA334CF173D43BA00325D25 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		2BA334D1173D569200325D25 /* LKNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKNavViewController.h; sourceTree = "<group>"; };
 		2BA334D2173D569200325D25 /* LKNavViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LKNavViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		2BA334EF173E08C100325D25 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
+		2BA334F0173E08C100325D25 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
+		2BA334F1173E08C100325D25 /* MWPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhoto.h; sourceTree = "<group>"; };
+		2BA334F2173E08C100325D25 /* MWPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhoto.m; sourceTree = "<group>"; };
+		2BA334F3173E08C100325D25 /* MWPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWPhotoBrowser.bundle; sourceTree = "<group>"; };
+		2BA334F4173E08C100325D25 /* MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowser.h; sourceTree = "<group>"; };
+		2BA334F5173E08C100325D25 /* MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhotoBrowser.m; sourceTree = "<group>"; };
+		2BA334F6173E08C100325D25 /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoProtocol.h; sourceTree = "<group>"; };
+		2BA334F7173E08C100325D25 /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingImageView.h; sourceTree = "<group>"; };
+		2BA334F8173E08C100325D25 /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingImageView.m; sourceTree = "<group>"; };
+		2BA334F9173E08C100325D25 /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingView.h; sourceTree = "<group>"; };
+		2BA334FA173E08C100325D25 /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingView.m; sourceTree = "<group>"; };
+		2BA334FB173E08C100325D25 /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
+		2BA334FC173E08C100325D25 /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
+		2BA33505173E08CE00325D25 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		2BA33506173E08CE00325D25 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		2BA510C9171C2856009A6547 /* Linkkk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Linkkk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BA510CD171C2856009A6547 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2BA510CF171C2856009A6547 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -320,6 +344,36 @@
 			path = AGImagePickerController;
 			sourceTree = "<group>";
 		};
+		2BA334EE173E08C100325D25 /* MWPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				2BA334EF173E08C100325D25 /* MWCaptionView.h */,
+				2BA334F0173E08C100325D25 /* MWCaptionView.m */,
+				2BA334F1173E08C100325D25 /* MWPhoto.h */,
+				2BA334F2173E08C100325D25 /* MWPhoto.m */,
+				2BA334F3173E08C100325D25 /* MWPhotoBrowser.bundle */,
+				2BA334F4173E08C100325D25 /* MWPhotoBrowser.h */,
+				2BA334F5173E08C100325D25 /* MWPhotoBrowser.m */,
+				2BA334F6173E08C100325D25 /* MWPhotoProtocol.h */,
+				2BA334F7173E08C100325D25 /* MWTapDetectingImageView.h */,
+				2BA334F8173E08C100325D25 /* MWTapDetectingImageView.m */,
+				2BA334F9173E08C100325D25 /* MWTapDetectingView.h */,
+				2BA334FA173E08C100325D25 /* MWTapDetectingView.m */,
+				2BA334FB173E08C100325D25 /* MWZoomingScrollView.h */,
+				2BA334FC173E08C100325D25 /* MWZoomingScrollView.m */,
+			);
+			path = MWPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		2BA33504173E08CE00325D25 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				2BA33505173E08CE00325D25 /* MBProgressHUD.h */,
+				2BA33506173E08CE00325D25 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		2BA510BE171C2856009A6547 = {
 			isa = PBXGroup;
 			children = (
@@ -410,6 +464,8 @@
 		2BA510F4171C39B2009A6547 /* Third Parties */ = {
 			isa = PBXGroup;
 			children = (
+				2BA33504173E08CE00325D25 /* MBProgressHUD */,
+				2BA334EE173E08C100325D25 /* MWPhotoBrowser */,
 				2BA334B3173D43A700325D25 /* AGImagePickerController */,
 				2BCE7762173C3BB600EBBE95 /* BMKMapKit */,
 				2BD27251172B02A100C757E9 /* SDWebImage */,
@@ -680,6 +736,7 @@
 				2BCE7732173B36F300EBBE95 /* verticalpixel@2x.png in Resources */,
 				2BCE7783173C3D6300EBBE95 /* mapapi.bundle in Resources */,
 				2BA334C7173D43A700325D25 /* AGImagePickerController.bundle in Resources */,
+				2BA334FF173E08C100325D25 /* MWPhotoBrowser.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +792,13 @@
 				2BA334CD173D43A700325D25 /* AGIPCToolbarItem.m in Sources */,
 				2BA334CE173D43A700325D25 /* ALAsset+AGIPC.m in Sources */,
 				2BA334D3173D569200325D25 /* LKNavViewController.mm in Sources */,
+				2BA334FD173E08C100325D25 /* MWCaptionView.m in Sources */,
+				2BA334FE173E08C100325D25 /* MWPhoto.m in Sources */,
+				2BA33500173E08C100325D25 /* MWPhotoBrowser.m in Sources */,
+				2BA33501173E08C100325D25 /* MWTapDetectingImageView.m in Sources */,
+				2BA33502173E08C100325D25 /* MWTapDetectingView.m in Sources */,
+				2BA33503173E08C100325D25 /* MWZoomingScrollView.m in Sources */,
+				2BA33507173E08CE00325D25 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
