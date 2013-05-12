@@ -9,6 +9,7 @@
 #import "LKCreateViewController.h"
 #import "LKPlacePickerViewController.h"
 #import "LKProfile.h"
+#import "LKMapManager.h"
 #import "LKLoadingView.h"
 
 #import "UIButton+Linkkk.h"
@@ -296,6 +297,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
                 return;
             }
             [_assets addObject:asset];
+            if (!_poi) [self _updateCoordinateFromAsset:asset];
             UIButton *imageButton = [_imageButtons objectAtIndex:_assets.count - 1];
             imageButton.image = [UIImage imageWithCGImage:asset.thumbnail];
             imageButton.hidden = NO;
@@ -336,11 +338,14 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
             }
         } andSuccessBlock:^(NSArray *info) {
             [_imageButtons enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                ((UIButton *)obj).image = nil;
+                UIButton *button = (UIButton *)obj;
+                button.image = nil;
+                button.hidden = YES;
             }];
             _assets = [NSMutableArray arrayWithArray:info];
             [_assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 ALAsset *asset = obj;
+                if (!_poi) [self _updateCoordinateFromAsset:asset];
                 UIButton *imageButton = [_imageButtons objectAtIndex:idx];
                 imageButton.image = [UIImage imageWithCGImage:asset.thumbnail];
                 imageButton.hidden = NO;
@@ -364,6 +369,18 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 - (void)didSelectPoi:(BMKPoiInfo *)poi
 {
     _poi = poi;
+    if (_poi.city == nil || _poi.address == nil) {
+        [[LKMapManager sharedInstance] reverseGeocode:_poi.pt withCompletionHandler:^(BMKAddrInfo *addr) {
+            if (_poi.city == nil) _poi.city = addr.addressComponent.city;
+            if (_poi.address == nil) {
+                _poi.address = addr.strAddr;
+                _placemarkLabel.text = _poi.address;
+            } else {
+                _locationButton.selected = NO;
+            }
+        }];
+    }
+    
     _placemarkLabel.text = _poi.name;
     _locationButton.selected = YES;
 }
@@ -394,6 +411,16 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         _photoButton.selected = NO;
         [self _calculateContentSize];
     }
+}
+
+- (void)_updateCoordinateFromAsset:(ALAsset *)asset
+{
+    CLLocation *location = [asset valueForProperty:ALAssetPropertyLocation];
+    if (location.coordinate.latitude == 0 || location.coordinate.longitude == 0)
+        return;
+    BMKPoiInfo *poi = [[BMKPoiInfo alloc] init];
+    poi.pt = location.coordinate;
+    [self didSelectPoi:poi];
 }
 
 - (void)_enableUI:(BOOL)enabled

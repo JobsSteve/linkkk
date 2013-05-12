@@ -79,25 +79,37 @@
 
 - (void)onGetSuggestionResult:(BMKSuggestionResult *)result errorCode:(int)error
 {
-    if (error) return;
+    if (error) {
+        NSLog(@"ERROR: Baidu Maps onGetSuggestionResult %d", error);
+        return;
+    }
     _suggestionHandler(result);
 }
 
 - (void)onGetAddrResult:(BMKAddrInfo *)result errorCode:(int)error
 {
-    if (error) return;
+    if (error) {
+        NSLog(@"ERROR: Baidu Maps onGetAddrResult %d", error);
+        return;
+    }
     _reverseGeocodeHandler(result);
 }
 
 - (void)onGetPoiResult:(NSArray *)poiResultList searchType:(int)type errorCode:(int)error
 {
-    if (error) return;
+    if (error) {
+        NSLog(@"ERROR: Baidu Maps onGetPoiResult %d", error);
+        return;
+    }
     _poiNearbyHandler([[poiResultList objectAtIndex:0] poiInfoList]);
 }
 
 - (void)onGetDrivingRouteResult:(BMKPlanResult *)result errorCode:(int)error
 {
-    if (error) return;
+    if (error) {
+        NSLog(@"ERROR: Baidu Maps onGetDrivingRouteResult %d", error);
+        return;
+    }
     _driveSearchHandler(result);
 }
 
