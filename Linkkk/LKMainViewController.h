@@ -14,7 +14,11 @@
 - (void)shakeViewDidShake;
 @end
 
-@interface LKMainViewController : UIViewController <SinaWeiboDelegate, LKShakeProtocol, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@protocol LKCreateDelegate <NSObject>
+- (void)hasCreated;
+@end
+
+@interface LKMainViewController : UIViewController <SinaWeiboDelegate, LKShakeProtocol, LKCreateDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) IBOutlet UIButton *nearbyButton;
 @property (nonatomic, strong) IBOutlet UIButton *createButton;

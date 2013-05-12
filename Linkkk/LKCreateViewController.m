@@ -8,6 +8,7 @@
 
 #import "LKCreateViewController.h"
 #import "LKPlacePickerViewController.h"
+#import "LKMainViewController.h"
 #import "LKProfile.h"
 #import "LKMapManager.h"
 #import "LKLoadingView.h"
@@ -201,22 +202,22 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (void)doneButtonSelected:(id)sender
 {
-//    if (_titleField.text.length == 0) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入标题" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
-//        [alert show];
-//        return;
-//    }
-//    if (_titleField.text.length == 0) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入内容" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
-//        [alert show];
-//        return;
-//    }
-//    if (_poi == nil)
-//    {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择地址" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
-//        [alert show];
-//        return;
-//    }
+    if (_titleField.text.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入标题" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    if (_titleField.text.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请输入内容" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    if (_poi == nil)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请选择地址" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     
     [self _enableUI:NO];
     BOOL hasImage = (_assets.count != 0);
@@ -235,18 +236,23 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     LKLoadingView *loadingView = [[LKLoadingView alloc] init];
     [self.view addSubview:loadingView];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    NSString *content = _textView.text;
+    NSString *title = _titleField.text;
+    
+    dispatch_async(dispatch_queue_create("post_info_queue", NULL), ^{
         NSString *city = _poi.city == nil ? @"未知城市" : _poi.city;
         NSString *address = _poi.address == nil ? @"未知地址" : _poi.address;
-        NSMutableDictionary *dict = [@{@"content":_textView.text,
+        NSString *name = _poi.name == nil ? @"未知地名" : _poi.name;
+        NSMutableDictionary *dict = [@{@"content":content,
                                      @"latitude":[NSNumber numberWithFloat:_poi.pt.latitude],
                                      @"longitude":[NSNumber numberWithFloat:_poi.pt.longitude],
                                      @"city":city,
-                                     @"location":address,
-                                     @"title":_titleField.text} mutableCopy];
-        //    if (hasImage) {
-        //        [dict setValue:[NSArray arrayWithObject:[NSNumber numberWithInt:_imageID]] forKey:@"album"];
-        //    }
+                                     @"address":address,
+                                     @"location":name,
+                                     @"title":title} mutableCopy];
+        if (hasImage) {
+            [dict setValue:_imageIDs forKey:@"album"];
+        }
         NSData *postData = [NSJSONSerialization dataWithJSONObject:dict options:NULL error:nil];
         
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/experience/"]];
@@ -266,7 +272,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
             [loadingView removeFromSuperview];
             // [self _enableUI:YES]; unnecessary as we pop
             [self.navigationController popViewControllerAnimated:YES];
-            [self removeFromParentViewController];
+            [self.delegate hasCreated];
         });
         
         NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -438,11 +444,19 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     _titleField.userInteractionEnabled = enabled;
     _locationButton.enabled = enabled;
     _photoButton.enabled = enabled;
+    _imageContainerView.userInteractionEnabled = enabled; // cheap way to disable photo buttons
 }
 
-- (void)_uploadImageFailed
+- (void)_postInfoFailed
 {
-    
+    [self _enableUI:YES];
+    _imageBeingUploaded = 0;
+    [_imageIDs removeAllObjects];
+    [_progressLabels enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        ((UILabel *)obj).hidden = YES;
+    }];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"创建失败, 请重新尝试" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+    [alert show];
 }
 
 - (void)_uploadImageAndPostInfo
@@ -501,7 +515,6 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSLog(@"%@", response);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
@@ -511,14 +524,22 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"%@", [[NSString alloc] initWithData:_uploadResponseData encoding:NSUTF8StringEncoding]);
-    _imageBeingUploaded++;
-    [self _uploadImageAndPostInfo];
+    // TODO: exception catch
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:_uploadResponseData options:kNilOptions error:nil];
+    if (json && [[json objectForKey:@"status"] isEqualToString:@"okay"]) {
+        [_imageIDs addObject:[[json objectForKey:@"data"] objectForKey:@"id"]];
+        _imageBeingUploaded++;
+        [self _uploadImageAndPostInfo];
+        return;
+    } else {
+        [self _postInfoFailed];
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     NSLog(@"ERROR: uploading failed %@", error);
+    [self _postInfoFailed];
 }
 
 @end

@@ -156,6 +156,13 @@
     }
 }
 
+#pragma mark - Create View Delegate
+
+- (void)hasCreated
+{
+    _createViewController = nil;
+}
+
 #pragma mark - Story Board
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -271,6 +278,7 @@
 {
     if (_createViewController == nil) {
         _createViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"CreateScene"];
+        _createViewController.delegate = self;
     }
     
     [self.navigationController pushViewController:_createViewController animated:YES];

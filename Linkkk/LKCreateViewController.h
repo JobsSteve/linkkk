@@ -10,6 +10,7 @@
 #import "HPGrowingTextView.h"
 
 @class BMKPoiInfo;
+@protocol LKCreateDelegate;
 
 @protocol LKPlacePickerDelegate <NSObject>
 - (void)didSelectPoi:(BMKPoiInfo *)poi;
@@ -17,6 +18,8 @@
 @end
 
 @interface LKCreateViewController : UIViewController <HPGrowingTextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LKPlacePickerDelegate>
+
+@property (nonatomic, assign) id<LKCreateDelegate> delegate;
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UITextField *titleField;
