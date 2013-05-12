@@ -107,6 +107,7 @@
 		2BD532DA1737E4870050EDF7 /* searchbar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD532D81737E4870050EDF7 /* searchbar_bg.png */; };
 		2BD532DB1737E4870050EDF7 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD532D91737E4870050EDF7 /* searchbar_bg@2x.png */; };
 		2BD532DE1737E5260050EDF7 /* LKPlacePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BD532DD1737E5260050EDF7 /* LKPlacePickerCell.m */; };
+		2BF71BE6173F44DC009C4AED /* UIImage+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF71BE5173F44DC009C4AED /* UIImage+Linkkk.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -300,6 +301,8 @@
 		2BD532D91737E4870050EDF7 /* searchbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchbar_bg@2x.png"; sourceTree = "<group>"; };
 		2BD532DC1737E5260050EDF7 /* LKPlacePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPlacePickerCell.h; sourceTree = "<group>"; };
 		2BD532DD1737E5260050EDF7 /* LKPlacePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPlacePickerCell.m; sourceTree = "<group>"; };
+		2BF71BE4173F44DC009C4AED /* UIImage+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Linkkk.h"; sourceTree = "<group>"; };
+		2BF71BE5173F44DC009C4AED /* UIImage+Linkkk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Linkkk.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -662,6 +665,8 @@
 				2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */,
 				2BCE7722173AE8BA00EBBE95 /* CLPlacemark+Linkkk.h */,
 				2BCE7723173AE8BA00EBBE95 /* CLPlacemark+Linkkk.m */,
+				2BF71BE4173F44DC009C4AED /* UIImage+Linkkk.h */,
+				2BF71BE5173F44DC009C4AED /* UIImage+Linkkk.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -816,6 +821,7 @@
 				2B396C73173EA21300152BA1 /* UIButton+Linkkk.m in Sources */,
 				2B396C79173EA85D00152BA1 /* HPGrowingTextView.m in Sources */,
 				2B396C7A173EA85D00152BA1 /* HPTextViewInternal.m in Sources */,
+				2BF71BE6173F44DC009C4AED /* UIImage+Linkkk.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -422,7 +422,7 @@
         [self _navButtonSelected:nil];
     } else {
         BMKPoiInfo *poi = (BMKPoiInfo *)[_results objectAtIndex:indexPath.row];
-        [[LKMapManager sharedInstance] reverseGeocode:poi.pt withCompletionHandler:^(BMKAddrInfo *address) {
+        [[LKMapManager sharedInstance] reverseGeocode:poi.pt withCompletionHandler:^(BMKAddrInfo *address, int error) {
             profile.address = address;
         }];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];

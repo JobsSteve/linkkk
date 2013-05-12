@@ -13,7 +13,7 @@
 @interface LKMapManager () <BMKSearchDelegate>
 {
     BMKSearch *_search;
-    void (^_reverseGeocodeHandler)(BMKAddrInfo *);
+    void (^_reverseGeocodeHandler)(BMKAddrInfo *, int error);
     void (^_suggestionHandler)(BMKSuggestionResult *);
     void (^_poiNearbyHandler)(NSArray *);
     void (^_driveSearchHandler)(BMKPlanResult *);
@@ -53,7 +53,7 @@
     _suggestionHandler = block;
 }
 
-- (void)reverseGeocode:(CLLocationCoordinate2D)coordinate withCompletionHandler:(void (^)(BMKAddrInfo *))block
+- (void)reverseGeocode:(CLLocationCoordinate2D)coordinate withCompletionHandler:(void (^)(BMKAddrInfo *, int error))block
 {
     [_search reverseGeocode:coordinate];
     _reverseGeocodeHandler = block;
@@ -89,10 +89,9 @@
 - (void)onGetAddrResult:(BMKAddrInfo *)result errorCode:(int)error
 {
     if (error) {
-        NSLog(@"ERROR: Baidu Maps onGetAddrResult %d", error);
-        return;
+        NSLog(@"ERROR: Baidu Maps onGetAddrResult %d, %@", error, result);
     }
-    _reverseGeocodeHandler(result);
+    _reverseGeocodeHandler(result, error);
 }
 
 - (void)onGetPoiResult:(NSArray *)poiResultList searchType:(int)type errorCode:(int)error

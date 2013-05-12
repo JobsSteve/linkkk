@@ -16,6 +16,7 @@
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIViewController+Linkkk.h"
 #import "UIColor+Linkkk.h"
+#import "UIImage+Linkkk.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <QuartzCore/QuartzCore.h>
@@ -29,11 +30,13 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 {
     LKProfile *_profile;
     BMKPoiInfo *_poi;
-    
-    int _imageUploaded;
+
+    int _imageBeingUploaded;
     NSArray *_imageButtons;
     NSArray *_progressLabels;
     NSMutableArray *_assets;
+    NSMutableArray *_imageIDs;
+    NSMutableData *_uploadResponseData;
     
     CGRect _textViewFrame;
 }
@@ -48,6 +51,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         _profile = [LKProfile profile];
         
         _assets = [NSMutableArray arrayWithCapacity:5];
+        _imageIDs = [NSMutableArray arrayWithCapacity:5];
     }
     return self;
 }
@@ -217,15 +221,15 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     [self _enableUI:NO];
     BOOL hasImage = (_assets.count != 0);
     if (hasImage) {
-        [self _uploadImage];
+        [self _uploadImageAndPostInfo];
     } else {
-        [self postInfo:hasImage];
+        [self _postInfoWithImage:hasImage];
     }
     
     return;
 }
 
-- (void)postInfo:(BOOL)hasImage
+- (void)_postInfoWithImage:(BOOL)hasImage
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     LKLoadingView *loadingView = [[LKLoadingView alloc] init];
@@ -370,13 +374,17 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 {
     _poi = poi;
     if (_poi.city == nil || _poi.address == nil) {
-        [[LKMapManager sharedInstance] reverseGeocode:_poi.pt withCompletionHandler:^(BMKAddrInfo *addr) {
+        [[LKMapManager sharedInstance] reverseGeocode:_poi.pt withCompletionHandler:^(BMKAddrInfo *addr, int error) {
+            // Failed to reverse geocode
+            if (addr.strAddr == nil) {
+                _poi = nil;
+                _locationButton.selected = NO;
+                return;
+            }
             if (_poi.city == nil) _poi.city = addr.addressComponent.city;
             if (_poi.address == nil) {
                 _poi.address = addr.strAddr;
                 _placemarkLabel.text = _poi.address;
-            } else {
-                _locationButton.selected = NO;
             }
         }];
     }
@@ -426,24 +434,38 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 - (void)_enableUI:(BOOL)enabled
 {
     self.navigationItem.rightBarButtonItem.enabled = enabled;
-    //_textView.userInteractionEnabled = enabled;
-    //_titleField.userInteractionEnabled = enabled;
+    _textView.userInteractionEnabled = enabled;
+    _titleField.userInteractionEnabled = enabled;
     _locationButton.enabled = enabled;
     _photoButton.enabled = enabled;
 }
 
-- (void)_uploadImage
+- (void)_uploadImageFailed
 {
-    // Upload image
-    if (_assets.count == 0)
+    
+}
+
+- (void)_uploadImageAndPostInfo
+{
+    // Post info
+    if (_imageBeingUploaded >= _assets.count) {
+        [self _postInfoWithImage:YES];
         return;
-    ((UILabel *)[_progressLabels objectAtIndex:0]).hidden = NO;
-    ALAsset *asset = [_assets objectAtIndex:0];
-    UIImage *image = [UIImage imageWithCGImage:asset.defaultRepresentation.fullResolutionImage];
+    }
+    ((UILabel *)[_progressLabels objectAtIndex:_imageBeingUploaded]).hidden = NO;
+    ALAsset *asset = [_assets objectAtIndex:_imageBeingUploaded];
+    CGImageRef imageRef = asset.defaultRepresentation.fullResolutionImage;
+    
+    // resize and orient
+    UIImage *image = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:[[asset valueForProperty:ALAssetPropertyOrientation] intValue]];
+    image = [image normalizedImage];
+    CGSize size = [UIImage strategicSizeWithImageSize:image.size];
+    NSLog(@"Upload image: %@, size: %@, new size: %@", image, NSStringFromCGSize(image.size), NSStringFromCGSize((size)));
+    image = [UIImage imageWithImage:image scaledToSize:size];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/winterfell/upload/"]];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    [request setTimeoutInterval:30];
+    [request setTimeoutInterval:60];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"multipart/form-data" forHTTPHeaderField:@"Content-Type"];
     [request setValue:[LKProfile profile].csrf forHTTPHeaderField:@"X-XSRF-TOKEN"];
@@ -453,6 +475,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     
     NSMutableData *body = [NSMutableData data];
     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+    NSLog(@"Image size before: %d", imageData.length);
+    imageData = UIImageJPEGRepresentation(image, [UIImage strategicRatioWithDataSize:imageData.length]);
     [body appendData:[[NSString stringWithFormat:@"--%@\r\n", kHTTPBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[@"Content-Disposition: form-data; name=\"image\"; filename=\"image.jpg\"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -460,25 +484,19 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [body appendData:[[NSString stringWithFormat:@"--%@\r\n", kHTTPBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     [request setHTTPBody:body];
-    [request setValue:[NSString stringWithFormat:@"%d", [body length]] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[NSString stringWithFormat:@"%d", body.length] forHTTPHeaderField:@"Content-Length"];
+    NSLog(@"Image size after: %d", imageData.length);
     
     [NSURLConnection connectionWithRequest:request delegate:self];
-//    NSData *data = ;
-//    if (data == nil) {
-//        NSLog(@"ERROR uploading image");
-//        return;
-//    }
-//    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-////    _imageID = [[[json objectForKey:@"data"] objectForKey:@"id"] intValue];
-//    NSLog(@"%d, %@", response.statusCode, json);
+    _uploadResponseData = [[NSMutableData alloc] init]; // prepare to receive data
 }
 
 #pragma mark - NSURLConnection Delegate
 
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-    ((UILabel *)[_progressLabels objectAtIndex:0]).text = [NSString stringWithFormat:@"%d%%", 100*totalBytesWritten/totalBytesExpectedToWrite];
-    NSLog(@"%d, %d", totalBytesWritten, totalBytesExpectedToWrite);
+    UILabel *label = (UILabel *)[_progressLabels objectAtIndex:_imageBeingUploaded];
+    label.text = [NSString stringWithFormat:@"%d%%", 100*totalBytesWritten/totalBytesExpectedToWrite];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -488,7 +506,14 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    [_uploadResponseData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSLog(@"%@", [[NSString alloc] initWithData:_uploadResponseData encoding:NSUTF8StringEncoding]);
+    _imageBeingUploaded++;
+    [self _uploadImageAndPostInfo];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error

@@ -139,7 +139,7 @@
 #endif
     
     // Reverse Geocoding
-    [[LKMapManager sharedInstance] reverseGeocode:location.coordinate withCompletionHandler:^(BMKAddrInfo *result) {
+    [[LKMapManager sharedInstance] reverseGeocode:location.coordinate withCompletionHandler:^(BMKAddrInfo *result, int error) {
         self.current = result;
         self.address = result;
     }];
