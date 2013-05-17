@@ -63,12 +63,15 @@ static NSUInteger numberOfSelectedGridItems = 0;
             self.selectionView.hidden = !_selected;
             self.checkmarkImageView.hidden = !_selected;
             
+            static int total_number;
             if (_selected)
             {
+                _number = ++total_number;
                 numberOfSelectedGridItems++;
             }
             else
             {
+                _number = 0;
                 if (numberOfSelectedGridItems > 0)
                     numberOfSelectedGridItems--;
             }

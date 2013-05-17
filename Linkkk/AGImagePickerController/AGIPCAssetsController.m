@@ -101,15 +101,30 @@
 
 - (NSArray *)selectedAssets
 {
-    NSMutableArray *selectedAssets = [NSMutableArray array];
+    NSMutableArray *selectedGrids = [NSMutableArray array];
     
 	for (AGIPCGridItem *gridItem in self.assets) 
     {		
 		if (gridItem.selected)
         {	
-			[selectedAssets addObject:gridItem.asset];
+			[selectedGrids addObject:gridItem];
 		}
 	}
+    [selectedGrids sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        AGIPCGridItem *item1 = (AGIPCGridItem *)obj1;
+        AGIPCGridItem *item2 = (AGIPCGridItem *)obj2;
+        if (item1.number > item2.number) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        if (item1.number < item2.number) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    NSMutableArray *selectedAssets = [NSMutableArray arrayWithCapacity:selectedGrids.count];
+    for (AGIPCGridItem *gridItem in selectedGrids) {
+        [selectedAssets addObject:gridItem.asset];
+    }
     
     return selectedAssets;
 }

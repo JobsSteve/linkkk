@@ -412,8 +412,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 {
     int idx = sender.tag - 100;
     for (int i=idx;i<_assets.count-1;i++) {
-        UIButton *leftButton = (UIButton *)[_imageButtons objectAtIndex:idx];
-        UIButton *rightButton = (UIButton *)[_imageButtons objectAtIndex:idx+1];
+        UIButton *leftButton = (UIButton *)[_imageButtons objectAtIndex:i];
+        UIButton *rightButton = (UIButton *)[_imageButtons objectAtIndex:i+1];
         leftButton.image = rightButton.image;
     }
     UIButton *lastButton = ((UIButton *)[_imageButtons objectAtIndex:_assets.count-1]);

@@ -32,6 +32,7 @@
 
 @property (assign) BOOL selected;
 @property (strong) ALAsset *asset;
+@property (readonly) int number;
 
 @property (nonatomic, ag_weak) id<AGIPCGridItemDelegate> delegate;
 
