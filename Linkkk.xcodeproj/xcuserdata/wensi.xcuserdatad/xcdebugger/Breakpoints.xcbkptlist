@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Linkkk/LKCreateViewController.m"
-         timestampString = "390028876.206142"
+         timestampString = "390495728.041394"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "242"
-         endingLineNumber = "242"
+         startingLineNumber = "247"
+         endingLineNumber = "247"
          landmarkName = "-_postInfoWithImage:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Linkkk/LKCreateViewController.m"
-         timestampString = "390028876.206142"
+         timestampString = "390495728.041394"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "267"
-         endingLineNumber = "267"
+         startingLineNumber = "272"
+         endingLineNumber = "272"
          landmarkName = "-_postInfoWithImage:"
          landmarkType = "5">
       </FileBreakpoint>

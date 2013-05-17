@@ -40,6 +40,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     NSMutableData *_uploadResponseData;
     
     CGRect _textViewFrame;
+    LKLoadingView *_loadingView;
 }
 @end
 
@@ -53,6 +54,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         
         _assets = [NSMutableArray arrayWithCapacity:5];
         _imageIDs = [NSMutableArray arrayWithCapacity:5];
+        
+        _loadingView = [[LKLoadingView alloc] init];
     }
     return self;
 }
@@ -221,8 +224,14 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     
     [self _enableUI:NO];
     BOOL hasImage = (_assets.count != 0);
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    LKLoadingView *loadingView = [[LKLoadingView alloc] init];
+    [self.view addSubview:loadingView];
+    
     if (hasImage) {
-        [self _uploadImageAndPostInfo];
+        // TODO: timer/spinner hack, should be on a separate thread
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_uploadImageAndPostInfo) userInfo:nil repeats:NO];
     } else {
         [self _postInfoWithImage:hasImage];
     }
@@ -232,9 +241,6 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 
 - (void)_postInfoWithImage:(BOOL)hasImage
 {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    LKLoadingView *loadingView = [[LKLoadingView alloc] init];
-    [self.view addSubview:loadingView];
     
     NSString *content = _textView.text;
     NSString *title = _titleField.text;
@@ -269,7 +275,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [loadingView removeFromSuperview];
+            [_loadingView removeFromSuperview];
             // [self _enableUI:YES]; unnecessary as we pop
             [self.navigationController popViewControllerAnimated:YES];
             [self.delegate hasCreated];
@@ -477,7 +483,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     NSLog(@"Upload image: %@, size: %@, new size: %@", image, NSStringFromCGSize(image.size), NSStringFromCGSize((size)));
     image = [UIImage imageWithImage:image scaledToSize:size];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/winterfell/upload/"]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/winterfell/upload/ios/"]];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [request setTimeoutInterval:60];
     [request setHTTPMethod:@"POST"];
