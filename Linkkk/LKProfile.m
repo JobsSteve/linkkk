@@ -14,7 +14,7 @@
 #import "SinaWeibo.h"
 #import "BMapKit.h"
 
-#define CUSTOM_LOCATION
+//#define CUSTOM_LOCATION
 #define SET_LOCATION(lat,lng) location = [[CLLocation alloc] initWithLatitude:lat longitude:lng]
 
 /*
@@ -135,7 +135,7 @@
 #ifdef CUSTOM_LOCATION
     // 上海静安区 31.230393, 121.473704
     // 乌鲁木齐 43.88601647043421, 87.5225830078125
-    SET_LOCATION(43.88601647043421, 87.5225830078125);
+    SET_LOCATION(31.230393, 121.453704);
 #endif
     
     // Reverse Geocoding

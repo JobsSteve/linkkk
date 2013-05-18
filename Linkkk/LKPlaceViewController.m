@@ -206,6 +206,8 @@
     
     if (_place.hasFaved)
         _favButton.titleLabel.textColor = [UIColor redColor];
+    else
+        _favButton.titleLabel.textColor = [UIColor specialBlue];
 }
 
 - (void)didSelectPhoto:(UIButton *)sender

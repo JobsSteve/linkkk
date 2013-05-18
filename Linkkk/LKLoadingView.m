@@ -19,7 +19,7 @@
         CGRect bounds = [UIScreen mainScreen].bounds;
         CGRect rect = CGRectMake(0, 0, 120, 100);
         self.frame = rect;
-        self.center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds) - 100);
+        self.center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds) - 80);
         self.backgroundColor = [UIColor blackColor];
         self.alpha = 0.8;
         self.layer.cornerRadius = 10;

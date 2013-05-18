@@ -654,13 +654,13 @@
         <!--Place View Controller - Place-->
         <scene sceneID="7fE-7u-v03">
             <objects>
-                <viewController title="Place" id="qoA-0K-5eQ" customClass="LKPlaceViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlaceScene" title="Place" id="qoA-0K-5eQ" customClass="LKPlaceViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7Mb-34-cgq">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="Gnk-7d-Lvb" userLabel="Container View" customClass="LKPlaceView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" id="Cac-L0-fPP">
@@ -814,11 +814,11 @@
             <objects>
                 <viewController storyboardIdentifier="NavScene" id="DE9-id-DMy" customClass="LKNavViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6zg-hZ-Dql">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="k2O-9q-6c2" customClass="BMKMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -929,6 +929,7 @@
                                             <outlet property="photoView3" destination="HJK-8r-M9W" id="rYv-SH-jh9"/>
                                             <outlet property="titleLabel" destination="2Cg-7Z-ybi" id="Moq-Ey-khu"/>
                                             <outlet property="userLabel" destination="8aJ-Xr-qp3" id="hYd-LA-dkm"/>
+                                            <segue destination="qoA-0K-5eQ" kind="push" identifier="ProfilePlaceSegue" id="JjK-ir-j01"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1084,6 +1085,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="OXz-tS-kv5"/>
+        <segue reference="JjK-ir-j01"/>
     </inferredMetricsTieBreakers>
 </document>

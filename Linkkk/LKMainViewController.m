@@ -48,6 +48,8 @@
     
     NSMutableArray *_places;
     NSArray *_results;
+    
+    LKLoadingView *_loadingView;
 }
 @end
 
@@ -60,6 +62,8 @@
         [LKProfile profile];
         _places = [NSMutableArray arrayWithCapacity:10];
         [LKMapManager sharedInstance];
+        
+        _loadingView = [[LKLoadingView alloc] init];
     }
     return self;
 }
@@ -147,12 +151,13 @@
 
 - (void)shakeViewDidShake
 {
-    // TODO: update bottom controls (fav)
+    _shakeViewController.placeView.hidden = YES;
     if (_places.count == 0) {
         [self _fetchData];
     }
     else {
-        [self _updateView:nil];
+        [_shakeViewController.view addSubview:_loadingView];
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_updateView) userInfo:nil repeats:NO];
     }
 }
 
@@ -486,13 +491,11 @@
     static int offset = 0;
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=%d&order_by=-score&format=json", coord.latitude, coord.longitude, offset];
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=10&offset=%d&format=json", coord.latitude, coord.longitude, offset];
     offset += 10;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    _shakeViewController.placeView.hidden = YES;
-    LKLoadingView *loadingView = [[LKLoadingView alloc] init];
-    [_shakeViewController.view addSubview:loadingView];
+    [_shakeViewController.view addSubview:_loadingView];
     
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
@@ -509,14 +512,14 @@
          [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
              [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
          }];
-         [self _updateView:loadingView];
+         [self _updateView];
      }];
 }
 
-- (void)_updateView:(UIView *)loadingView
+- (void)_updateView
 {
     _shakeViewController.placeView.hidden = NO;
-    [loadingView removeFromSuperview];
+    [_loadingView removeFromSuperview];
     
     if (_places.count > 0) {
         _shakeViewController.place = [_places objectAtIndex:0];

@@ -15,6 +15,7 @@
 
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIViewController+Linkkk.h"
+#import "UIColor+Linkkk.h"
 
 #import "BMapKit.h"
 
@@ -24,6 +25,13 @@
 {
     int _selectedRow;
     NSMutableArray *_places;
+    
+    BOOL _hasMore;
+    int _offset;
+    
+    UITableViewCell *_loadCell;
+    UILabel *_loadLabel;
+    UIActivityIndicatorView *_loadSpinner;
 }
 @end
 
@@ -33,6 +41,8 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
+        _hasMore = YES;
+        _places = [NSMutableArray arrayWithCapacity:10];
     }
     return self;
 }
@@ -62,25 +72,53 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _places.count;
+    if (section == 0)
+        return _places.count;
+    // section == 1
+    if (_places.count == 0 || !_hasMore) // When there is nothing, do not display "load more"
+        return 0;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellIdentifier = @"NearbyCell";
-    LKNearbyCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.place = [_places objectAtIndex:indexPath.row];
+    UITableViewCell *cell = nil;
+    if (indexPath.section == 0) {
+        static NSString *cellIdentifier = @"NearbyCell";
+        LKNearbyCell *nearbyCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+        nearbyCell.place = [_places objectAtIndex:indexPath.row];
+        cell = nearbyCell;
+    } else if (indexPath.section == 1) {
+        if (_loadCell == nil) {
+            _loadCell = [[UITableViewCell alloc] init];
+            _loadCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            _loadLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 15, 200, 50)];
+            _loadLabel.textColor = [UIColor specialBlue];
+            _loadLabel.font = [UIFont boldSystemFontOfSize:18.0];
+            _loadLabel.text = @"加载更多";
+            [_loadCell addSubview:_loadLabel];
+            
+            _loadSpinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            _loadSpinner.color = [UIColor specialBlue];
+            _loadSpinner.center = CGPointMake(155, 38);
+            [_loadCell addSubview:_loadSpinner];
+        }
+        cell = _loadCell;
+    }
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 1) // Load more cell
+        return 80.0;
     LKPlace *place = [_places objectAtIndex:indexPath.row];
     if (place.album.count == 0)
         return 100.0;
@@ -97,6 +135,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 1) { // load more cell
+        [self _fetchData];
+    }
 }
 
 #pragma mark - Callbacks
@@ -112,17 +153,30 @@
 {
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=0&order_by=-score&format=json", coord.latitude, coord.longitude];
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=%d&order_by=-score&format=json", coord.latitude, coord.longitude, _offset];
+    _offset += 10;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     LKLoadingView *loadingView = [[LKLoadingView alloc] init];
     [self.view addSubview:loadingView];
+    if (_loadCell != nil) {
+        _loadLabel.hidden = YES;
+        [_loadSpinner startAnimating];
+        _loadCell.userInteractionEnabled = NO;
+    }
+    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
     {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [loadingView removeFromSuperview];
+        if (_loadCell != nil) {
+            _loadLabel.hidden = NO;
+            [_loadSpinner stopAnimating];
+            _loadCell.userInteractionEnabled = YES;
+        }
         
         if (data == nil || error != nil) {
             [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
@@ -131,10 +185,11 @@
         
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSArray *array = [json objectForKey:@"objects"];
-        _places = [[NSMutableArray alloc] initWithCapacity:[array count]];
         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
         }];
+        if (array.count == 0)
+            _hasMore = NO;
         [self.tableView reloadData];
     }];
 }

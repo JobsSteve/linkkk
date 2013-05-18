@@ -10,6 +10,7 @@
 #import "LKProfile.h"
 #import "LKPlace.h"
 #import "LKNearbyCell.h"
+#import "LKPlaceViewController.h"
 
 #import "UIViewController+Linkkk.h"
 #import "UIBarButtonItem+Linkkk.h"
@@ -58,6 +59,11 @@
     }
     
     [self _fetchFav];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [_favTableView deselectRowAtIndexPath:[_favTableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -155,6 +161,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"ProfilePlaceSegue"]) {
+        LKPlaceViewController *placeViewController = (LKPlaceViewController *)segue.destinationViewController;
+        placeViewController.place = [_places objectAtIndex:[_favTableView indexPathForSelectedRow].row];
+    }
 }
 
 @end
