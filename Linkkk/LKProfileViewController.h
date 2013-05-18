@@ -16,5 +16,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *username;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segControl;
 @property (strong, nonatomic) IBOutlet UITableView *favTableView;
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @end
