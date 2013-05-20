@@ -14,5 +14,6 @@
 
 @property (assign, nonatomic) id<LKPlacePickerDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) NSString *placeholder;
 
 @end

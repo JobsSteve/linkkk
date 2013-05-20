@@ -41,7 +41,7 @@
     [super viewDidLoad];
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithName:@"注销" target:self action:@selector(logoutButtonSelected:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:40.0 target:self action:@selector(logoutButtonSelected:)];
     
     // Customize Seg Control
     UIFont *font = [UIFont fontWithName:@"Entypo" size:40.0];
@@ -194,12 +194,12 @@
         LKPlace *place = [_favPlaces objectAtIndex:indexPath.row];
         if (place.album.count == 0)
             return 100.0;
-        return 196.0;
+        return 214.0;
     } else { // tableView == _myTableView
         LKPlace *place = [_myPlaces objectAtIndex:indexPath.row];
         if (place.album.count == 0)
             return 100.0;
-        return 196.0;
+        return 214.0;
     }
 }
 

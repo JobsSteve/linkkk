@@ -197,6 +197,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
 {
     if ([segue.identifier isEqualToString:@"PlacePickerScene"]) {
         LKPlacePickerViewController *viewController = (LKPlacePickerViewController *)segue.destinationViewController;
+        viewController.placeholder = _poi.name;
         viewController.delegate = self;
     }
 }

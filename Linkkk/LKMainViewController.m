@@ -35,7 +35,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface LKMainViewController ()
+@interface LKMainViewController () <UIGestureRecognizerDelegate>
 {
     LKNearbyViewController *_nearbyViewController;
     LKCreateViewController *_createViewController;
@@ -80,7 +80,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"⚙" size:50.0 target:self action:@selector(_settingButtonSelected:)];
+    //self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"⚙" size:50.0 target:self action:@selector(_settingButtonSelected:)];
     
     // Custom Title
     UIButton *navButton = [UIBarButtonItem customTitleButtonWithString:@"当前：未知地址 "];
@@ -88,9 +88,14 @@
     self.navigationItem.titleView = navButton;
     
     // Custom fonts
-    _nearbyButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
-    _createButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
-    _profileButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:80.0];
+    _nearbyButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:70.0];
+    _createButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:70.0];
+    _profileButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:70.0];
+    
+    // Touch to dismiss
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_navButtonSelected:)];
+    gesture.delegate = self;
+    [_tableView addGestureRecognizer:gesture];
     
     // Update Location
     LKProfile *profile = [LKProfile profile];
@@ -287,6 +292,18 @@
     }
     
     [self.navigationController pushViewController:_createViewController animated:YES];
+}
+
+#pragma mark - Gesture Delegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    // If the view that is touched is not the view associated with this view's table view, but
+    // is one of the sub-views, we should not recognize the touch.
+    if (touch.view != _tableView && [touch.view isDescendantOfView:_tableView]) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - Animation Delegate

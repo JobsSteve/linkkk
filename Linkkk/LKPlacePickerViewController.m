@@ -43,6 +43,9 @@
     
     [_searchBar becomeFirstResponder];
     [_searchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"searchbar_bg"] forState:UIControlStateNormal];
+    if (_placeholder != nil) {
+        _searchBar.text = _placeholder;
+    }
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"选择地址" target:self action:@selector(backButtonSelected:)];
 }
@@ -57,7 +60,7 @@
 
 - (void)backButtonSelected:(UIButton *)sender
 {
-    [_delegate didCancelPoi];
+    //[_delegate didCancelPoi];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

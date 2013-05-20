@@ -44,13 +44,15 @@
     _place = place;
     
     _titleLabel.text = _place.title;
-    _addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.address];
+    [_titleLabel sizeToFit];
+    _addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@, %@", _place.distance, _place.location, _place.address];
+    [_addressLabel sizeToFit];
     _textView.text = _place.content;
     
     NSArray *album = _place.album;
     [album enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (_imageButtons.count > idx) {
-            NSURL *url = [NSURL URLWithString:[[album objectAtIndex:idx] objectForKey:@"small"]];
+            NSURL *url = [NSURL URLWithString:[[album objectAtIndex:idx] objectForKey:@"square"]];
             UIButton *button = [_imageButtons objectAtIndex:idx];
             [button setImageWithURL:url];
             button.hidden = NO;
@@ -64,19 +66,31 @@
 {
     [super layoutSubviews];
     
+    CGRect titleFrame = _titleLabel.frame;
+    
+    CGRect addressFrame = _addressLabel.frame;
+    addressFrame.origin.y = CGRectGetMaxY(titleFrame) + 12.0;
+    _addressLabel.frame = addressFrame;
+    
+    for (UIButton *button in _imageButtons) {
+        CGRect imageFrame = button.frame;
+        imageFrame.origin.y = CGRectGetMaxY(addressFrame) + 15.0;
+        button.frame = imageFrame;
+    }
+    
     if (CGRectIsEmpty(initialFrame))
         initialFrame = _textView.frame;
     CGRect textViewFrame = initialFrame;
     textViewFrame.size = _textView.contentSize;
-    if (_place.album.count == 0) textViewFrame.origin.y -= 96.0;
+    if (_place.album.count == 0) {
+        textViewFrame.origin.y = CGRectGetMaxY(addressFrame) + 12.0;
+    } else {
+        textViewFrame.origin.y = CGRectGetMaxY(((UIButton *)[_imageButtons objectAtIndex:0]).frame) + 5.0;
+    }
     _textView.frame = textViewFrame;
     
-    CGRect containerFrame = _containerView.frame;
-    containerFrame.origin.y = CGRectGetMaxY(textViewFrame) + 10;
-    _containerView.frame = containerFrame;
-    
     CGSize size = self.frame.size;
-    size.height = CGRectGetHeight(self.frame) + CGRectGetHeight(_textView.frame) - 180;
+    size.height = CGRectGetMaxY(_textView.frame) + 0.0;
     self.contentSize = size;
 }
 

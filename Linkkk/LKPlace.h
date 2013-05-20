@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, strong) NSString *address;
+@property (nonatomic, strong) NSString *location;
 @property (nonatomic, strong) NSDictionary *author;
 
 @property (nonatomic, strong) NSArray *album;
@@ -22,9 +23,10 @@
 @property (nonatomic, assign) int fav_count;
 @property (nonatomic, assign) int like_count;
 @property (nonatomic, assign) int comment_count;
+@property (nonatomic, assign) int score;
 @property (nonatomic, assign) int distance;
 @property (nonatomic, assign) BOOL hasFaved;
-@property (nonatomic, assign) CLLocationCoordinate2D location;
+@property (nonatomic, assign) CLLocationCoordinate2D pt;
 
 - (id)initWithJSON:(NSDictionary *)dict;
 

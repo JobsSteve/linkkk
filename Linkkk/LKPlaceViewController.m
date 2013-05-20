@@ -45,8 +45,7 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
-    self.navigationItem.titleView = [UIBarButtonItem customTitleLabelWithString:@"攻略"];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"攻略" target:self action:@selector(backButtonSelected:)];
     
     self.placeView.shakeDelegate = _shakeDelegate;
     
@@ -93,7 +92,7 @@
     if ([segue.identifier isEqualToString:@"NavSegue"]) {
         LKNavViewController *navViewController = (LKNavViewController *)segue.destinationViewController;
         navViewController.from = [LKProfile profile].address.geoPt;
-        navViewController.to = _place.location;
+        navViewController.to = _place.pt;
     }
 }
 
@@ -199,10 +198,10 @@
     _placeView.place = _place; // accessor does the rest
     _placeView.placeDelegate = self;
     
-    _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
-    _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
-    _mapButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
-    _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:60.0];
+    _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
+    _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
+    _mapButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
+    _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
     
     if (_place.hasFaved)
         _favButton.titleLabel.textColor = [UIColor redColor];
