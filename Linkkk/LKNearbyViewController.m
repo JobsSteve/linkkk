@@ -51,7 +51,11 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"附近" target:self action:@selector(backButtonSelected:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:self action:@selector(mapButtonSelected:)];
+    
+    _sortLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
+    _distLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
     
     [self _fetchData];
 }
@@ -145,6 +149,21 @@
 - (void)backButtonSelected:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)titleButtonSelected:(UIButton *)sender
+{
+    NSLog(@"title");
+}
+
+- (void)rightButtonSelected:(UIButton *)sender
+{
+    NSLog(@"right");
+}
+
+- (void)mapButtonSelected:(UIButton *)sender
+{
+    NSLog(@"map");
 }
 
 #pragma mark - Helper Functions

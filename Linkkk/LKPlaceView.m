@@ -43,10 +43,23 @@
 {
     _place = place;
     
+    _contactIconLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
+    _hoursIconLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
+    
     _titleLabel.text = _place.title;
     [_titleLabel sizeToFit];
     _addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@, %@", _place.distance, _place.location, _place.address];
     [_addressLabel sizeToFit];
+    if (_place.contact == nil || [_place.contact isKindOfClass:[NSNull class]] || _place.contact.length == 0) {
+        _contactLabel.text = @"未知业主电话";
+    } else {
+        _contactLabel.text = _place.contact;
+    }
+    if (_place.time_start == nil || [_place.time_start isKindOfClass:[NSNull class]]) {
+        _hoursLabel.text = @"未知营业时间";
+    } else {
+        _hoursLabel.text = [NSString stringWithFormat:@"%@ - %@ %@", _place.time_start, _place.time_end, _place.time_desc];
+    }
     _textView.text = _place.content;
     
     NSArray *album = _place.album;
@@ -85,12 +98,16 @@
     if (_place.album.count == 0) {
         textViewFrame.origin.y = CGRectGetMaxY(addressFrame) + 12.0;
     } else {
-        textViewFrame.origin.y = CGRectGetMaxY(((UIButton *)[_imageButtons objectAtIndex:0]).frame) + 5.0;
+        textViewFrame.origin.y = CGRectGetMaxY(((UIButton *)[_imageButtons objectAtIndex:0]).frame) + 10.0;
     }
     _textView.frame = textViewFrame;
     
+    CGRect infoFrame = _infoView.frame;
+    infoFrame.origin.y = CGRectGetMaxY(textViewFrame) + 0.0;
+    _infoView.frame = infoFrame;
+    
     CGSize size = self.frame.size;
-    size.height = CGRectGetMaxY(_textView.frame) + 0.0;
+    size.height = CGRectGetMaxY(_infoView.frame) + 0.0;
     self.contentSize = size;
 }
 

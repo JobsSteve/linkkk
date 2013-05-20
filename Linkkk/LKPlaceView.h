@@ -16,7 +16,12 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *addressLabel;
+@property (strong, nonatomic) IBOutlet UILabel *contactLabel;
+@property (strong, nonatomic) IBOutlet UILabel *hoursLabel;
+@property (strong, nonatomic) IBOutlet UILabel *contactIconLabel;
+@property (strong, nonatomic) IBOutlet UILabel *hoursIconLabel;
 @property (strong, nonatomic) IBOutlet UITextView *textView;
+@property (strong, nonatomic) IBOutlet UIView *infoView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) NSMutableArray *imageButtons;
 

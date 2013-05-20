@@ -10,4 +10,9 @@
 
 @interface LKNearbyViewController : UITableViewController
 
+@property (nonatomic, strong) IBOutlet UIButton *sortButton;
+@property (nonatomic, strong) IBOutlet UIButton *distButton;
+@property (nonatomic, strong) IBOutlet UILabel *sortLabel;
+@property (nonatomic, strong) IBOutlet UILabel *distLabel;
+
 @end

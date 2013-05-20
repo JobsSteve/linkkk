@@ -83,8 +83,7 @@
     //self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"⚙" size:50.0 target:self action:@selector(_settingButtonSelected:)];
     
     // Custom Title
-    UIButton *navButton = [UIBarButtonItem customTitleButtonWithString:@"当前：未知地址 "];
-    [navButton addTarget:self action:@selector(_navButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *navButton = [UIBarButtonItem customTitleButtonWithString:@"当前：未知地址 " target:self action:@selector(_navButtonSelected:)];
     self.navigationItem.titleView = navButton;
     
     // Custom fonts

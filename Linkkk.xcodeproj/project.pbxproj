@@ -39,7 +39,7 @@
 		2BA33501173E08C100325D25 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334F8173E08C100325D25 /* MWTapDetectingImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		2BA33502173E08C100325D25 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334FA173E08C100325D25 /* MWTapDetectingView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		2BA33503173E08C100325D25 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA334FC173E08C100325D25 /* MWZoomingScrollView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
-		2BA33507173E08CE00325D25 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA33506173E08CE00325D25 /* MBProgressHUD.m */; };
+		2BA33507173E08CE00325D25 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA33506173E08CE00325D25 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-w"; }; };
 		2BA3351B173E093400325D25 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3350A173E093400325D25 /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		2BA3351C173E093400325D25 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA3350E173E093400325D25 /* SDWebImageDecoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };
 		2BA3351D173E093400325D25 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BA33510173E093400325D25 /* SDWebImageDownloader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -w"; }; };

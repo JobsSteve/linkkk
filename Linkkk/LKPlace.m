@@ -19,13 +19,16 @@
         _content = [[dict objectForKey:@"content"] copy];
         _address = [[dict objectForKey:@"address"] copy];
         _location = [[dict objectForKey:@"location"] copy];
+        _time_start = [[dict objectForKey:@"time_start"] copy];
+        _time_end = [[dict objectForKey:@"time_end"] copy];
+        _time_desc = [[dict objectForKey:@"time_desc"] copy];
+        _contact = [[dict objectForKey:@"contact"] copy];
         _album = [[dict objectForKey:@"album"] copy];
         _placeID = [[dict objectForKey:@"id"] intValue];
         _distance = [[dict objectForKey:@"distance"] intValue];
         _hasFaved = [[dict objectForKey:@"has_faved"] boolValue];
         _score = [[dict objectForKey:@"score"] intValue];
         _fav_count = [[dict objectForKey:@"count_favourite"] intValue];
-        _like_count = [[dict objectForKey:@"count_like"] intValue];
         _comment_count = [[dict objectForKey:@"count_comment"] intValue];
         _pt.latitude = [[dict objectForKey:@"latitude"] floatValue];
         _pt.longitude = [[dict objectForKey:@"longitude"] floatValue];

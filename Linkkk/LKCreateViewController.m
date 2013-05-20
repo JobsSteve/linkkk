@@ -89,9 +89,8 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     _locationButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:50.0];
     
     // Custom navigation
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"创建" target:self action:@selector(backButtonSelected:)];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"✓" size:50.0 target:self action:@selector(doneButtonSelected:)];
-    self.navigationItem.titleView = [UIBarButtonItem customTitleLabelWithString:@"创建经历"];
     
     // Image Views
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:5];

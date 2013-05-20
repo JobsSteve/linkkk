@@ -18,17 +18,25 @@
 
 + (UIBarButtonItem *)customBackButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+    CGRect frame = CGRectMake(0, 0, 150, 30);
+    UIView *view = [[UIView alloc] initWithFrame:frame];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 2, 2, 26)];
     imageView.image = [UIImage imageNamed:@"verticalpixel"];
     [view addSubview:imageView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 95, 30)];
+    CGRect labelFrame = CGRectMake(55, 0, 95, 30);
+    UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
     label.font = [UIFont boldSystemFontOfSize:18];
     label.textColor = [UIColor specialBlue];
     label.text = title;
+    [label sizeToFit];
+    labelFrame.size.width = CGRectGetWidth(label.frame);
+    label.frame = labelFrame;
     [view addSubview:label];
+    
+    frame.size.width = CGRectGetMaxX(label.frame) + 10.0;
+    view.frame = frame;
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
     backButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:50.0];
@@ -36,6 +44,29 @@
     [backButton setTitleColor:[UIColor specialBlue] forState:UIControlStateNormal];
     [backButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:backButton];
+    
+    return [[UIBarButtonItem alloc] initWithCustomView:view];
+}
+
++ (UIBarButtonItem *)customRightButtonWithTitle:(NSString *)title target:(id)target action:(SEL)action
+{
+    CGRect frame = CGRectMake(0, 0, 85, 30);
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2, 2, 26)];
+    imageView.image = [UIImage imageNamed:@"verticalpixel"];
+    [view addSubview:imageView];
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(13, 0, 80, 44)];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:title];
+    NSRange range = NSMakeRange(title.length - 1, 1);
+    [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Entypo" size:30.0] range:range];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor specialBlue] range:NSMakeRange(0, string.length)];
+    [button setAttributedTitle:string forState:UIControlStateNormal];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    [button sizeToFit];
+    [view addSubview:button];
     
     return [[UIBarButtonItem alloc] initWithCustomView:view];
 }
@@ -53,7 +84,7 @@
 + (UIBarButtonItem *)customButtonWithName:(NSString *)name target:(id)target action:(SEL)action
 {
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-    backButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    backButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [backButton setTitle:name forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor specialBlue] forState:UIControlStateNormal];
     [backButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -63,22 +94,23 @@
 + (UILabel *)customTitleLabelWithString:(NSString *)title
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.font = [UIFont boldSystemFontOfSize:20.0];
+    label.font = [UIFont boldSystemFontOfSize:18.0];
     label.textColor = [UIColor specialBlue];
     label.text = title;
     [label sizeToFit];
     return label;
 }
 
-+ (UIButton *)customTitleButtonWithString:(NSString *)title
++ (UIButton *)customTitleButtonWithString:(NSString *)title target:(id)target action:(SEL)action
 {
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 44)];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
     NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:title];
     NSRange range = NSMakeRange(title.length - 1, 1);
     [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Entypo" size:30.0] range:range];
     [string addAttribute:NSForegroundColorAttributeName value:[UIColor specialBlue] range:NSMakeRange(0, string.length)];
     [button setAttributedTitle:string forState:UIControlStateNormal];
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     [button sizeToFit];
     return button;
 }
