@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B0B74BF174C88DC00646CD1 /* LKDropDownOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B0B74BE174C88DC00646CD1 /* LKDropDownOptionsView.m */; };
+		2B0B74C2174D187F00646CD1 /* LKDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B0B74C1174D187F00646CD1 /* LKDefaults.m */; };
 		2B286FA81724600D00A454FE /* LKPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B286FA71724600D00A454FE /* LKPlace.m */; };
 		2B286FAA1724610A00A454FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B286FA91724610A00A454FE /* CoreLocation.framework */; };
 		2B286FAD1724C66E00A454FE /* LKPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B286FAC1724C66D00A454FE /* LKPlaceViewController.m */; };
@@ -111,6 +113,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B0B74BD174C88DC00646CD1 /* LKDropDownOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKDropDownOptionsView.h; sourceTree = "<group>"; };
+		2B0B74BE174C88DC00646CD1 /* LKDropDownOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKDropDownOptionsView.m; sourceTree = "<group>"; };
+		2B0B74C0174D187F00646CD1 /* LKDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKDefaults.h; sourceTree = "<group>"; };
+		2B0B74C1174D187F00646CD1 /* LKDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKDefaults.m; sourceTree = "<group>"; };
 		2B286FA61724600D00A454FE /* LKPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPlace.h; sourceTree = "<group>"; };
 		2B286FA71724600D00A454FE /* LKPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPlace.m; sourceTree = "<group>"; };
 		2B286FA91724610A00A454FE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -473,6 +479,8 @@
 				2BD1DB25171DA0660029949F /* LKNearbyViewController.m */,
 				2BD1DB21171D9FE80029949F /* LKNearbyCell.h */,
 				2BD1DB22171D9FE80029949F /* LKNearbyCell.m */,
+				2B0B74BD174C88DC00646CD1 /* LKDropDownOptionsView.h */,
+				2B0B74BE174C88DC00646CD1 /* LKDropDownOptionsView.m */,
 				2B286FAB1724C66D00A454FE /* LKPlaceViewController.h */,
 				2B286FAC1724C66D00A454FE /* LKPlaceViewController.m */,
 				2BD1DB1E171D978F0029949F /* LKPlaceView.h */,
@@ -627,6 +635,8 @@
 				2BD1DB30171DD1AF0029949F /* LKProfile.m */,
 				2B286FA61724600D00A454FE /* LKPlace.h */,
 				2B286FA71724600D00A454FE /* LKPlace.m */,
+				2B0B74C0174D187F00646CD1 /* LKDefaults.h */,
+				2B0B74C1174D187F00646CD1 /* LKDefaults.m */,
 				2BCE7786173C787600EBBE95 /* LKMapManager.h */,
 				2BCE7787173C787600EBBE95 /* LKMapManager.m */,
 			);
@@ -822,6 +832,8 @@
 				2B396C79173EA85D00152BA1 /* HPGrowingTextView.m in Sources */,
 				2B396C7A173EA85D00152BA1 /* HPTextViewInternal.m in Sources */,
 				2BF71BE6173F44DC009C4AED /* UIImage+Linkkk.m in Sources */,
+				2B0B74BF174C88DC00646CD1 /* LKDropDownOptionsView.m in Sources */,
+				2B0B74C2174D187F00646CD1 /* LKDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -901,7 +913,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Si Wen (DJ6L37D66M)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linkkk/Linkkk-Prefix.pch";
@@ -913,8 +925,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "68167496-AEEE-491E-BC85-352DBEB4C25E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -936,7 +947,6 @@
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

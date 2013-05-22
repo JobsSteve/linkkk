@@ -12,6 +12,8 @@
 #import "LKPlace.h"
 #import "LKProfile.h"
 #import "LKLoadingView.h"
+#import "LKDropDownOptionsView.h"
+#import "LKDefaults.h"
 
 #import "UIBarButtonItem+Linkkk.h"
 #import "UIViewController+Linkkk.h"
@@ -19,7 +21,15 @@
 
 #import "BMapKit.h"
 
-#import <QuartzCore/CALayer.h>
+#import <QuartzCore/QuartzCore.h>
+
+static NSString * const kDistanceOptions[] = {
+    @"1公里内", @"2公里内", @"5公里内", @"10公里内"
+};
+
+static NSString * const kSortByOptions[] = {
+    @"距离最近的", @"最多喜欢的", @"最多评论的", @"最近更新的"
+};
 
 @interface LKNearbyViewController ()
 {
@@ -32,6 +42,10 @@
     UITableViewCell *_loadCell;
     UILabel *_loadLabel;
     UIActivityIndicatorView *_loadSpinner;
+    
+    LKDropDownOptionsView *_sortingView;
+    LKDropDownOptionsView *_distanceView;
+    UIView *_overlayView;
 }
 @end
 
@@ -56,7 +70,28 @@
     
     _sortLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
     _distLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
+    [_sortButton setTitle:kSortByOptions[[LKDefaults sortBy]] forState:UIControlStateNormal];
+    [_sortButton setTitle:kSortByOptions[[LKDefaults sortBy]] forState:UIControlStateHighlighted];
+    [_distButton setTitle:kDistanceOptions[[LKDefaults distance]] forState:UIControlStateNormal];
+    [_distButton setTitle:kDistanceOptions[[LKDefaults distance]] forState:UIControlStateHighlighted];
     
+    // Filters
+    _overlayView = [[UIView alloc] initWithFrame:self.tableView.frame];
+    _overlayView.backgroundColor = [UIColor whiteColor];
+    _overlayView.alpha = 0.5;
+    _overlayView.hidden = YES;
+    [_overlayView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(overlaySelected)]];
+    [self.tableView insertSubview:_overlayView belowSubview:self.tableView.tableHeaderView];
+    
+    _distanceView = [[LKDropDownOptionsView alloc] initWithOptions:@[@"1公里内", @"2公里内", @"5公里内", @"10公里内"] type:LKFilterTypeDistance];
+    _distanceView.delegate = self;
+    [self.tableView insertSubview:_distanceView belowSubview:self.tableView.tableHeaderView];
+    
+    _sortingView = [[LKDropDownOptionsView alloc] initWithOptions:@[@"距离最近的", @"最多喜欢的", @"最多评论的", @"最近更新的"] type:LKFilterTypeSortBy];
+    _sortingView.delegate = self;
+    [self.tableView insertSubview:_sortingView belowSubview:self.tableView.tableHeaderView];
+    
+    // Fetch Data
     [self _fetchData];
 }
 
@@ -135,6 +170,11 @@
     return 0.01f;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.01f;
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -146,19 +186,62 @@
 
 #pragma mark - Callbacks
 
-- (void)backButtonSelected:(UIButton *)sender
+- (void)dropDownOptionDidSelect:(int)option type:(int)type
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    _overlayView.hidden = YES;
+    if (type == LKFilterTypeSortBy) {
+        [_sortButton setTitle:kSortByOptions[option] forState:UIControlStateNormal];
+        [_sortButton setTitle:kSortByOptions[option] forState:UIControlStateHighlighted];
+    }
+    if (type == LKFilterTypeDistance) {
+        [_distButton setTitle:kDistanceOptions[option] forState:UIControlStateNormal];
+        [_distButton setTitle:kDistanceOptions[option] forState:UIControlStateHighlighted];
+    }
+    // Clear and fetch data
+    _offset = 0;
+    [_places removeAllObjects];
+    [self _fetchData];
 }
 
-- (void)titleButtonSelected:(UIButton *)sender
+- (void)distanceButtonSelected:(UIButton *)sender
 {
-    NSLog(@"title");
+    if (_distanceView.alpha == 1.0) {
+        [_distanceView animateOut];
+        _overlayView.hidden = YES;
+    } else {
+        [_distanceView animateIn];
+        _overlayView.hidden = NO;
+    }
+    
+    if (_sortingView.alpha == 1.0) {
+        [_sortingView animateOut];
+    }
 }
 
-- (void)rightButtonSelected:(UIButton *)sender
+- (void)sortingButtonSelected:(UIButton *)sender
 {
-    NSLog(@"right");
+    if (_sortingView.alpha == 1.0) {
+        [_sortingView animateOut];
+        _overlayView.hidden = YES;
+    } else {
+        [_sortingView animateIn];
+        _overlayView.hidden = NO;
+    }
+    
+    if (_distanceView.alpha == 1.0) {
+        [_distanceView animateOut];
+    }
+}
+
+- (void)overlaySelected
+{
+    if (_distanceView.alpha == 1.0) {
+        [_distanceView animateOut];
+    }
+    if (_sortingView.alpha == 1.0) {
+        [_sortingView animateOut];
+    }
+    _overlayView.hidden = YES;
 }
 
 - (void)mapButtonSelected:(UIButton *)sender
@@ -166,19 +249,31 @@
     NSLog(@"map");
 }
 
+- (void)backButtonSelected:(UIButton *)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Helper Functions
+
+static const int kDistances[] = {1, 2, 5, 10};
+static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modified"};
 
 - (void)_fetchData
 {
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=10&la=%f&lo=%f&limit=10&offset=%d&order_by=score&format=json", coord.latitude, coord.longitude, _offset];
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=%d&la=%f&lo=%f&limit=10&offset=%d&order_by=%@&format=json", kDistances[[LKDefaults distance]], coord.latitude, coord.longitude, _offset, kSortBy[[LKDefaults sortBy]]];
+    NSLog(@"Fetch data url: %@", url);
     _offset += 10;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     LKLoadingView *loadingView = [[LKLoadingView alloc] init];
     [self.view addSubview:loadingView];
+    _distButton.enabled = NO;
+    _sortButton.enabled = NO;
+    self.tableView.userInteractionEnabled = NO;
     if (_loadCell != nil) {
         _loadLabel.hidden = YES;
         [_loadSpinner startAnimating];
@@ -191,6 +286,9 @@
     {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         [loadingView removeFromSuperview];
+        _distButton.enabled = YES;
+        _sortButton.enabled = YES;
+        self.tableView.userInteractionEnabled = YES;
         if (_loadCell != nil) {
             _loadLabel.hidden = NO;
             [_loadSpinner stopAnimating];
@@ -204,7 +302,6 @@
         
         NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
         NSArray *array = [json objectForKey:@"objects"];
-        NSLog(@"%@", json);
         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
         }];

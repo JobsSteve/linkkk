@@ -36,8 +36,20 @@
     _userLabel.text = [NSString stringWithFormat:@"By@%@", [_place.author objectForKey:@"nickname"]];
     _favLabel.text = [NSString stringWithFormat:@"%d", _place.score];
     _heartLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
-    if (_place.hasFaved)
+    if (_place.hasFaved) {
+        _heartLabel.text = @"♥";
         _heartLabel.textColor = [UIColor redColor];
+    } else {
+        _heartLabel.text = @"♡";
+        _heartLabel.textColor = [UIColor darkGrayColor];
+    }
+    if (_place.score < 10) {
+        _heartLabel.center = CGPointMake(282, _heartLabel.center.y);
+    } else if (_place.score < 100) {
+        _heartLabel.center = CGPointMake(274, _heartLabel.center.y);
+    } else {
+        _heartLabel.center = CGPointMake(266, _heartLabel.center.y);
+    }
     
     _photoView1.hidden = YES;
     _photoView2.hidden = YES;

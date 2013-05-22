@@ -209,42 +209,54 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="ghh-XL-3nh">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="LAs-HV-kY2">
-                                    <rect key="frame" x="20" y="0.0" width="140" height="44"/>
+                                    <rect key="frame" x="20" y="-8" width="140" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                     <state key="normal" title="附近500米">
                                         <color key="titleColor" red="0.0" green="0.53725490200000003" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="highlighted">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="disabled">
+                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="distanceButtonSelected:" destination="0jg-Ip-0BB" eventType="touchUpInside" id="sF8-1d-kvy"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dap-df-PXQ">
-                                    <rect key="frame" x="160" y="0.0" width="140" height="44"/>
+                                    <rect key="frame" x="160" y="-8" width="140" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                     <state key="normal" title="距离最近">
                                         <color key="titleColor" red="0.0" green="0.53725490200000003" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
-                                    <state key="highlighted">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="disabled">
+                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <state key="highlighted">
+                                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="sortingButtonSelected:" destination="0jg-Ip-0BB" eventType="touchUpInside" id="fQ7-ho-bVo"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Iad-XO-aCh">
-                                    <rect key="frame" x="135" y="11" width="17" height="21"/>
+                                    <rect key="frame" x="130" y="3" width="17" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.53725490200000003" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mnw-Z9-jEU">
-                                    <rect key="frame" x="283" y="11" width="17" height="21"/>
+                                    <rect key="frame" x="278" y="3" width="17" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.53725490200000003" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -255,7 +267,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NearbyCell" rowHeight="214" id="enU-hd-RkD" customClass="LKNearbyCell">
-                                <rect key="frame" x="0.0" y="66" width="320" height="214"/>
+                                <rect key="frame" x="0.0" y="56" width="320" height="214"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="213"/>
@@ -302,7 +314,7 @@
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="♥" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DIf-Ns-4WP">
-                                            <rect key="frame" x="256" y="178" width="25" height="21"/>
+                                            <rect key="frame" x="256" y="179" width="25" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -1214,6 +1226,8 @@
         <class className="LKNearbyViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LKNearbyViewController.h"/>
             <relationships>
+                <relationship kind="action" name="distanceButtonSelected:" candidateClass="UIButton"/>
+                <relationship kind="action" name="sortingButtonSelected:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="distButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="distLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="sortButton" candidateClass="UIButton"/>

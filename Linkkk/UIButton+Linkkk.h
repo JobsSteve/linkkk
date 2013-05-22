@@ -10,6 +10,9 @@
 
 @interface UIButton (Linkkk)
 
+- (void)setTitle:(NSString *)title;
+- (void)setTitleColor:(UIColor *)color;
+- (void)setTitleFont:(UIFont *)font;
 - (void)setTitleWithString:(NSString *)string;
 - (void)setImage:(UIImage *)image;
 - (UIImage *)image;
