@@ -10,6 +10,7 @@
 #import "LKProfile.h"
 #import "LKPlace.h"
 #import "LKNearbyCell.h"
+#import "LKLoadingView.h"
 #import "LKPlaceViewController.h"
 
 #import "UIViewController+Linkkk.h"
@@ -109,9 +110,15 @@
 - (void)_fetchFav
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/favourited/"]];
+    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    LKLoadingView *loadingView = [[LKLoadingView alloc] init];
+    [self.view addSubview:loadingView];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [loadingView removeFromSuperview];
+        
         if (data == nil || error != nil) {
             [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
             return;
@@ -133,7 +140,7 @@
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/experience/created/"]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (data == nil || error != nil) {
             [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
@@ -193,12 +200,12 @@
     if (tableView == _favTableView) {
         LKPlace *place = [_favPlaces objectAtIndex:indexPath.row];
         if (place.album.count == 0)
-            return 100.0;
+            return 110.0;
         return 214.0;
     } else { // tableView == _myTableView
         LKPlace *place = [_myPlaces objectAtIndex:indexPath.row];
         if (place.album.count == 0)
-            return 100.0;
+            return 110.0;
         return 214.0;
     }
 }

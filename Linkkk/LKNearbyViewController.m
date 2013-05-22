@@ -158,9 +158,10 @@ static NSString * const kSortByOptions[] = {
 {
     if (indexPath.section == 1) // Load more cell
         return 80.0;
+    
     LKPlace *place = [_places objectAtIndex:indexPath.row];
     if (place.album.count == 0)
-        return 100.0;
+        return 110.0;
     return 214.0;
 }
 

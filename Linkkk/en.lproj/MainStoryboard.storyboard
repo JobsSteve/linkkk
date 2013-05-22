@@ -994,50 +994,57 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FavCell" rowHeight="196" id="6sP-Jk-qCJ" customClass="LKNearbyCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="196"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FavCell" rowHeight="214" id="uYc-pv-evw" customClass="LKNearbyCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="214"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="195"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="213"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="tua-6u-9nx">
-                                                    <rect key="frame" x="20" y="72" width="85" height="85"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="qcK-Xx-J5N">
+                                                    <rect key="frame" x="20" y="80" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="DFr-tE-oZ4">
-                                                    <rect key="frame" x="116" y="72" width="85" height="85"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="vaa-Ev-aeF">
+                                                    <rect key="frame" x="115" y="80" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="HJK-8r-M9W">
-                                                    <rect key="frame" x="215" y="72" width="85" height="85"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="h0E-mv-4S1">
+                                                    <rect key="frame" x="210" y="80" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" id="2Cg-7Z-ybi">
-                                                    <rect key="frame" x="20" y="20" width="280" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tSo-53-iTg">
+                                                    <rect key="frame" x="20" y="18" width="280" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="地址" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g90-iw-OHT">
-                                                    <rect key="frame" x="20" y="43" width="280" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="地址" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QWS-Pe-4F1">
+                                                    <rect key="frame" x="20" y="47" width="280" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8aJ-Xr-qp3">
-                                                    <rect key="frame" x="20" y="165" width="187" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8D3-i5-Sgx">
+                                                    <rect key="frame" x="20" y="178" width="187" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="fav" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mme-ZV-pJV">
-                                                    <rect key="frame" x="215" y="165" width="85" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="888" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e58-Ia-wr4">
+                                                    <rect key="frame" x="269" y="178" width="31" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="♥" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X1z-HD-q3N">
+                                                    <rect key="frame" x="256" y="179" width="25" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
@@ -1045,14 +1052,15 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <outlet property="addressLabel" destination="g90-iw-OHT" id="3Xq-gb-X7E"/>
-                                            <outlet property="favLabel" destination="mme-ZV-pJV" id="Pvq-hi-fCY"/>
-                                            <outlet property="photoView1" destination="tua-6u-9nx" id="kMW-f1-jQI"/>
-                                            <outlet property="photoView2" destination="DFr-tE-oZ4" id="cyc-gd-aaV"/>
-                                            <outlet property="photoView3" destination="HJK-8r-M9W" id="rYv-SH-jh9"/>
-                                            <outlet property="titleLabel" destination="2Cg-7Z-ybi" id="Moq-Ey-khu"/>
-                                            <outlet property="userLabel" destination="8aJ-Xr-qp3" id="hYd-LA-dkm"/>
-                                            <segue destination="qoA-0K-5eQ" kind="push" identifier="FavPlaceSegue" id="JjK-ir-j01"/>
+                                            <outlet property="addressLabel" destination="QWS-Pe-4F1" id="68w-5e-IrL"/>
+                                            <outlet property="favLabel" destination="e58-Ia-wr4" id="efz-2V-TaJ"/>
+                                            <outlet property="heartLabel" destination="X1z-HD-q3N" id="O6h-VW-3wq"/>
+                                            <outlet property="photoView1" destination="qcK-Xx-J5N" id="Ufm-cy-h5j"/>
+                                            <outlet property="photoView2" destination="vaa-Ev-aeF" id="ips-vF-TyF"/>
+                                            <outlet property="photoView3" destination="h0E-mv-4S1" id="3Bj-Ba-P6e"/>
+                                            <outlet property="titleLabel" destination="tSo-53-iTg" id="luR-PZ-FCP"/>
+                                            <outlet property="userLabel" destination="8D3-i5-Sgx" id="9XA-4Y-Kzl"/>
+                                            <segue destination="qoA-0K-5eQ" kind="push" identifier="FavPlaceSegue" id="A18-DA-hat"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1066,50 +1074,57 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyCell" rowHeight="196" id="vmc-QD-03t" customClass="LKNearbyCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="196"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyCell" rowHeight="214" id="PEu-wI-0IK" customClass="LKNearbyCell">
+                                        <rect key="frame" x="0.0" y="56" width="320" height="214"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="195"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="213"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="5AQ-LA-lC3">
-                                                    <rect key="frame" x="20" y="72" width="85" height="85"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Zz9-FX-AeV">
+                                                    <rect key="frame" x="20" y="80" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="CDO-4H-Iqh">
-                                                    <rect key="frame" x="116" y="72" width="85" height="85"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="iXt-rW-fQh">
+                                                    <rect key="frame" x="115" y="80" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="XDY-zn-krH">
-                                                    <rect key="frame" x="215" y="72" width="85" height="85"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="fVn-Y1-YYn">
+                                                    <rect key="frame" x="210" y="80" width="90" height="90"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" id="CQI-GP-VfT">
-                                                    <rect key="frame" x="20" y="20" width="280" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="brd-Zi-yM5">
+                                                    <rect key="frame" x="20" y="18" width="280" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="地址" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U8b-BV-678">
-                                                    <rect key="frame" x="20" y="43" width="280" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="地址" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rfG-pL-Co8">
+                                                    <rect key="frame" x="20" y="47" width="280" height="20"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xlJ-V1-OjK">
-                                                    <rect key="frame" x="20" y="165" width="187" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oaA-Oc-TKO">
+                                                    <rect key="frame" x="20" y="178" width="187" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="fav" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PLs-3P-1wS">
-                                                    <rect key="frame" x="215" y="165" width="85" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="888" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hQp-iM-lvp">
+                                                    <rect key="frame" x="269" y="178" width="31" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="♥" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="THX-ry-e4Y">
+                                                    <rect key="frame" x="256" y="179" width="25" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
@@ -1117,14 +1132,15 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <outlet property="addressLabel" destination="U8b-BV-678" id="htH-2R-Njv"/>
-                                            <outlet property="favLabel" destination="PLs-3P-1wS" id="ljI-zi-a20"/>
-                                            <outlet property="photoView1" destination="5AQ-LA-lC3" id="I95-hj-K7e"/>
-                                            <outlet property="photoView2" destination="CDO-4H-Iqh" id="gIM-c1-wPw"/>
-                                            <outlet property="photoView3" destination="XDY-zn-krH" id="LGY-dZ-gpE"/>
-                                            <outlet property="titleLabel" destination="CQI-GP-VfT" id="bUt-mn-Znz"/>
-                                            <outlet property="userLabel" destination="xlJ-V1-OjK" id="8CH-G1-vI7"/>
-                                            <segue destination="qoA-0K-5eQ" kind="push" identifier="MyPlaceSegue" id="Y2q-Mo-zAq"/>
+                                            <outlet property="addressLabel" destination="rfG-pL-Co8" id="zIf-hg-r7z"/>
+                                            <outlet property="favLabel" destination="hQp-iM-lvp" id="pY6-t9-2rQ"/>
+                                            <outlet property="heartLabel" destination="THX-ry-e4Y" id="6E5-4Q-WhV"/>
+                                            <outlet property="photoView1" destination="Zz9-FX-AeV" id="zkb-ZO-Ygc"/>
+                                            <outlet property="photoView2" destination="iXt-rW-fQh" id="SGv-av-BUQ"/>
+                                            <outlet property="photoView3" destination="fVn-Y1-YYn" id="NYy-ba-kAf"/>
+                                            <outlet property="titleLabel" destination="brd-Zi-yM5" id="FVa-GT-8z8"/>
+                                            <outlet property="userLabel" destination="oaA-Oc-TKO" id="BC5-f6-jej"/>
+                                            <segue destination="qoA-0K-5eQ" kind="push" identifier="MyPlaceSegue" id="qVT-MZ-GNh"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

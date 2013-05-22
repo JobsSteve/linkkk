@@ -46,7 +46,6 @@
     UISearchBar *_searchBar;
     BOOL _isShowingSearchBar;
     
-    NSMutableArray *_places;
     NSArray *_results;
     
     LKLoadingView *_loadingView;
@@ -60,7 +59,6 @@
     self = [super initWithCoder:decoder];
     if (self) {
         [LKProfile profile];
-        _places = [NSMutableArray arrayWithCapacity:10];
         [LKMapManager sharedInstance];
         
         _loadingView = [[LKLoadingView alloc] init];
@@ -150,19 +148,19 @@
 
 - (void)mainViewDidShake
 {
-    [self performSegueWithIdentifier:@"ShakeSegue" sender:nil];
+    _shakeViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"PlaceScene"];
+    _shakeViewController.shakeDelegate = self;
+    // FIX: not show place view when loading
+    [_shakeViewController view];
+    _shakeViewController.placeView.hidden = YES;
+    // END FIX
+    [self.navigationController pushViewController:_shakeViewController animated:YES];
+    [self shakeViewDidShake];
 }
 
 - (void)shakeViewDidShake
 {
-    _shakeViewController.placeView.hidden = YES;
-    if (_places.count == 0) {
-        [self _fetchData];
-    }
-    else {
-        [_shakeViewController.view addSubview:_loadingView];
-        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(_updateView) userInfo:nil repeats:NO];
-    }
+    [self _fetchData];
 }
 
 #pragma mark - Create View Delegate
@@ -184,8 +182,11 @@
         profileViewController.sinaweibo = [self _sinaweibo];
     } else if ([segue.identifier isEqualToString:@"ShakeSegue"]) {
         _shakeViewController = ((LKPlaceViewController *)segue.destinationViewController);
-        _shakeViewController.shakeDelegate = self;
+        // FIX: not show place view when loading
         [_shakeViewController view];
+        _shakeViewController.placeView.hidden = YES;
+        // END FIX
+        _shakeViewController.shakeDelegate = self;
         [self shakeViewDidShake];
     } else {
         // DO NOTHING
@@ -507,8 +508,7 @@
     static int offset = 0;
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=10&offset=%d&format=json", coord.latitude, coord.longitude, offset];
-    offset += 10;
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=1&offset=%d&format=json", coord.latitude, coord.longitude, offset++];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [_shakeViewController.view addSubview:_loadingView];
@@ -525,23 +525,15 @@
          
          NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
          NSArray *array = [json objectForKey:@"objects"];
-         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-             [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
-         }];
-         [self _updateView];
+         if (array.count > 0) {
+             LKPlace *place = [[LKPlace alloc] initWithJSON:[array objectAtIndex:0]];
+             [self.navigationController popViewControllerAnimated:NO];
+             _shakeViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"PlaceScene"];
+             _shakeViewController.shakeDelegate = self;
+             _shakeViewController.place = place;
+             [self.navigationController pushViewController:_shakeViewController animated:NO];
+         }
      }];
-}
-
-- (void)_updateView
-{
-    _shakeViewController.placeView.hidden = NO;
-    [_loadingView removeFromSuperview];
-    
-    if (_places.count > 0) {
-        _shakeViewController.place = [_places objectAtIndex:0];
-        [_places removeObjectAtIndex:0];
-        [_shakeViewController updateView];
-    }
 }
 
 @end

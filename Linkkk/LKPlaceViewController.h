@@ -33,7 +33,6 @@
 - (IBAction)favButtonSelected:(UIButton *)sender;
 - (IBAction)shareButtonSelected:(UIButton *)sender;
 
-- (void)updateView;
 - (void)presentPhotoGallery:(UIButton *)sender;
 
 @end

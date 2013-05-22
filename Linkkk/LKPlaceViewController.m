@@ -49,7 +49,18 @@
     
     self.placeView.shakeDelegate = _shakeDelegate;
     
-    [self updateView];
+    _placeView.place = _place; // accessor does the rest
+    _placeView.placeDelegate = self;
+    
+    _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
+    _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
+    _mapButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
+    _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
+    
+    if (_place.hasFaved)
+        _favButton.titleLabel.textColor = [UIColor redColor];
+    else
+        _favButton.titleLabel.textColor = [UIColor specialBlue];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -191,22 +202,6 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"失败" message:@"暂不能分享无图碎片" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
         [alertView show];
     }
-}
-
-- (void)updateView
-{
-    _placeView.place = _place; // accessor does the rest
-    _placeView.placeDelegate = self;
-    
-    _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
-    _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
-    _mapButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
-    _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
-    
-    if (_place.hasFaved)
-        _favButton.titleLabel.textColor = [UIColor redColor];
-    else
-        _favButton.titleLabel.textColor = [UIColor specialBlue];
 }
 
 - (void)didSelectPhoto:(UIButton *)sender
