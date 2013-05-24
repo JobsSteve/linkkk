@@ -9,10 +9,11 @@
 #import "LKNearbyViewController.h"
 #import "LKNearbyCell.h"
 #import "LKPlaceViewController.h"
-#import "LKPlace.h"
-#import "LKProfile.h"
 #import "LKLoadingView.h"
 #import "LKDropDownOptionsView.h"
+
+#import "LKPlace.h"
+#import "LKProfile.h"
 #import "LKDefaults.h"
 
 #import "UIBarButtonItem+Linkkk.h"
@@ -31,7 +32,7 @@ static NSString * const kSortByOptions[] = {
     @"距离最近的", @"最多喜欢的", @"最多评论的", @"最近更新的"
 };
 
-@interface LKNearbyViewController ()
+@interface LKNearbyViewController () <BMKMapViewDelegate>
 {
     int _selectedRow;
     NSMutableArray *_places;
@@ -91,8 +92,19 @@ static NSString * const kSortByOptions[] = {
     _sortingView.delegate = self;
     [self.tableView insertSubview:_sortingView belowSubview:self.tableView.tableHeaderView];
     
+    // Map view setup
+    _mapView.delegate = self;
+    _mapView.zoomLevel = 14;
+    
     // Fetch Data
     [self _fetchData];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -185,6 +197,28 @@ static NSString * const kSortByOptions[] = {
     }
 }
 
+#pragma mark - Map View Delegate
+
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
+{
+    LKPlace *annotationPlace;
+    for (LKPlace *place in _places) {
+        if ([view.annotation.title isEqualToString:place.title]) {
+            annotationPlace = place;
+            break;
+        }
+    }
+//    for (UIView *view in [[[_mapView subviews] objectAtIndex:0] subviews]) {
+//        if ([[[view class] description] isEqualToString:@"ActionPaopaoView"])
+//            view.backgroundColor = [UIColor redColor];
+//    }
+    if (annotationPlace) {
+        LKPlaceViewController *placeViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"PlaceScene"];
+        placeViewController.place = annotationPlace;
+        [self.navigationController pushViewController:placeViewController animated:YES];
+    }
+}
+
 #pragma mark - Callbacks
 
 - (void)dropDownOptionDidSelect:(int)option type:(int)type
@@ -200,7 +234,9 @@ static NSString * const kSortByOptions[] = {
     }
     // Clear and fetch data
     _offset = 0;
+    _hasMore = YES;
     [_places removeAllObjects];
+    [self.tableView reloadData];
     [self _fetchData];
 }
 
@@ -247,7 +283,14 @@ static NSString * const kSortByOptions[] = {
 
 - (void)mapButtonSelected:(UIButton *)sender
 {
-    NSLog(@"map");
+    [UIView transitionFromView:_tableView toView:_mapView duration:0.7 options:UIViewAnimationOptionTransitionFlipFromRight completion:nil];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"☰" size:50.0 target:self action:@selector(listButtonSelected:)];
+}
+
+- (void)listButtonSelected:(UIButton *)sender
+{
+    [UIView transitionFromView:_mapView toView:_tableView duration:0.7 options:UIViewAnimationOptionTransitionFlipFromRight completion:nil];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:self action:@selector(mapButtonSelected:)];
 }
 
 - (void)backButtonSelected:(UIButton *)sender
@@ -274,7 +317,6 @@ static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modifi
     [self.view addSubview:loadingView];
     _distButton.enabled = NO;
     _sortButton.enabled = NO;
-    self.tableView.userInteractionEnabled = NO;
     if (_loadCell != nil) {
         _loadLabel.hidden = YES;
         [_loadSpinner startAnimating];
@@ -289,7 +331,6 @@ static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modifi
         [loadingView removeFromSuperview];
         _distButton.enabled = YES;
         _sortButton.enabled = YES;
-        self.tableView.userInteractionEnabled = YES;
         if (_loadCell != nil) {
             _loadLabel.hidden = NO;
             [_loadSpinner stopAnimating];
@@ -309,7 +350,22 @@ static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modifi
         if (array.count == 0)
             _hasMore = NO;
         [self.tableView reloadData];
+        [self _updateMap];
     }];
+}
+
+- (void)_updateMap
+{
+    _mapView.showsUserLocation = YES;
+    _mapView.centerCoordinate = [LKProfile profile].address.geoPt;
+    
+    for (LKPlace *place in _places) {
+        BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
+        annotation.coordinate = place.pt;
+        annotation.title = place.title;
+        annotation.subtitle = place.address;
+        [_mapView addAnnotation:annotation];
+    }
 }
 
 @end
