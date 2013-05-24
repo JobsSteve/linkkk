@@ -13,6 +13,7 @@
 #import "LKAppDelegate.h"
 
 #import "LKNavViewController.h"
+#import "LKShareWeiboViewController.h"
 
 #import "UIViewController+Linkkk.h"
 #import "UIBarButtonItem+Linkkk.h"
@@ -26,7 +27,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 
-@interface LKPlaceViewController () <MWPhotoBrowserDelegate, SinaWeiboRequestDelegate, UIAlertViewDelegate>
+@interface LKPlaceViewController () <MWPhotoBrowserDelegate, UIAlertViewDelegate>
 
 @end
 
@@ -104,6 +105,9 @@
         LKNavViewController *navViewController = (LKNavViewController *)segue.destinationViewController;
         navViewController.from = [LKProfile profile].address.geoPt;
         navViewController.to = _place.pt;
+    } else if ([segue.identifier isEqualToString:@"WeiboSegue"]) {
+        LKShareWeiboViewController *weiboViewController = (LKShareWeiboViewController *)segue.destinationViewController;
+        weiboViewController.place = _place;
     }
 }
 
@@ -185,23 +189,6 @@
 
 - (IBAction)shareButtonSelected:(UIButton *)sender
 {
-    SinaWeibo *weibo = ((LKAppDelegate *)[UIApplication sharedApplication].delegate).sinaweibo;
-    
-    if (_place.album.count > 0) {
-        NSString *string = _place.content;
-        if (string.length > 118) {
-            string = [string substringToIndex:120];
-            string = [string stringByAppendingString:@"..."];
-        }
-        string = [NSString stringWithFormat:@"#大中华经历地图# %@ @连客Link", string];
-//        [weibo requestWithURL:@"statuses/upload.json"
-//                       params:[NSMutableDictionary dictionaryWithObjectsAndKeys:string, @"status", _placeView.photoView1.image, @"pic", nil]
-//                   httpMethod:@"POST"
-//                     delegate:self];
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"失败" message:@"暂不能分享无图碎片" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
-        [alertView show];
-    }
 }
 
 - (void)didSelectPhoto:(UIButton *)sender
