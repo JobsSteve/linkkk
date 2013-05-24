@@ -126,7 +126,6 @@
 
 - (void)_imageSelected:(UIButton *)sender
 {
-    NSLog(@"selected");
     [_placeDelegate didSelectPhoto:sender];
 }
 

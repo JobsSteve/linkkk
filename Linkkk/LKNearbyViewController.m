@@ -100,11 +100,20 @@ static NSString * const kSortByOptions[] = {
     [self _fetchData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[LKProfile profile] removeObserver:self forKeyPath:@"address"];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    
+    [[LKProfile profile] addObserver:self forKeyPath:@"address" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 - (void)didReceiveMemoryWarning
@@ -117,6 +126,13 @@ static NSString * const kSortByOptions[] = {
 {
     LKPlaceViewController *viewController = [segue destinationViewController];
     viewController.place = [_places objectAtIndex:[self.tableView indexPathForSelectedRow].row];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"address"]) {
+        [self _clearAndFetchData];
+    }
 }
 
 #pragma mark - Table view data source
@@ -233,11 +249,7 @@ static NSString * const kSortByOptions[] = {
         [_distButton setTitle:kDistanceOptions[option] forState:UIControlStateHighlighted];
     }
     // Clear and fetch data
-    _offset = 0;
-    _hasMore = YES;
-    [_places removeAllObjects];
-    [self.tableView reloadData];
-    [self _fetchData];
+    [self _clearAndFetchData];
 }
 
 - (void)distanceButtonSelected:(UIButton *)sender
@@ -303,6 +315,15 @@ static NSString * const kSortByOptions[] = {
 static const int kDistances[] = {1, 2, 5, 10};
 static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modified"};
 
+- (void)_clearAndFetchData
+{
+    _offset = 0;
+    _hasMore = YES;
+    [_places removeAllObjects];
+    [self.tableView reloadData];
+    [self _fetchData];
+}
+
 - (void)_fetchData
 {
     LKProfile *profile = [LKProfile profile];
@@ -358,6 +379,7 @@ static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modifi
 {
     _mapView.showsUserLocation = YES;
     _mapView.centerCoordinate = [LKProfile profile].address.geoPt;
+    [_mapView removeAnnotations:[[_mapView annotations] mutableCopy]];
     
     for (LKPlace *place in _places) {
         BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];

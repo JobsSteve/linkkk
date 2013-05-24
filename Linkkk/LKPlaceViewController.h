@@ -21,6 +21,7 @@
 
 @property (nonatomic, strong) LKPlace *place;
 @property (nonatomic, strong) IBOutlet LKPlaceView *placeView;
+@property (nonatomic, strong) IBOutlet UIView *toolbarView;
 
 @property (nonatomic, strong) IBOutlet UIButton *flagButton;
 @property (nonatomic, strong) IBOutlet UIButton *favButton;

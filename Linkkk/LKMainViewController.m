@@ -48,6 +48,8 @@
     
     NSArray *_results;
     
+    int _shakeOffset;
+    
     LKLoadingView *_loadingView;
 }
 @end
@@ -153,6 +155,7 @@
     // FIX: not show place view when loading
     [_shakeViewController view];
     _shakeViewController.placeView.hidden = YES;
+    _shakeViewController.toolbarView.hidden = YES;
     // END FIX
     [self.navigationController pushViewController:_shakeViewController animated:YES];
     [self shakeViewDidShake];
@@ -185,6 +188,7 @@
         // FIX: not show place view when loading
         [_shakeViewController view];
         _shakeViewController.placeView.hidden = YES;
+        _shakeViewController.toolbarView.hidden = YES;
         // END FIX
         _shakeViewController.shakeDelegate = self;
         [self shakeViewDidShake];
@@ -318,6 +322,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"address"]) {
+        // Navigation bar
         BMKAddrInfo *address = [LKProfile profile].address;
         UIButton *titleButton = (UIButton *)self.navigationItem.titleView;
         NSString *name = address.addressComponent.streetName;
@@ -331,6 +336,9 @@
             cell.headingLabel.text = @"当前位置";
             cell.subHeadingLabel.text = [LKProfile profile].current.strAddr;
         }
+        
+        // Shakeview controller
+        _shakeOffset = 0;
     } else if ([keyPath isEqualToString:@"resignActiveNotifier"]) {
         if (_isShowingSearchBar) {
             [self _navButtonSelected:nil];
@@ -505,10 +513,9 @@
 
 - (void)_fetchData
 {
-    static int offset = 0;
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=1&offset=%d&format=json", coord.latitude, coord.longitude, offset++];
+    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=1&offset=%d&format=json", coord.latitude, coord.longitude, _shakeOffset++];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [_shakeViewController.view addSubview:_loadingView];
@@ -518,6 +525,12 @@
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+         // FIX: hack for weird "back" button behaviour
+         if (self.navigationController.visibleViewController != _shakeViewController) {
+             return;
+         } else {
+             [self.navigationController popViewControllerAnimated:NO];
+         }
          if (data == nil || error != nil) {
              [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
              return;
@@ -527,7 +540,6 @@
          NSArray *array = [json objectForKey:@"objects"];
          if (array.count > 0) {
              LKPlace *place = [[LKPlace alloc] initWithJSON:[array objectAtIndex:0]];
-             [self.navigationController popViewControllerAnimated:NO];
              _shakeViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"PlaceScene"];
              _shakeViewController.shakeDelegate = self;
              _shakeViewController.place = place;

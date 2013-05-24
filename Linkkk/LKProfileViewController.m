@@ -53,22 +53,30 @@
     [_segControl setDividerImage:[UIImage imageNamed:@"profile_seg_div"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [_segControl addTarget:self action:@selector(_segControlDidSelect:) forControlEvents:UIControlEventValueChanged];
     
-    LKProfile *profile = [LKProfile profile];
-    if (profile.username == nil) {
-        [profile addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:NULL];
-    } else {
-        _username.text = profile.username;
-        [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
-    }
-    
     [self _fetchFav];
     [self _fetchMine];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     [_favTableView deselectRowAtIndexPath:[_favTableView indexPathForSelectedRow] animated:YES];
     [_myTableView deselectRowAtIndexPath:[_myTableView indexPathForSelectedRow] animated:YES];
+    
+    LKProfile *profile = [LKProfile profile];
+    [profile addObserver:self forKeyPath:@"username" options:NSKeyValueObservingOptionNew context:NULL];
+    if (profile != nil) {
+        _username.text = profile.username;
+        [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[LKProfile profile] removeObserver:self forKeyPath:@"username"];
 }
 
 - (void)didReceiveMemoryWarning

@@ -22,7 +22,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *hoursIconLabel;
 @property (strong, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) IBOutlet UIView *infoView;
-@property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) NSMutableArray *imageButtons;
 
 @property (strong, nonatomic) LKPlace *place;

@@ -33,11 +33,11 @@
 
 @implementation LKPlaceViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -46,12 +46,13 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"攻略" target:self action:@selector(backButtonSelected:)];
-    
     self.placeView.shakeDelegate = _shakeDelegate;
     
     _placeView.place = _place; // accessor does the rest
     _placeView.placeDelegate = self;
+    
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"攻略" target:self action:@selector(backButtonSelected:)];
+    //self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:_shakeDelegate action:@selector(shakeViewDidShake)];
     
     _flagButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
     _favButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
@@ -59,9 +60,7 @@
     _shareButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:44.0];
     
     if (_place.hasFaved)
-        _favButton.titleLabel.textColor = [UIColor redColor];
-    else
-        _favButton.titleLabel.textColor = [UIColor specialBlue];
+        _favButton.selected = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -182,7 +181,7 @@
             [self showErrorView:@"Server failure"];
         } else {
             _place.hasFaved = !_place.hasFaved;
-            _favButton.titleLabel.textColor = _place.hasFaved ? [UIColor redColor] : [UIColor specialBlue];
+            _favButton.selected = _place.hasFaved;
         }
     }];
 }
