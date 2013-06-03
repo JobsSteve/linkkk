@@ -542,7 +542,7 @@
              [self.navigationController popViewControllerAnimated:NO];
          }
          if (data == nil || error != nil) {
-             [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+             [UIViewController showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
              return;
          }
          

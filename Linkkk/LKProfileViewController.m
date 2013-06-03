@@ -53,6 +53,8 @@
     [_segControl setDividerImage:[UIImage imageNamed:@"profile_seg_div"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [_segControl addTarget:self action:@selector(_segControlDidSelect:) forControlEvents:UIControlEventValueChanged];
     
+    _favTableView.tableHeaderView = _containerView;
+    
     [self _fetchFav];
     [self _fetchMine];
 }
@@ -124,6 +126,16 @@
 {
     _favTableView.hidden = !_favTableView.hidden;
     _myTableView.hidden = !_myTableView.hidden;
+    
+    if (_favTableView.hidden) {
+        _favTableView.tableHeaderView = nil;
+        _myTableView.tableHeaderView = _containerView;
+        _myTableView.contentOffset = _favTableView.contentOffset;
+    } else {
+        _myTableView.tableHeaderView = nil;
+        _favTableView.tableHeaderView = _containerView;
+        _favTableView.contentOffset = _myTableView.contentOffset;
+    }
 }
 
 - (void)_fetchFav
@@ -139,7 +151,7 @@
         [loadingView removeFromSuperview];
         
         if (data == nil || error != nil) {
-            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            [UIViewController showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
             return;
         }
         // Parse user info
@@ -162,7 +174,7 @@
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (data == nil || error != nil) {
-            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            [UIViewController showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
             return;
         }
         // Parse user info

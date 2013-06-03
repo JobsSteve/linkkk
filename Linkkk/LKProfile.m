@@ -14,7 +14,7 @@
 #import "SinaWeibo.h"
 #import "BMapKit.h"
 
-#define CUSTOM_LOCATION
+//#define CUSTOM_LOCATION
 #define SET_LOCATION(lat,lng) location = [[CLLocation alloc] initWithLatitude:lat longitude:lng]
 
 /*

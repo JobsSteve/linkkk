@@ -359,7 +359,7 @@ static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modifi
         }
         
         if (data == nil || error != nil) {
-            [self showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            [UIViewController showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
             return;
         }
         

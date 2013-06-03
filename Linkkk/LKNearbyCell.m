@@ -7,9 +7,11 @@
 //
 
 #import "LKNearbyCell.h"
+#import "LKProfile.h"
 #import "LKPlace.h"
 
 #import "UIImageView+WebCache.h"
+#import "UIViewController+Linkkk.h"
 
 @implementation LKNearbyCell
 
@@ -35,20 +37,15 @@
     _addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.location];
     _userLabel.text = [NSString stringWithFormat:@"By@%@", [_place.author objectForKey:@"nickname"]];
     _favLabel.text = [NSString stringWithFormat:@"%d", _place.score];
-    _heartLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
-    if (_place.hasFaved) {
-        _heartLabel.text = @"♥";
-        _heartLabel.textColor = [UIColor redColor];
-    } else {
-        _heartLabel.text = @"♡";
-        _heartLabel.textColor = [UIColor darkGrayColor];
-    }
+    _heartButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
+    _heartButton.selected = _place.hasFaved;
+    [_heartButton addTarget:self action:@selector(_favButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
     if (_place.score < 10) {
-        _heartLabel.center = CGPointMake(282, _heartLabel.center.y);
+        _heartButton.center = CGPointMake(282, _heartButton.center.y);
     } else if (_place.score < 100) {
-        _heartLabel.center = CGPointMake(274, _heartLabel.center.y);
+        _heartButton.center = CGPointMake(274, _heartButton.center.y);
     } else {
-        _heartLabel.center = CGPointMake(266, _heartLabel.center.y);
+        _heartButton.center = CGPointMake(266, _heartButton.center.y);
     }
     
     _photoView1.hidden = YES;
@@ -71,6 +68,36 @@
         [_photoView3 setImageWithURL:url];
         _photoView3.hidden = NO;
     }
+}
+
+- (void)_favButtonSelected:(UIButton *)sender
+{
+    NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json", _place.placeID];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSString *urlString = _place.hasFaved ? @"http://map.linkkk.com/v5/unfavourite/exp/" : @"http://map.linkkk.com/v5/favourite/exp/";
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    request.HTTPMethod = @"POST";
+    request.HTTPBody = postData;
+    [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
+    [request setValue:[LKProfile profile].csrf forHTTPHeaderField:@"X-XSRF-TOKEN"];
+    [request setValue:[LKProfile profile].cookie forHTTPHeaderField:@"Cookie"];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        if (data == nil || error != nil) {
+            [UIViewController showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
+            return;
+        }
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+        NSLog(@"%@", json);
+        if (![[json objectForKey:@"status"] isEqualToString:@"okay"]) {
+            [UIViewController showErrorView:@"Server failure"];
+        } else {
+            _place.hasFaved = !_place.hasFaved;
+            _heartButton.selected = _place.hasFaved;
+        }
+    }];
 }
 
 @end

@@ -17,5 +17,6 @@
 @property (strong, nonatomic) IBOutlet UISegmentedControl *segControl;
 @property (strong, nonatomic) IBOutlet UITableView *favTableView;
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
+@property (strong, nonatomic) IBOutlet UIView *containerView;
 
 @end

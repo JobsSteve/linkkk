@@ -10,6 +10,6 @@
 
 @interface UIViewController (Linkkk)
 
-- (void)showErrorView:(NSString *)description;
++ (void)showErrorView:(NSString *)description;
 
 @end
