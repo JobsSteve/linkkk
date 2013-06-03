@@ -19,7 +19,7 @@
 
 #import "UIImageView+WebCache.h"
 
-@interface LKProfileViewController ()
+@interface LKProfileViewController () <UIAlertViewDelegate>
 {
     NSMutableArray *_favPlaces;
     NSMutableArray *_myPlaces;
@@ -41,7 +41,7 @@
 {
     [super viewDidLoad];
 
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"帐号" target:self action:@selector(backButtonSelected:)];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:40.0 target:self action:@selector(logoutButtonSelected:)];
     
     // Customize Seg Control
@@ -96,12 +96,23 @@
     });
 }
 
+#pragma mark - Alert View Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+        return;
+    
+    [_sinaweibo logOut];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Callbacks
 
 - (void)logoutButtonSelected:(UIButton *)sender
 {
-    [_sinaweibo logOut];
-    [self.navigationController popViewControllerAnimated:YES];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注销" message:@"真的要注销么？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    [alertView show];
 }
 
 - (void)backButtonSelected:(UIButton *)sender

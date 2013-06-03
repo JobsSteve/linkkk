@@ -19,6 +19,9 @@
 		2B396C7A173EA85D00152BA1 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B396C78173EA85D00152BA1 /* HPTextViewInternal.m */; };
 		2B647AFC1736C89C0063F431 /* LKLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B647AFB1736C89B0063F431 /* LKLoadingView.m */; };
 		2B67CA62174FE63000D87D86 /* LKShareWeiboViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B67CA61174FE63000D87D86 /* LKShareWeiboViewController.m */; };
+		2B68C05D175B81190036C1E9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B68C05C175B81190036C1E9 /* AudioToolbox.framework */; };
+		2B68C060175B8FE40036C1E9 /* shake_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B68C05E175B8FE40036C1E9 /* shake_normal.png */; };
+		2B68C061175B8FE40036C1E9 /* shake_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B68C05F175B8FE40036C1E9 /* shake_normal@2x.png */; };
 		2B6B3BCA1737104600916D44 /* UIColor+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */; };
 		2B6B3BCC1737179400916D44 /* profile_seg_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B6B3BCB1737179400916D44 /* profile_seg_bg@2x.png */; };
 		2B8C74F91726AA230075F2D1 /* LKCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C74F81726AA230075F2D1 /* LKCreateViewController.m */; };
@@ -136,6 +139,9 @@
 		2B647AFB1736C89B0063F431 /* LKLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKLoadingView.m; sourceTree = "<group>"; };
 		2B67CA60174FE63000D87D86 /* LKShareWeiboViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKShareWeiboViewController.h; sourceTree = "<group>"; };
 		2B67CA61174FE63000D87D86 /* LKShareWeiboViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKShareWeiboViewController.m; sourceTree = "<group>"; };
+		2B68C05C175B81190036C1E9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		2B68C05E175B8FE40036C1E9 /* shake_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shake_normal.png; sourceTree = "<group>"; };
+		2B68C05F175B8FE40036C1E9 /* shake_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shake_normal@2x.png"; sourceTree = "<group>"; };
 		2B6B3BC81737104600916D44 /* UIColor+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Linkkk.h"; sourceTree = "<group>"; };
 		2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Linkkk.m"; sourceTree = "<group>"; };
 		2B6B3BCB1737179400916D44 /* profile_seg_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_seg_bg@2x.png"; sourceTree = "<group>"; };
@@ -319,6 +325,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B68C05D175B81190036C1E9 /* AudioToolbox.framework in Frameworks */,
 				2BA33523173E09AD00325D25 /* MessageUI.framework in Frameworks */,
 				2BA334D0173D43BA00325D25 /* AssetsLibrary.framework in Frameworks */,
 				2BCE7785173C3FAF00EBBE95 /* libc++.dylib in Frameworks */,
@@ -449,6 +456,7 @@
 		2BA510CC171C2856009A6547 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2B68C05C175B81190036C1E9 /* AudioToolbox.framework */,
 				2BA33522173E09AD00325D25 /* MessageUI.framework */,
 				2BA334CF173D43BA00325D25 /* AssetsLibrary.framework */,
 				2BD27273172B038400C757E9 /* ImageIO.framework */,
@@ -614,12 +622,14 @@
 				2BD532C517374D060050EDF7 /* profile_seg_bg.png */,
 				2BD532C617374D060050EDF7 /* profile_seg_fg.png */,
 				2BD532C717374D060050EDF7 /* profile_seg_fg@2x.png */,
-				2BD2724A172AD9F500C757E9 /* entypo.ttf */,
-				2BD2724B172AD9F500C757E9 /* entypo-social.ttf */,
+				2B68C05E175B8FE40036C1E9 /* shake_normal.png */,
+				2B68C05F175B8FE40036C1E9 /* shake_normal@2x.png */,
 				2BD27242172AD86E00C757E9 /* shakehome_normal.png */,
 				2BD27243172AD86E00C757E9 /* shakehome_normal@2x.png */,
 				2BD27244172AD86E00C757E9 /* shakehome_pressed.png */,
 				2BD27245172AD86E00C757E9 /* shakehome_pressed@2x.png */,
+				2BD2724A172AD9F500C757E9 /* entypo.ttf */,
+				2BD2724B172AD9F500C757E9 /* entypo-social.ttf */,
 				2BD27241172ACC0500C757E9 /* Splash Screen */,
 				2BD27250172B016D00C757E9 /* App Icon */,
 				2BD2723D172AC26600C757E9 /* navbar.png */,
@@ -774,6 +784,8 @@
 				2BCE7783173C3D6300EBBE95 /* mapapi.bundle in Resources */,
 				2BA334C7173D43A700325D25 /* AGImagePickerController.bundle in Resources */,
 				2BA334FF173E08C100325D25 /* MWPhotoBrowser.bundle in Resources */,
+				2B68C060175B8FE40036C1E9 /* shake_normal.png in Resources */,
+				2B68C061175B8FE40036C1E9 /* shake_normal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

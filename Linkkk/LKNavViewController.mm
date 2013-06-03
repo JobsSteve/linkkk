@@ -83,7 +83,7 @@ BOOL isRetina = YES;
 {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTarget:self action:@selector(backButtonSelected:)];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"导航" target:self action:@selector(backButtonSelected:)];
     
     _mapView.delegate = self;
     _mapView.zoomLevel = 15;

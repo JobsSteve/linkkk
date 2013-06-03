@@ -15,7 +15,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 static const int kTableHeaderHeight = 34.0;
-static const int kCellHeight = 50.0;
+static const int kCellHeight = 60.0;
 static const int kButtonTagOffset = 100;
 
 @interface LKDropDownOptionsView ()
@@ -133,7 +133,7 @@ static const int kButtonTagOffset = 100;
 
 - (void)setCheckmarkAtIndex:(int)index
 {
-    _checkmark.center = CGPointMake(280, index * kCellHeight + 25.0);
+    _checkmark.center = CGPointMake(280, index * kCellHeight + 30.0);
 }
 
 @end

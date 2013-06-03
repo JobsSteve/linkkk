@@ -14,7 +14,7 @@
 #import "SinaWeibo.h"
 #import "BMapKit.h"
 
-//#define CUSTOM_LOCATION
+#define CUSTOM_LOCATION
 #define SET_LOCATION(lat,lng) location = [[CLLocation alloc] initWithLatitude:lat longitude:lng]
 
 /*
@@ -130,7 +130,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation* location = [locations lastObject];
-    [manager stopUpdatingLocation];
+    //[manager stopUpdatingLocation];
     
 #ifdef CUSTOM_LOCATION
     // 上海静安区 31.230393, 121.473704

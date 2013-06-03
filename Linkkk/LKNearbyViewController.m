@@ -79,7 +79,7 @@ static NSString * const kSortByOptions[] = {
     // Filters
     _overlayView = [[UIView alloc] initWithFrame:self.tableView.frame];
     _overlayView.backgroundColor = [UIColor whiteColor];
-    _overlayView.alpha = 0.5;
+    _overlayView.alpha = 0.9;
     _overlayView.hidden = YES;
     [_overlayView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(overlaySelected)]];
     [self.tableView insertSubview:_overlayView belowSubview:self.tableView.tableHeaderView];

@@ -102,7 +102,7 @@
 {
     if ([segue.identifier isEqualToString:@"NavSegue"]) {
         LKNavViewController *navViewController = (LKNavViewController *)segue.destinationViewController;
-        navViewController.from = [LKProfile profile].address.geoPt;
+        navViewController.from = [LKProfile profile].current.geoPt;
         navViewController.to = _place.pt;
     } else if ([segue.identifier isEqualToString:@"WeiboSegue"]) {
         LKShareWeiboViewController *weiboViewController = (LKShareWeiboViewController *)segue.destinationViewController;

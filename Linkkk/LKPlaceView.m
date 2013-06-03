@@ -60,7 +60,7 @@
     } else {
         _hoursLabel.text = [NSString stringWithFormat:@"%@ - %@ %@", _place.time_start, _place.time_end, _place.time_desc];
     }
-    _textView.text = _place.content;
+    _textView.text = [_place.content stringByAppendingFormat:@"\n@%@", [_place.author objectForKey:@"nickname"]];
     
     NSArray *album = _place.album;
     [album enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

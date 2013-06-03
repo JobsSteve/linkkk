@@ -34,6 +34,7 @@
 #import "BMapKit.h"
 
 #import <QuartzCore/QuartzCore.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface LKMainViewController () <UIGestureRecognizerDelegate>
 {
@@ -163,6 +164,7 @@
 
 - (void)shakeViewDidShake
 {
+    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
     [self _fetchData];
 }
 
@@ -241,6 +243,10 @@
         [self.navigationController.navigationBar.layer addAnimation:animation2 forKey:@"animation2"];
         [_searchBar.layer addAnimation:animation3 forKey:@"animation3"];
         
+        UIButton *titleButton = (UIButton *)self.navigationItem.titleView;
+        NSString *title = [titleButton.titleLabel.text substringToIndex:titleButton.titleLabel.text.length-1];
+        [titleButton setTitleWithString:[title stringByAppendingString:@""]];
+        
         _tableView.hidden = NO;
         _searchBar.hidden = NO;
         self.navigationItem.rightBarButtonItem.customView.hidden = YES;
@@ -274,6 +280,10 @@
         [self.view.layer addAnimation:animation1 forKey:@"animation1"];
         [self.navigationController.navigationBar.layer addAnimation:animation2 forKey:@"animation2"];
         [_searchBar.layer addAnimation:animation3 forKey:@"animation3"];
+        
+        UIButton *titleButton = (UIButton *)self.navigationItem.titleView;
+        NSString *title = [titleButton.titleLabel.text substringToIndex:titleButton.titleLabel.text.length-1];
+        [titleButton setTitleWithString:[title stringByAppendingString:@""]];
         
         _tableView.hidden = YES;
         self.navigationItem.rightBarButtonItem.customView.hidden = NO;
@@ -543,6 +553,7 @@
              _shakeViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"PlaceScene"];
              _shakeViewController.shakeDelegate = self;
              _shakeViewController.place = place;
+             _shakeViewController.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithImage:[UIImage imageNamed:@"shake_normal"] target:self action:@selector(shakeViewDidShake)];
              [self.navigationController pushViewController:_shakeViewController animated:NO];
          }
      }];

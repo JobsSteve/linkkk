@@ -91,6 +91,14 @@
     return [[UIBarButtonItem alloc] initWithCustomView:backButton];
 }
 
++ (UIBarButtonItem *)customButtonWithImage:(UIImage *)image target:(id)target action:(SEL)action
+{
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+    [backButton setImage:image forState:UIControlStateNormal];
+    [backButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    return [[UIBarButtonItem alloc] initWithCustomView:backButton];
+}
+
 + (UILabel *)customTitleLabelWithString:(NSString *)title
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
