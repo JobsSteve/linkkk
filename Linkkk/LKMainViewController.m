@@ -12,6 +12,7 @@
 #import "LKLoginViewController.h"
 #import "LKSettingViewController.h"
 #import "LKPlaceViewController.h"
+#import "LKMapViewController.h"
 #import "LKNearbyViewController.h"
 #import "LKCreateViewController.h"
 #import "LKProfileViewController.h"
@@ -81,7 +82,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     
-    //self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"⚙" size:50.0 target:self action:@selector(_settingButtonSelected:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:self action:@selector(_mapButtonSelected:)];
     
     // Custom Title
     UIButton *navButton = [UIBarButtonItem customTitleButtonWithString:@"当前：未知地址 " target:self action:@selector(_navButtonSelected:)];
@@ -151,14 +152,6 @@
 
 - (void)mainViewDidShake
 {
-    _shakeViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"PlaceScene"];
-    _shakeViewController.shakeDelegate = self;
-    // FIX: not show place view when loading
-    [_shakeViewController view];
-    _shakeViewController.placeView.hidden = YES;
-    _shakeViewController.toolbarView.hidden = YES;
-    // END FIX
-    [self.navigationController pushViewController:_shakeViewController animated:YES];
     [self shakeViewDidShake];
 }
 
@@ -185,21 +178,23 @@
     } else if ([segue.identifier isEqualToString:@"ProfileSegue"]) {
         LKProfileViewController *profileViewController = ((LKProfileViewController *)segue.destinationViewController);
         profileViewController.sinaweibo = [self _sinaweibo];
-    } else if ([segue.identifier isEqualToString:@"ShakeSegue"]) {
-        _shakeViewController = ((LKPlaceViewController *)segue.destinationViewController);
-        // FIX: not show place view when loading
-        [_shakeViewController view];
-        _shakeViewController.placeView.hidden = YES;
-        _shakeViewController.toolbarView.hidden = YES;
-        // END FIX
-        _shakeViewController.shakeDelegate = self;
-        [self shakeViewDidShake];
     } else {
         // DO NOTHING
     }
 }
 
 #pragma mark - Callbacks
+
+- (IBAction)shakeButtonSelected:(id)sender
+{
+    [self mainViewDidShake];
+}
+
+- (void)_mapButtonSelected:(UIButton *)sender
+{
+    LKMapViewController *controller = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MapScene"];
+    [self.navigationController pushViewController:controller animated:YES];
+}
 
 - (void)_settingButtonSelected:(id)sender
 {
@@ -523,24 +518,25 @@
 
 - (void)_fetchData
 {
+    static BOOL fetching = NO;
+    NSLog(@"fetching %d", fetching);
+    if (fetching)
+        return;
+    fetching = YES;
+    
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
     NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=1&offset=%d&format=json", coord.latitude, coord.longitude, _shakeOffset++];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [_shakeViewController.view addSubview:_loadingView];
+    [self.navigationController.visibleViewController.view addSubview:_loadingView];
     
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-         // FIX: hack for weird "back" button behaviour
-         if (self.navigationController.visibleViewController != _shakeViewController) {
-             return;
-         } else {
-             [self.navigationController popViewControllerAnimated:NO];
-         }
+         [_loadingView removeFromSuperview];
          if (data == nil || error != nil) {
              [UIViewController showErrorView:[NSString stringWithFormat:@"数据加载失败, %d:%@", ((NSHTTPURLResponse *)response).statusCode, error]];
              return;
@@ -554,8 +550,14 @@
              _shakeViewController.shakeDelegate = self;
              _shakeViewController.place = place;
              _shakeViewController.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithImage:[UIImage imageNamed:@"shake_normal"] target:self action:@selector(shakeViewDidShake)];
-             [self.navigationController pushViewController:_shakeViewController animated:NO];
+             if (self.navigationController.visibleViewController == self) {
+                 [self.navigationController pushViewController:_shakeViewController animated:YES];
+             } else {
+                 [self.navigationController popToViewController:self animated:NO];
+                 [self.navigationController pushViewController:_shakeViewController animated:NO];
+             }
          }
+         fetching = NO;
      }];
 }
 

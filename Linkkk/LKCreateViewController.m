@@ -397,6 +397,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
             if (_poi.address == nil) {
                 _poi.address = addr.strAddr;
                 _placemarkLabel.text = _poi.address;
+                _poi.name = _poi.address;
             }
         }];
     }

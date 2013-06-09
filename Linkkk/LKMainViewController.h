@@ -25,6 +25,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *profileButton;
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 
+- (IBAction)shakeButtonSelected:(id)sender;
 - (IBAction)nearbyButtonSelected:(id)sender;
 - (IBAction)createButtonSelected:(id)sender;
 

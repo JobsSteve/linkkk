@@ -67,7 +67,6 @@ static NSString * const kSortByOptions[] = {
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"附近" target:self action:@selector(backButtonSelected:)];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:self action:@selector(mapButtonSelected:)];
     
     _sortLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
     _distLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
@@ -224,10 +223,6 @@ static NSString * const kSortByOptions[] = {
             break;
         }
     }
-//    for (UIView *view in [[[_mapView subviews] objectAtIndex:0] subviews]) {
-//        if ([[[view class] description] isEqualToString:@"ActionPaopaoView"])
-//            view.backgroundColor = [UIColor redColor];
-//    }
     if (annotationPlace) {
         LKPlaceViewController *placeViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"PlaceScene"];
         placeViewController.place = annotationPlace;
@@ -293,17 +288,17 @@ static NSString * const kSortByOptions[] = {
     _overlayView.hidden = YES;
 }
 
-- (void)mapButtonSelected:(UIButton *)sender
-{
-    [UIView transitionFromView:_tableView toView:_mapView duration:0.7 options:UIViewAnimationOptionTransitionFlipFromRight completion:nil];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"☰" size:50.0 target:self action:@selector(listButtonSelected:)];
-}
-
-- (void)listButtonSelected:(UIButton *)sender
-{
-    [UIView transitionFromView:_mapView toView:_tableView duration:0.7 options:UIViewAnimationOptionTransitionFlipFromRight completion:nil];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:self action:@selector(mapButtonSelected:)];
-}
+//- (void)mapButtonSelected:(UIButton *)sender
+//{
+//    [UIView transitionFromView:_tableView toView:_mapView duration:0.7 options:UIViewAnimationOptionTransitionFlipFromRight completion:nil];
+//    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"☰" size:50.0 target:self action:@selector(listButtonSelected:)];
+//}
+//
+//- (void)listButtonSelected:(UIButton *)sender
+//{
+//    [UIView transitionFromView:_mapView toView:_tableView duration:0.7 options:UIViewAnimationOptionTransitionFlipFromRight completion:nil];
+//    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:self action:@selector(mapButtonSelected:)];
+//}
 
 - (void)backButtonSelected:(UIButton *)sender
 {

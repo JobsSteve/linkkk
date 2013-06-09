@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Linkkk/LKMainViewController.m"
-         timestampString = "391873568.249579"
+         timestampString = "392485042.791066"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "450"
-         endingLineNumber = "450"
+         startingLineNumber = "445"
+         endingLineNumber = "445"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Linkkk/LKPlaceView.m"
-         timestampString = "390943573.176942"
+         timestampString = "392482812.064556"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
+         startingLineNumber = "89"
+         endingLineNumber = "89"
          landmarkName = "-layoutSubviews"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,25 +60,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Linkkk/LKPlaceView.m"
-         timestampString = "390943686.656517"
+         timestampString = "392481921.495946"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "44"
-         endingLineNumber = "44"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
          landmarkName = "-setPlace:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Linkkk/LKMainViewController.m"
-         timestampString = "391872974.861273"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "156"
-         endingLineNumber = "156"
-         landmarkName = "-mainViewDidShake"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

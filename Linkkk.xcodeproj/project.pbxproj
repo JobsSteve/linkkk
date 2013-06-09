@@ -22,6 +22,7 @@
 		2B68C05D175B81190036C1E9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B68C05C175B81190036C1E9 /* AudioToolbox.framework */; };
 		2B68C060175B8FE40036C1E9 /* shake_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B68C05E175B8FE40036C1E9 /* shake_normal.png */; };
 		2B68C061175B8FE40036C1E9 /* shake_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B68C05F175B8FE40036C1E9 /* shake_normal@2x.png */; };
+		2B68C0C61764BE2D0036C1E9 /* LKMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B68C0C51764BE2C0036C1E9 /* LKMapViewController.m */; };
 		2B6B3BCA1737104600916D44 /* UIColor+Linkkk.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */; };
 		2B6B3BCC1737179400916D44 /* profile_seg_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B6B3BCB1737179400916D44 /* profile_seg_bg@2x.png */; };
 		2B8C74F91726AA230075F2D1 /* LKCreateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B8C74F81726AA230075F2D1 /* LKCreateViewController.m */; };
@@ -142,6 +143,8 @@
 		2B68C05C175B81190036C1E9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		2B68C05E175B8FE40036C1E9 /* shake_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shake_normal.png; sourceTree = "<group>"; };
 		2B68C05F175B8FE40036C1E9 /* shake_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shake_normal@2x.png"; sourceTree = "<group>"; };
+		2B68C0C41764BE2C0036C1E9 /* LKMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKMapViewController.h; sourceTree = "<group>"; };
+		2B68C0C51764BE2C0036C1E9 /* LKMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKMapViewController.m; sourceTree = "<group>"; };
 		2B6B3BC81737104600916D44 /* UIColor+Linkkk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Linkkk.h"; sourceTree = "<group>"; };
 		2B6B3BC91737104600916D44 /* UIColor+Linkkk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Linkkk.m"; sourceTree = "<group>"; };
 		2B6B3BCB1737179400916D44 /* profile_seg_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile_seg_bg@2x.png"; sourceTree = "<group>"; };
@@ -486,6 +489,8 @@
 				2BA510E9171C2856009A6547 /* LKMainViewController.m */,
 				2B286FAE1724CAF900A454FE /* LKMainView.h */,
 				2B286FAF1724CAF900A454FE /* LKMainView.m */,
+				2B68C0C41764BE2C0036C1E9 /* LKMapViewController.h */,
+				2B68C0C51764BE2C0036C1E9 /* LKMapViewController.m */,
 				2BD1DB24171DA0660029949F /* LKNearbyViewController.h */,
 				2BD1DB25171DA0660029949F /* LKNearbyViewController.m */,
 				2BD1DB21171D9FE80029949F /* LKNearbyCell.h */,
@@ -852,6 +857,7 @@
 				2B0B74BF174C88DC00646CD1 /* LKDropDownOptionsView.m in Sources */,
 				2B0B74C2174D187F00646CD1 /* LKDefaults.m in Sources */,
 				2B67CA62174FE63000D87D86 /* LKShareWeiboViewController.m in Sources */,
+				2B68C0C61764BE2D0036C1E9 /* LKMapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

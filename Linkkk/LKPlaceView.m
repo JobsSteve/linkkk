@@ -13,6 +13,7 @@
 #import "LKPlaceViewController.h"
 
 #import "UIButton+WebCache.h"
+#import "UIColor+Linkkk.h"
 
 @interface LKPlaceView ()
 {
@@ -60,7 +61,15 @@
     } else {
         _hoursLabel.text = [NSString stringWithFormat:@"%@ - %@ %@", _place.time_start, _place.time_end, _place.time_desc];
     }
-    _textView.text = [_place.content stringByAppendingFormat:@"\n@%@", [_place.author objectForKey:@"nickname"]];
+    
+    NSString *author = [_place.author objectForKey:@"nickname"];
+    NSString *content = [_place.content stringByAppendingFormat:@" @%@", author];
+    if (content) {
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:content];
+        NSRange range = NSMakeRange(content.length - author.length - 1, author.length + 1);
+        [string addAttribute:NSForegroundColorAttributeName value:[UIColor specialBlue] range:range];
+        _textView.attributedText = string;
+    }
     
     NSArray *album = _place.album;
     [album enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

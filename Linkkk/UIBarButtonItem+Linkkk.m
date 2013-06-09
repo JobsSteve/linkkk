@@ -73,7 +73,7 @@
 
 + (UIBarButtonItem *)customButtonWithIcon:(NSString *)icon size:(CGFloat)size target:(id)target action:(SEL)action
 {
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 30)];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
     backButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:size];
     [backButton setTitle:icon forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor specialBlue] forState:UIControlStateNormal];

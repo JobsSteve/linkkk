@@ -18,6 +18,9 @@
 #import "UIColor+Linkkk.h"
 
 #import "UIImageView+WebCache.h"
+#import "BMapKit.h"
+
+#import <CoreLocation/CoreLocation.h>
 
 @interface LKProfileViewController () <UIAlertViewDelegate>
 {
@@ -46,8 +49,8 @@
     
     // Customize Seg Control
     UIFont *font = [UIFont fontWithName:@"Entypo" size:40.0];
-    [_segControl setTitleTextAttributes:@{UITextAttributeFont:font, UITextAttributeTextColor:[UIColor specialBlue]} forState:UIControlStateHighlighted];
-    [_segControl setTitleTextAttributes:@{UITextAttributeFont:font, UITextAttributeTextColor:[UIColor lightGrayColor]} forState:UIControlStateNormal];
+    [_segControl setTitleTextAttributes:@{UITextAttributeFont:font, UITextAttributeTextColor:[UIColor specialBlue], UITextAttributeTextShadowColor:[UIColor clearColor]} forState:UIControlStateHighlighted];
+    [_segControl setTitleTextAttributes:@{UITextAttributeFont:font, UITextAttributeTextColor:[UIColor lightGrayColor], UITextAttributeTextShadowColor:[UIColor clearColor]} forState:UIControlStateNormal];
     [_segControl setBackgroundImage:[UIImage imageNamed:@"profile_seg_fg"] forState:UIControlStateSelected barMetrics:UIBarMetricsDefault];
     [_segControl setBackgroundImage:[UIImage imageNamed:@"profile_seg_bg"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [_segControl setDividerImage:[UIImage imageNamed:@"profile_seg_div"] forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -140,7 +143,8 @@
 
 - (void)_fetchFav
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/favourited/"]];
+    CLLocationCoordinate2D coord = [LKProfile profile].current.geoPt;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/favourited/nearby/?la=%f&lo=%f", coord.latitude, coord.longitude]]];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     LKLoadingView *loadingView = [[LKLoadingView alloc] init];
@@ -239,12 +243,6 @@
             return 110.0;
         return 214.0;
     }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    // This will create a "invisible" footer. Eliminates extra separators
-    return 0.01f;
 }
 
 #pragma mark - Table view delegate
