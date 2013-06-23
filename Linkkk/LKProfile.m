@@ -14,7 +14,7 @@
 #import "SinaWeibo.h"
 #import "BMapKit.h"
 
-#define CUSTOM_LOCATION
+//#define CUSTOM_LOCATION
 #define SET_LOCATION(lat,lng) location = [[CLLocation alloc] initWithLatitude:lat longitude:lng]
 
 /*
@@ -79,7 +79,7 @@
     NSString *post = [NSString stringWithFormat:@"uid=%@&access_token=%@&expires_in=%d", weibo.userID, weibo.accessToken, (int)weibo.expirationDate.timeIntervalSinceNow];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/v5/app/login/"]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.linkkk.com/v5/app/login/"]];
     request.HTTPMethod = @"POST";
     request.HTTPBody = postData;
     [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
@@ -109,7 +109,7 @@
 
 - (void)getProfile
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/myself/"]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.linkkk.com/api/alpha/myself/"]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];

@@ -13,7 +13,7 @@
 + (void)showErrorView:(NSString *)description
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"错误" message:description delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:description delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil];
         [alertView show];
     });
 }

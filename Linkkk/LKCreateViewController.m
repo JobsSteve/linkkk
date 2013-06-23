@@ -261,7 +261,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
         }
         NSData *postData = [NSJSONSerialization dataWithJSONObject:dict options:NULL error:nil];
         
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/experience/"]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.linkkk.com/api/alpha/experience/"]];
         request.HTTPMethod = @"POST";
         request.HTTPBody = postData;
         [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
@@ -484,7 +484,7 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     NSLog(@"Upload image: %@, size: %@, new size: %@", image, NSStringFromCGSize(image.size), NSStringFromCGSize((size)));
     image = [UIImage imageWithImage:image scaledToSize:size];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/winterfell/upload/ios/"]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.linkkk.com/winterfell/upload/ios/"]];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     [request setTimeoutInterval:60];
     [request setHTTPMethod:@"POST"];

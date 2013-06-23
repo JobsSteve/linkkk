@@ -120,7 +120,7 @@
     NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json&reason=%@", _place.placeID, [alertView textFieldAtIndex:0].text];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/v5/report/exp/"]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.linkkk.com/v5/report/exp/"]];
     request.HTTPMethod = @"POST";
     request.HTTPBody = postData;
     [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
@@ -161,7 +161,7 @@
     NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json", _place.placeID];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
-    NSString *urlString = _place.hasFaved ? @"http://map.linkkk.com/v5/unfavourite/exp/" : @"http://map.linkkk.com/v5/favourite/exp/";
+    NSString *urlString = _place.hasFaved ? @"http://www.linkkk.com/v5/unfavourite/exp/" : @"http://www.linkkk.com/v5/favourite/exp/";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
     request.HTTPBody = postData;

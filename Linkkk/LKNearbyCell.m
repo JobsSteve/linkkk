@@ -34,7 +34,8 @@
 {
     _place = place;
     _titleLabel.text = _place.title;
-    _addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@", _place.distance, _place.location];
+    NSString *distString = (_place.distance >= 1000) ? [NSString stringWithFormat:@"距离%.2f公里", _place.distance/1000.0] : [NSString stringWithFormat:@"距离%d米", _place.distance];
+    _addressLabel.text = [NSString stringWithFormat:@"%@, %@", distString, _place.location];
     _userLabel.text = [NSString stringWithFormat:@"By@%@", [_place.author objectForKey:@"nickname"]];
     _favLabel.text = [NSString stringWithFormat:@"%d", _place.score];
     _heartButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:30.0];
@@ -75,7 +76,7 @@
     NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json", _place.placeID];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
-    NSString *urlString = _place.hasFaved ? @"http://map.linkkk.com/v5/unfavourite/exp/" : @"http://map.linkkk.com/v5/favourite/exp/";
+    NSString *urlString = _place.hasFaved ? @"http://www.linkkk.com/v5/unfavourite/exp/" : @"http://www.linkkk.com/v5/favourite/exp/";
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
     request.HTTPBody = postData;

@@ -51,13 +51,17 @@
     [_titleLabel sizeToFit];
     _addressLabel.text = [NSString stringWithFormat:@"距离%d米, %@, %@", _place.distance, _place.location, _place.address];
     [_addressLabel sizeToFit];
+    
+    [self _storeInfoSetHidden:NO];
     if (_place.contact == nil || [_place.contact isKindOfClass:[NSNull class]] || _place.contact.length == 0) {
         _contactLabel.text = @"未知业主电话";
+        [self _storeInfoSetHidden:YES];
     } else {
         _contactLabel.text = _place.contact;
     }
     if (_place.time_start == nil || [_place.time_start isKindOfClass:[NSNull class]]) {
         _hoursLabel.text = @"未知营业时间";
+        [self _storeInfoSetHidden:YES];
     } else {
         _hoursLabel.text = [NSString stringWithFormat:@"%@ - %@ %@", _place.time_start, _place.time_end, _place.time_desc];
     }
@@ -68,7 +72,9 @@
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:content];
         NSRange range = NSMakeRange(content.length - author.length - 1, author.length + 1);
         [string addAttribute:NSForegroundColorAttributeName value:[UIColor specialBlue] range:range];
+        [string addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:16] range:NSMakeRange(0, string.length)];
         _textView.attributedText = string;
+        _textView.textAlignment = NSTextAlignmentJustified;
     }
     
     NSArray *album = _place.album;
@@ -82,6 +88,14 @@
     }];
     
     [self setNeedsLayout];
+}
+
+- (void)_storeInfoSetHidden:(BOOL)hidden
+{
+    _contactLabel.hidden = hidden;
+    _contactIconLabel.hidden = hidden;
+    _hoursIconLabel.hidden = hidden;
+    _hoursLabel.hidden = hidden;
 }
 
 - (void)layoutSubviews

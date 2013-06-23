@@ -32,6 +32,8 @@ static NSString * const kSortByOptions[] = {
     @"距离最近的", @"最多喜欢的", @"最多评论的", @"最近更新的"
 };
 
+static const int kFetchAmount = 10;
+
 @interface LKNearbyViewController () <BMKMapViewDelegate>
 {
     int _selectedRow;
@@ -146,7 +148,7 @@ static NSString * const kSortByOptions[] = {
     if (section == 0)
         return _places.count;
     // section == 1
-    if (_places.count == 0 || !_hasMore) // When there is nothing, do not display "load more"
+    if (_places.count < kFetchAmount || !_hasMore) // When there is nothing, do not display "load more"
         return 0;
     return 1;
 }
@@ -323,7 +325,7 @@ static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modifi
 {
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=%d&la=%f&lo=%f&limit=10&offset=%d&order_by=%@&format=json", kDistances[[LKDefaults distance]], coord.latitude, coord.longitude, _offset, kSortBy[[LKDefaults sortBy]]];
+    NSString *url = [NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/search/?range=%d&la=%f&lo=%f&limit=%d&offset=%d&order_by=%@&format=json", kDistances[[LKDefaults distance]], coord.latitude, coord.longitude, kFetchAmount, _offset, kSortBy[[LKDefaults sortBy]]];
     NSLog(@"Fetch data url: %@", url);
     _offset += 10;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
@@ -366,7 +368,7 @@ static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modifi
         if (array.count == 0)
             _hasMore = NO;
         [self.tableView reloadData];
-        [self _updateMap];
+        // [self _updateMap];
     }];
 }
 

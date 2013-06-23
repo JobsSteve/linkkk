@@ -45,6 +45,8 @@
     LKPlaceViewController *_shakeViewController;
     LKLoginViewController *_loginViewController;
     LKSettingViewController *_settingViewController;
+    LKMapViewController *_mapViewController;
+    
     UISearchBar *_searchBar;
     BOOL _isShowingSearchBar;
     
@@ -82,7 +84,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navbar"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:self action:@selector(_mapButtonSelected:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"" size:50.0 target:self action:@selector(_mapButtonSelected:)];
     
     // Custom Title
     UIButton *navButton = [UIBarButtonItem customTitleButtonWithString:@"当前：未知地址 " target:self action:@selector(_navButtonSelected:)];
@@ -192,8 +194,10 @@
 
 - (void)_mapButtonSelected:(UIButton *)sender
 {
-    LKMapViewController *controller = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MapScene"];
-    [self.navigationController pushViewController:controller animated:YES];
+    if (!_mapViewController) {
+        _mapViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MapScene"];
+    }
+    [self.navigationController pushViewController:_mapViewController animated:YES];
 }
 
 - (void)_settingButtonSelected:(id)sender
@@ -526,7 +530,7 @@
     
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=1&offset=%d&format=json", coord.latitude, coord.longitude, _shakeOffset++];
+    NSString *url = [NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=1&offset=%d&format=json", coord.latitude, coord.longitude, _shakeOffset++];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self.navigationController.visibleViewController.view addSubview:_loadingView];
@@ -556,6 +560,8 @@
                  [self.navigationController popToViewController:self animated:NO];
                  [self.navigationController pushViewController:_shakeViewController animated:NO];
              }
+         } else {
+             [UIViewController showErrorView:@"周围没有新的碎片T_T"];
          }
          fetching = NO;
      }];

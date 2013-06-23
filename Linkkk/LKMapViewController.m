@@ -20,7 +20,7 @@
 
 @interface LKMapViewController () <BMKMapViewDelegate>
 {
-    NSMutableArray *_places;
+    NSMutableDictionary *_places;
     
     BOOL _fetching;
 }
@@ -32,7 +32,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        _places = [NSMutableArray array];
+        _places = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -94,7 +94,7 @@
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view
 {
     LKPlace *annotationPlace;
-    for (LKPlace *place in _places) {
+    for (LKPlace *place in [_places allValues]) {
         if ([view.annotation.title isEqualToString:place.title]) {
             annotationPlace = place;
             break;
@@ -119,12 +119,11 @@
 - (void)_fetchData:(BOOL)mapCenter
 {
     _fetching = YES;
-    [_places removeAllObjects];
+    NSLog(@"%d", _places.count);
 
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = mapCenter ? _mapView.centerCoordinate : profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/experience/search/?range=1&la=%f&lo=%f&limit=30&offset=0&order_by=score&format=json", coord.latitude, coord.longitude];
-    NSLog(@"Fetch data url: %@", url);
+    NSString *url = [NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/search/?range=1&la=%f&lo=%f&limit=30&offset=0&order_by=score&format=json", coord.latitude, coord.longitude];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -146,7 +145,9 @@
          NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
          NSArray *array = [json objectForKey:@"objects"];
          [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-             [_places addObject:[[LKPlace alloc] initWithJSON:obj]];
+             if (![_places objectForKey:[obj objectForKey:@"id"]]) {
+                 [_places setObject:[[LKPlace alloc] initWithJSON:obj] forKey:[obj objectForKey:@"id"]];
+             }
          }];
          [self _updateMap];
      }];
@@ -156,7 +157,7 @@
 {
     [_mapView removeAnnotations:[[_mapView annotations] mutableCopy]];
     
-    for (LKPlace *place in _places) {
+    for (LKPlace *place in [_places allValues]) {
         BMKPointAnnotation *annotation = [[BMKPointAnnotation alloc] init];
         annotation.coordinate = place.pt;
         annotation.title = place.title;

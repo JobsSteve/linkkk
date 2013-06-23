@@ -144,7 +144,7 @@
 - (void)_fetchFav
 {
     CLLocationCoordinate2D coord = [LKProfile profile].current.geoPt;
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://map.linkkk.com/api/alpha/favourited/nearby/?la=%f&lo=%f", coord.latitude, coord.longitude]]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/favourited/?la=%f&lo=%f", coord.latitude, coord.longitude]]];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     LKLoadingView *loadingView = [[LKLoadingView alloc] init];
@@ -163,7 +163,7 @@
         NSArray *array = [json objectForKey:@"objects"];
         _favPlaces = [[NSMutableArray alloc] initWithCapacity:[array count]];
         [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [_favPlaces addObject:[[LKPlace alloc] initWithJSON:[obj objectForKey:@"exp"]]];
+            [_favPlaces addObject:[[LKPlace alloc] initWithJSON:obj]];
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
             [_favTableView reloadData];
@@ -173,7 +173,8 @@
 
 - (void)_fetchMine
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://map.linkkk.com/api/alpha/experience/created/"]];
+    CLLocationCoordinate2D coord = [LKProfile profile].current.geoPt;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/created/?la=%f&lo=%f", coord.latitude, coord.longitude]]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];

@@ -9,6 +9,8 @@
 #import "LKLoginViewController.h"
 #import "LKMainViewController.h"
 
+#import "UIColor+Linkkk.h"
+
 #import "SinaWeibo.h"
 
 #import <QuartzCore/QuartzCore.h>
@@ -27,6 +29,13 @@
     frame.origin.y = -20;
     _splashView.frame = frame;
     _splashView.image = [UIImage imageNamed:((CGRectGetHeight(frame) == 480) ? @"Default" : @"Default-568h")];
+    
+    _loginButton.titleLabel.font = [UIFont systemFontOfSize:16.0];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"用新浪微博登录 "];
+    NSRange range = NSMakeRange(string.length - 1, 1);
+    [string addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Entypo" size:25.0] range:range];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor specialBlue] range:NSMakeRange(0, string.length)];
+    [_loginButton setAttributedTitle:string forState:UIControlStateNormal];
 }
 
 - (void)viewDidAppear:(BOOL)animated
