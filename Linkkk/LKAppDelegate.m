@@ -14,13 +14,18 @@
 
 #define kAppKey             @"2279872707"
 #define kAppSecret          @"e0a3ff6db611f960c7e3f1765407c9d7"
-#define kAppRedirectURI     @"http://map.linkkk.com"
+#define kAppRedirectURI     @"http://www.linkkk.com"
 #define kMapKey             @"FB1C88AF3B39EB16C330E6F5841C4D3D387AD96E"
+#define kWechatAppID        @"wx76dd1c6028793dbe"
+#define kWechatAppKey       @"d2f78bdc088622e6e6deab2c2491514b"
 
 @implementation LKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{    
+{
+    // WeChat
+    [WXApi registerApp:kWechatAppID];
+    
     // Sina Weibo Defaults
     _sinaweibo = [[SinaWeibo alloc] initWithAppKey:kAppKey appSecret:kAppSecret appRedirectURI:kAppRedirectURI ssoCallbackScheme:@"linkkk.weibo" andDelegate:nil];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -74,12 +79,24 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [_sinaweibo handleOpenURL:url];
+    return [_sinaweibo handleOpenURL:url] & [WXApi handleOpenURL:url delegate:self];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    return [_sinaweibo handleOpenURL:url];
+    return [_sinaweibo handleOpenURL:url] & [WXApi handleOpenURL:url delegate:self];
+}
+
+#pragma mark - WeChat Delegate
+
+- (void)onReq:(BaseReq *)req
+{
+    
+}
+
+- (void)onResp:(BaseResp *)resp
+{
+    
 }
 
 @end

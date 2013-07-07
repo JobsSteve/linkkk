@@ -336,6 +336,7 @@
         UIButton *titleButton = (UIButton *)self.navigationItem.titleView;
         NSString *name = address.addressComponent.streetName;
         if (name == nil) name = address.addressComponent.district;
+        if (name == nil) name = @"未知地址";
         NSString *prefix = ([LKProfile profile].current == address) ? @"当前" : @"设定";
         NSString *title = [NSString stringWithFormat:@"%@：%@ ", prefix, name];
         [titleButton setTitleWithString:title];

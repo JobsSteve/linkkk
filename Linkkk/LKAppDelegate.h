@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WXApi.h"
 
 @class SinaWeibo;
 @class BMKMapManager;
 
-@interface LKAppDelegate : UIResponder <UIApplicationDelegate>
+@interface LKAppDelegate : UIResponder <UIApplicationDelegate, WXApiDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (assign, nonatomic) BOOL resignActiveNotifier;
