@@ -32,14 +32,9 @@ typedef NSUInteger BMKAnnotationViewDragState;
 ///标注view
 @interface BMKAnnotationView : UIView
 {
-    int lastX;
-    int lastY;
-    int offsetX;
-    int offsetY;
-    //BMKMapView* _mapView;
-    BMKMapViewInternal* mapviewinternal;
 @private
     BMKAnnotationViewInternal *_internal;
+    BOOL _enabled3D;
 }
 
 /**
@@ -49,11 +44,12 @@ typedef NSUInteger BMKAnnotationViewDragState;
  *@return 初始化成功则返回annotation view,否则返回nil
  */
 - (id)initWithAnnotation:(id <BMKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier;
-@property (nonatomic, assign) BMKMapViewInternal* mapviewinternal;
-//@property (nonatomic, assign) BMKMapView* mapView;
+
+
 ///复用标志
 @property (nonatomic, readonly) NSString *reuseIdentifier;
 
+@property (nonatomic, retain)UIView* paopaoView;
 
 /**
  *当view从reuse队列里取出时被调用
@@ -72,6 +68,9 @@ typedef NSUInteger BMKAnnotationViewDragState;
 
 ///默认情况下, 弹出的气泡位于view正中上方，可以设置calloutOffset改变view的位置，正的偏移使view朝右下方移动，负的朝左上方，单位是像素
 @property (nonatomic) CGPoint calloutOffset;
+
+///默认情况下,标注没有3D效果，可以设置enabled3D改变使用3D效果，使得标注在地图旋转和俯视时跟随旋转、俯视
+@property (nonatomic) BOOL enabled3D;
 
 ///默认为YES,当为NO时view忽略触摸事件
 @property (nonatomic, getter=isEnabled) BOOL enabled;

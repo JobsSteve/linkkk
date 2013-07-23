@@ -33,6 +33,7 @@
 
 #import "SinaWeibo.h"
 #import "BMapKit.h"
+#import "MobClick.h"
 
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -136,12 +137,16 @@
 {
     [super viewWillAppear:animated];
     [self.view becomeFirstResponder];
+    
+    [MobClick beginLogPageView:@"Main"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self.view resignFirstResponder];
+    
+    [MobClick endLogPageView:@"Main"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -161,6 +166,8 @@
 {
     AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
     [self _fetchData];
+    
+    [MobClick event:@"shake_initiated"];
 }
 
 #pragma mark - Create View Delegate
@@ -211,6 +218,7 @@
 
 - (void)_navButtonSelected:(id)sender
 {
+    [MobClick event:@"main_nav_clicked"];
     _isShowingSearchBar = !_isShowingSearchBar;
     
     if (_isShowingSearchBar) {
@@ -398,27 +406,27 @@
 
 - (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
 {
-    NSLog(@"WEIBO: did logout");
     [self _removeAuthData];
+    [MobClick event:@"weibo_logout"];
 }
 
 - (void)sinaweiboLogInDidCancel:(SinaWeibo *)sinaweibo
 {
-    NSLog(@"WEIBO: did cancel");
     [self _restoreButtons];
+    [MobClick event:@"weibo_login_cancel"];
 }
 
 - (void)sinaweibo:(SinaWeibo *)sinaweibo accessTokenInvalidOrExpired:(NSError *)error
 {
-    NSLog(@"WEIBO: access token expired %@", error);
     [self _removeAuthData];
     [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+    [MobClick event:@"weibo_login_expire"];
 }
 
 - (void)sinaweibo:(SinaWeibo *)sinaweibo logInDidFailWithError:(NSError *)error
 {
-    NSLog(@"WEIBO: login failed: %@", error);
     [self _restoreButtons];
+    [MobClick event:@"weibo_login_fail"];
 }
 
 #pragma mark - Table view data source
@@ -531,7 +539,7 @@
     
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=1&offset=%d&format=json", coord.latitude, coord.longitude, _shakeOffset++];
+    NSString *url = [NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/shake/?la=%f&lo=%f&limit=1&offset=%d&format=json&tag_from=ios", coord.latitude, coord.longitude, _shakeOffset++];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self.navigationController.visibleViewController.view addSubview:_loadingView];

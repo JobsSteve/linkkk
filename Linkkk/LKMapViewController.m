@@ -17,6 +17,7 @@
 #import "UIViewController+Linkkk.h"
 
 #import "BMapKit.h"
+#import "MobClick.h"
 
 @interface LKMapViewController () <BMKMapViewDelegate>
 {
@@ -42,6 +43,9 @@
     [super viewDidLoad];
 
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"地图" target:self action:@selector(backButtonSelected:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem customButtonWithIcon:@"⟳" size:50.0 target:self action:@selector(refreshButtonSelected:)];
+    
+    _centerButton.titleLabel.font = [UIFont fontWithName:@"Entypo" size:40.0];
     
     // Map view setup
     _mapView.delegate = self;
@@ -52,18 +56,23 @@
     [self _fetchData:NO];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    [[LKProfile profile] removeObserver:self forKeyPath:@"address"];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 
     [[LKProfile profile] addObserver:self forKeyPath:@"address" options:NSKeyValueObservingOptionNew context:NULL];
+    
+    [MobClick event:@"map_scene_clicked"];
+    [MobClick beginLogPageView:@"Map"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[LKProfile profile] removeObserver:self forKeyPath:@"address"];
+    
+    [MobClick endLogPageView:@"Map"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,6 +98,18 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)refreshButtonSelected:(id)sender
+{
+    if (!_fetching) {
+        [self _fetchData:YES];
+    }
+}
+
+- (IBAction)centerButtonSelected:(id)sender
+{
+    [_mapView setCenterCoordinate:_mapView.userLocation.location.coordinate animated:YES];
+}
+
 #pragma mark - Map View Delegate
 
 - (void)mapView:(BMKMapView *)mapView annotationViewForBubble:(BMKAnnotationView *)view
@@ -104,13 +125,6 @@
         LKPlaceViewController *placeViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"PlaceScene"];
         placeViewController.place = annotationPlace;
         [self.navigationController pushViewController:placeViewController animated:YES];
-    }
-}
-
-- (void)mapView:(BMKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-    if (!_fetching) {
-        [self _fetchData:YES];
     }
 }
 

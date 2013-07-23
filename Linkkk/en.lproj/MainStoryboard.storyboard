@@ -1057,10 +1057,26 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IBt-vX-EI2">
+                                <rect key="frame" x="61" y="498" width="48" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="➢">
+                                    <color key="titleColor" red="0.0" green="0.53725490200000003" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="centerButtonSelected:" destination="X0s-He-Uml" eventType="touchUpInside" id="jF2-LO-pH0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="centerButton" destination="IBt-vX-EI2" id="RML-qU-2Ma"/>
                         <outlet property="mapView" destination="Qen-7P-qhH" id="7zZ-fW-iEc"/>
                     </connections>
                 </viewController>
@@ -1364,7 +1380,10 @@
         <class className="LKMapViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LKMapViewController.h"/>
             <relationships>
+                <relationship kind="action" name="centerButtonSelected:"/>
+                <relationship kind="outlet" name="centerButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="mapView" candidateClass="BMKMapView"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="LKNavViewController" superclassName="UIViewController">

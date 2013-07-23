@@ -13,6 +13,7 @@
 
 #import "SinaWeibo.h"
 #import "BMapKit.h"
+#import "MobClick.h"
 
 //#define CUSTOM_LOCATION
 #define SET_LOCATION(lat,lng) location = [[CLLocation alloc] initWithLatitude:lat longitude:lng]
@@ -67,6 +68,7 @@
 
 - (void)login
 {
+    [MobClick event:@"login" label:_username];
     if ([self isLoggedIn]) {
         if ([self hasProfile])
             return;
@@ -142,6 +144,8 @@
     [[LKMapManager sharedInstance] reverseGeocode:location.coordinate withCompletionHandler:^(BMKAddrInfo *result, int error) {
         self.current = result;
         self.address = result;
+        
+        [MobClick event:@"user_coordinate" attributes:@{@"lat":[NSNumber numberWithFloat:result.geoPt.latitude], @"lng":[NSNumber numberWithFloat:result.geoPt.longitude], @"address":result.addressComponent.district}];
     }];
 }
 

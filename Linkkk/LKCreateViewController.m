@@ -23,6 +23,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "BMapKit.h"
+#import "MobClick.h"
 #import "AGImagePickerController.h"
 
 static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
@@ -115,6 +116,21 @@ static NSString * const kHTTPBoundary = @"----------FDfdsf8HShdS80SDJFsf302S";
     
     if (CGRectIsEmpty(_textViewFrame))
         _textViewFrame = _textView.frame;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [MobClick event:@"create_scene_clicked"];
+    [MobClick beginLogPageView:@"Create"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [MobClick endLogPageView:@"Create"];
 }
 
 - (void)didReceiveMemoryWarning

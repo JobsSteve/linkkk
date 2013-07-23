@@ -19,6 +19,7 @@
 
 #import "UIImageView+WebCache.h"
 #import "BMapKit.h"
+#import "MobClick.h"
 
 #import <CoreLocation/CoreLocation.h>
 
@@ -75,6 +76,9 @@
         _username.text = profile.username;
         [_imageView setImageWithURL:[NSURL URLWithString:profile.avatarURL]];
     }
+    
+    [MobClick event:@"profile_scene_clicked"];
+    [MobClick beginLogPageView:@"Profile"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -82,6 +86,8 @@
     [super viewWillDisappear:animated];
     
     [[LKProfile profile] removeObserver:self forKeyPath:@"username"];
+    
+    [MobClick endLogPageView:@"Profile"];
 }
 
 - (void)didReceiveMemoryWarning

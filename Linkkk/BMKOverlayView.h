@@ -10,10 +10,10 @@
 #import "BMKGeometry.h"
 #import "BMKOverlay.h"
 
-/// 该类是地图覆盖物View的基类，所有地图覆盖物View需要继承自此类
+/// 该类是地图覆盖物View的基类，提供绘制overlay的接口但本身并无实现，所有地图覆盖物View需要继承自此类
 @interface BMKOverlayView : UIView
 {
-	@package
+@package
     id <BMKOverlay> _overlay;
     BMKMapRect _boundingMapRect;
     CGAffineTransform _mapTransform;
@@ -29,6 +29,8 @@
         unsigned int drawingDisabled:1;
         unsigned int usesTiledLayer:1;
     } _flags;
+//@private
+//    int geometrylayerID;
 }
 
 /**
@@ -93,6 +95,29 @@
  */
 - (void)setNeedsDisplayInMapRect:(BMKMapRect)mapRect;     
 
+/**
+ *使用OpenGLES 绘制线
+ @param points 直角坐标点
+ @param pointCount 点个数
+ @param strokeColor 线颜色
+ @param lineWidth OpenGLES支持线宽尺寸
+ @param looped 是否闭合, 如polyline会设置NO, polygon会设置YES.
+ */
+- (void)renderLinesWithPoints:(BMKMapPoint *)points pointCount:(NSUInteger)pointCount strokeColor:(UIColor *)strokeColor lineWidth:(CGFloat)lineWidth looped:(BOOL)looped;
+
+/**
+ *使用OpenGLES 绘制区域
+ @param points 直角坐标点
+ @param pointCount 点个数
+ @param fillColor 填充颜色
+ @param usingTriangleFan YES对应GL_TRIANGLE_FAN, NO对应GL_TRIANGLES
+ */
+- (void)renderRegionWithPoints:(BMKMapPoint *)points pointCount:(NSUInteger)pointCount fillColor:(UIColor *)fillColor usingTriangleFan:(BOOL)usingTriangleFan;
+
+/**
+ *绘制函数(子类需要重载来实现)
+ */
+- (void)glRender;
 
 @end
 

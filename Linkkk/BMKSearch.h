@@ -29,13 +29,8 @@ enum {
 	BMKTypeAreaMultiPoiList = 45	///<POI检索类型：多关键字范围搜索、周边搜索POI列表
 };
 ///搜索服务
-@interface BMKSearch : NSObject
-{
-	id<BMKSearchDelegate> _delegate;
-	int _transitPolicy;
-	int _drivingPolicy;
-}
-
+@interface BMKSearch : NSObject 
+/// 检索模块的Delegate，此处记得不用的时候需要置nil，否则影响内存的释放
 @property (nonatomic, retain) id<BMKSearchDelegate> delegate;
 ///公交检索策略
 @property (nonatomic) int transitPolicy;
@@ -72,7 +67,7 @@ enum {
  *@param index 页码，如果是第一次发起搜索，填0，根据返回的结果可以去获取第n页的结果，页码从0开始
  *@return 成功返回YES，否则返回NO
  */
-- (BOOL)poiMultiSearchInbounds:(NSArray*)keys leftBottom:(CLLocationCoordinate2D)ptLB rightTop:(CLLocationCoordinate2D)ptRT pageIndex:(int)index;
+//- (BOOL)poiMultiSearchInbounds:(NSArray*)keys leftBottom:(CLLocationCoordinate2D)ptLB rightTop:(CLLocationCoordinate2D)ptRT pageIndex:(int)index;
 
 /**
  *根据中心点、半径和检索词发起周边检索
@@ -94,7 +89,7 @@ enum {
  *@param index 页码，如果是第一次发起搜索，填0，根据返回的结果可以去获取第n页的结果，页码从0开始
  *@return 成功返回YES，否则返回NO
  */
-- (BOOL)poiMultiSearchNearBy:(NSArray*)keys center:(CLLocationCoordinate2D)ptCenter radius:(int)radius pageIndex:(int)index;
+//- (BOOL)poiMultiSearchNearBy:(NSArray*)keys center:(CLLocationCoordinate2D)ptCenter radius:(int)radius pageIndex:(int)index;
 
 /**
  *公交路线检索
@@ -116,6 +111,19 @@ enum {
  *@return 成功返回YES，否则返回NO
  */
 - (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end;
+
+/**
+ *驾乘路线检索
+ *异步函数，返回结果在BMKSearchDelegate的onGetDrivingRouteResult通知
+ *@param startCity 起点所在城市，起点为坐标时可不填
+ *@param start 检索的起点，可通过关键字、坐标两种方式指定
+ *@param endCity 终点所在城市，终点为坐标时可不填
+ *@param end 检索的终点，可通过关键字、坐标两种方式指定
+ *@param wayPointsArray 途经点数组，存储BMKPlanNode信息的节点。wayPointsArray为nil或空时，表示没有途经点。最多支持10个途经点，超过10个请求发送不成功。
+ *@return 成功返回YES，否则返回NO
+ */
+- (BOOL)drivingSearch:(NSString*)startCity startNode:(BMKPlanNode*)start endCity:(NSString*)endCity endNode:(BMKPlanNode*)end throughWayPoints:(NSArray*)wayPointsArray;
+
 
 /**
  *步行路线检索
@@ -148,6 +156,14 @@ enum {
  *@return 成功返回YES，否则返回NO
  */
 - (BOOL)suggestionSearch:(NSString*)key;
+
+/**
+ *
+ *异步函数，返回结果在BMKSearchDelegate的onGetSuggestionResult通知
+ *@param cityname 城市名，用于指定在特定城市内检索
+ *@return 成功返回YES，否则返回NO
+ */
+- (BOOL)suggestionSearch:(NSString*)key inCity:(NSString*)cityname;
 
 /**
  *公交详情检索

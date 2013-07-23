@@ -12,6 +12,7 @@
 #import "UIColor+Linkkk.h"
 
 #import "SinaWeibo.h"
+#import "MobClick.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -50,6 +51,20 @@
     animation.duration = 0.5;
     _loginButton.layer.position = position;
     [_loginButton.layer addAnimation:animation forKey:@"animation"];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [MobClick beginLogPageView:@"Login"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [MobClick endLogPageView:@"Login"];
 }
 
 - (void)didReceiveMemoryWarning

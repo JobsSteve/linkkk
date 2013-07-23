@@ -73,7 +73,7 @@
 
 - (void)_favButtonSelected:(UIButton *)sender
 {
-    NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json", _place.placeID];
+    NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json&tag_from=ios", _place.placeID];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
     NSString *urlString = _place.hasFaved ? @"http://www.linkkk.com/v5/unfavourite/exp/" : @"http://www.linkkk.com/v5/favourite/exp/";

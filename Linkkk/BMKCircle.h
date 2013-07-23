@@ -7,11 +7,12 @@
  */
 
 #import "BMKShape.h"
+#import "BMKMultiPoint.h"
 #import "BMKOverlay.h"
 #import "BMKGeometry.h"
 
 /// 该类用于定义一个圆
-@interface BMKCircle : BMKShape <BMKOverlay> {
+@interface BMKCircle : BMKMultiPoint <BMKOverlay> {
 @package
     CLLocationCoordinate2D _coordinate;
     CLLocationDistance _radius;

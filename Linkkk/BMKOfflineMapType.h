@@ -15,6 +15,8 @@
 	NSString* _cityName;
 	int		  _size;
 	int		  _cityID;
+    int       _cityType;
+    NSArray*  _childCities;
 }
 ///城市名称
 @property (nonatomic, retain) NSString* cityName;
@@ -22,6 +24,11 @@
 @property (nonatomic) int size;
 ///城市ID
 @property (nonatomic) int cityID;
+///城市类型 0：全国；1：省份；2：城市；如果是省份，可以通过childCities得到子城市列表
+@property (nonatomic) int cityType;
+///子城市列表
+@property (nonatomic, retain) NSArray*  childCities;
+
 
 @end
 

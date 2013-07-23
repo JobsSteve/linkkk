@@ -11,6 +11,7 @@
 
 #import "SinaWeibo.h"
 #import "BMapKit.h"
+#import "MobClick.h"
 
 #define kAppKey             @"2279872707"
 #define kAppSecret          @"e0a3ff6db611f960c7e3f1765407c9d7"
@@ -18,11 +19,16 @@
 #define kMapKey             @"FB1C88AF3B39EB16C330E6F5841C4D3D387AD96E"
 #define kWechatAppID        @"wx76dd1c6028793dbe"
 #define kWechatAppKey       @"d2f78bdc088622e6e6deab2c2491514b"
+#define kUmengAppKey        @"51dcd74456240b7c75007aa5"
 
 @implementation LKAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Umeng
+    [MobClick startWithAppkey:kUmengAppKey];// reportPolicy:(ReportPolicy) REALTIME channelId:nil];
+    //[MobClick setLogEnabled:YES];
+    
     // WeChat
     [WXApi registerApp:kWechatAppID];
     

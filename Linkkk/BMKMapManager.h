@@ -5,7 +5,7 @@
  *  Copyright 2011 Baidu Inc. All rights reserved.
  *
  */
-
+#import <UIKit/UIKit.h>
 @protocol BMKGeneralDelegate;
 
 ///主引擎类

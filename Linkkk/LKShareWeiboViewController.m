@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 
 #import "SinaWeibo.h"
+#import "MobClick.h"
 
 @interface LKShareWeiboViewController () <SinaWeiboRequestDelegate>
 {
@@ -71,6 +72,21 @@
     [_textView becomeFirstResponder];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [MobClick event:@"share_scene_clicked"];
+    [MobClick beginLogPageView:@"Share Weibo"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [MobClick endLogPageView:@"Share Weibo"];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -95,7 +111,7 @@
 
 - (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
 {
-    NSLog(@"WEIBO ERROR: %@", error);
+    [MobClick event:@"weibo_share_fail"];
     [_loadingView removeFromSuperview];
     _uploading = NO;
     [self _showAlert];
@@ -104,11 +120,12 @@
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
 {
     if (result == nil || [result objectForKey:@"error"] != nil) {
-        NSLog(@"WEIBO ERROR: %@", result);
+        [MobClick event:@"weibo_share_error"];
         [_loadingView removeFromSuperview];
         _uploading = NO;
         [self _showAlert];
     } else {
+        [MobClick event:@"weibo_share_success"];
         NSLog(@"WEIBO SUCCESS: %@", result);
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -136,12 +153,14 @@
     SinaWeibo *weibo = ((LKAppDelegate *)[UIApplication sharedApplication].delegate).sinaweibo;
     
     if (_place.album.count == 0) {
+        [MobClick event:@"weibo_share_text"];
         [weibo requestWithURL:@"statuses/update.json"
                        params:[NSMutableDictionary dictionaryWithObjectsAndKeys:_textView.text, @"status", nil]
                    httpMethod:@"POST"
                      delegate:self];
     }
     else {
+        [MobClick event:@"weibo_share_image"];
         [weibo requestWithURL:@"statuses/upload.json"
                        params:[NSMutableDictionary dictionaryWithObjectsAndKeys:_textView.text, @"status", _imageView1.image, @"pic", nil]
                    httpMethod:@"POST"

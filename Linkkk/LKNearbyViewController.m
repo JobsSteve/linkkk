@@ -21,6 +21,7 @@
 #import "UIColor+Linkkk.h"
 
 #import "BMapKit.h"
+#import "MobClick.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -101,13 +102,6 @@ static const int kFetchAmount = 10;
     [self _fetchData];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    [[LKProfile profile] removeObserver:self forKeyPath:@"address"];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -115,6 +109,18 @@ static const int kFetchAmount = 10;
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
     [[LKProfile profile] addObserver:self forKeyPath:@"address" options:NSKeyValueObservingOptionNew context:NULL];
+    
+    [MobClick event:@"nearby_scene_clicked"];
+    [MobClick beginLogPageView:@"Nearby"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[LKProfile profile] removeObserver:self forKeyPath:@"address"];
+    
+    [MobClick endLogPageView:@"Nearby"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -325,7 +331,7 @@ static NSString * const kSortBy[] = {@"distance", @"score", @"comment", @"modifi
 {
     LKProfile *profile = [LKProfile profile];
     CLLocationCoordinate2D coord = profile.address.geoPt;
-    NSString *url = [NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/search/?range=%d&la=%f&lo=%f&limit=%d&offset=%d&order_by=%@&format=json", kDistances[[LKDefaults distance]], coord.latitude, coord.longitude, kFetchAmount, _offset, kSortBy[[LKDefaults sortBy]]];
+    NSString *url = [NSString stringWithFormat:@"http://www.linkkk.com/api/alpha/experience/search/?range=%d&la=%f&lo=%f&limit=%d&offset=%d&order_by=%@&format=json&tag_from=ios", kDistances[[LKDefaults distance]], coord.latitude, coord.longitude, kFetchAmount, _offset, kSortBy[[LKDefaults sortBy]]];
     NSLog(@"Fetch data url: %@", url);
     _offset += 10;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];

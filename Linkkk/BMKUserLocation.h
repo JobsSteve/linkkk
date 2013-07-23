@@ -14,11 +14,7 @@
 
 NS_CLASS_AVAILABLE(__MAC_NA, 3_0)
 /// 定位信息类
-@interface BMKUserLocation : NSObject <BMKAnnotation> {
-  @private
-    BMKUserLocationInternal *_internal;
-}
-
+@interface BMKUserLocation : NSObject <BMKAnnotation> 
 /// 位置更新状态，如果正在更新位置信息，则该值为YES
 @property (readonly, nonatomic, getter=isUpdating) BOOL updating;
 

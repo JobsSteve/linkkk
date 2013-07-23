@@ -15,9 +15,12 @@
 ///线路节点信息
 @interface BMKPlanNode : NSObject
 {
+    NSString* _cityName;
 	NSString* _name; 
 	CLLocationCoordinate2D _pt;
 }
+///节点所在城市
+@property (nonatomic, retain) NSString* cityName;
 ///节点名称
 @property (nonatomic, retain) NSString* name;
 ///节点坐标
@@ -168,6 +171,7 @@
 {
 	BMKPlanNode* _startNode;
 	BMKPlanNode* _endNode;
+    NSMutableArray* _wayNodes;
 	NSArray*	 _plans;
 	BMKRouteAddrResult* _routeAddrResult;
 }
@@ -175,6 +179,8 @@
 @property (nonatomic, retain) BMKPlanNode* startNode;
 ///线路终点
 @property (nonatomic, retain) BMKPlanNode* endNode;
+///路线途经点数组，包含的类型为(BMKPlanNode*)
+@property (nonatomic, retain) NSArray*  wayNodes;
 ///方案数组  公交搜索返回BMKTransitRoutePlan类型，驾车和步行返回BMKRoutePlan类型
 @property (nonatomic, retain) NSArray*	   plans;
 ///返回起点或终点的地址信息结果
@@ -189,6 +195,8 @@
 	NSArray* _endPoiList;
 	NSArray* _startCityList;
 	NSArray* _endCityList;
+    NSArray* _wayPointsPoiList;
+    NSArray* _wayPointsCityList;
 }
 ///起点POI列表，成员类型为BMKPoiInfo
 @property (nonatomic, retain) NSArray* startPoiList;
@@ -198,6 +206,10 @@
 @property (nonatomic, retain) NSArray* endPoiList;
 ///终点城市列表，成员类型为BMKCityListInfo,如果输入的地点在本城市没有而在其它城市有，则返回其它城市的信息
 @property (nonatomic, retain) NSArray* endCityList;
+///途经点POI列表，成员类型为NSArray<BMKPoiInfo*>
+@property (nonatomic, retain) NSArray* wayPointPoiList;
+///途经点城市列表，成员类型为NSArray<BMKCityListInfo*>,如果输入的地点在本城市没有而在其它城市有，则返回其它城市的信息
+@property (nonatomic, retain) NSArray* wayPointCityList;
 @end
 
 ///公交详情结果类.

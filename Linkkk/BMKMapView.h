@@ -1,3 +1,12 @@
+//
+//  BMKMapView.h
+//  MapPlatform
+//
+//  Created by BaiduMapAPI on 13-3-25.
+//  Copyright (c) 2013年 baidu. All rights reserved.
+//
+
+
 /*
  *  BMKMapView.h
  *	BMapKit
@@ -11,27 +20,33 @@
 #import "BMKAnnotationView.h"
 #import "BMKOverlayView.h"
 #import "BMKUserLocation.h"
-#import "UIKit/UIKit.h" 
-@class BMKMapViewInternal;
-@class BMKOverlayView;
+#import "UIKit/UIKit.h"
+
 @protocol BMKMapViewDelegate;
-@protocol BMKOverlay;
+
+///点击地图标注返回数据结构
+@interface BMKMapPoi : NSObject
+///点标注的名称
+@property (nonatomic,retain) NSString* text;
+///点标注的经纬度坐标
+@property (nonatomic,assign) CLLocationCoordinate2D pt;
+@end
+
 
 ///地图View类，使用此View可以显示地图窗口，并且对地图进行相关的操作
-@interface BMKMapView : UIView<NSCoding>
-{
-@private
-    BMKMapViewInternal *_internal;
-}
+@interface BMKMapView : UIView
 
-/// 地图View的Delegate
-@property (nonatomic, assign) id<BMKMapViewDelegate> delegate;
+/// 地图View的Delegate，此处记得不用的时候需要置nil，否则影响内存的释放
+@property (nonatomic, retain) id<BMKMapViewDelegate> delegate;
 
 /// 当前地图类型，可设定为普通模式或实时路况模式
 @property (nonatomic) BMKMapType mapType;
 
 /// 当前地图的经纬度范围，设定的该范围可能会被调整为适合地图窗口显示的范围
 @property (nonatomic) BMKCoordinateRegion region;
+
+/// 指南针的位置，设定坐标以BMKMapView左上角为原点，向右向下增长
+@property (nonatomic) CGPoint compassPosition;
 
 /**
  *设定当前地图的显示范围
@@ -50,8 +65,34 @@
  */
 - (void)setCenterCoordinate:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
 
-/// 地图比例尺级别，在手机上当前可使用的级别为3-18级
-@property (nonatomic) int zoomLevel;
+/// 地图比例尺级别，在手机上当前可使用的级别为3-19级
+@property (nonatomic) float zoomLevel;
+
+/// 地图旋转角度，在手机上当前可使用的范围为－180～180度
+@property (nonatomic) int rotation;
+
+/// 地图俯视角度，在手机上当前可使用的范围为－45～0度
+@property (nonatomic) int overlooking;
+
+/// 设定是否显示定位图层
+@property (nonatomic) BOOL showsUserLocation;
+
+/// 当前用户位置，返回坐标为百度坐标
+@property (nonatomic, readonly) BMKUserLocation *userLocation;
+
+/// 返回定位坐标点是否在当前地图可视区域内
+@property (nonatomic, readonly, getter=isUserLocationVisible) BOOL userLocationVisible;
+
+
+/**
+ *当mapview即将被显式的时候调用，恢复之前存储的mapview状态。
+ */
+-(void)viewWillAppear;
+
+/**
+ *当mapview即将被隐藏的时候调用，存储当前mapview的状态。
+ */
+-(void)viewWillDisappear;
 
 /**
  *放大一级比例尺
@@ -74,6 +115,12 @@
 
 ///当前地图范围，采用直角坐标系表示，向右向下增长
 @property (nonatomic) BMKMapRect visibleMapRect;
+
+/**
+ *获得地图当前可视区域截图
+ *@return 返回view范围内的截取的UIImage
+ */
+-(UIImage*) takeSnapshot;
 
 /**
  *设定当前地图的显示范围,采用直角坐标系表示
@@ -158,14 +205,6 @@
 ///设定地图View能否支持用户移动地图
 @property(nonatomic, getter=isScrollEnabled) BOOL scrollEnabled;
 
-/// 设定是否显示定位图层
-@property (nonatomic) BOOL showsUserLocation;
-
-/// 当前用户位置，返回坐标为百度坐标
- @property (nonatomic, readonly) BMKUserLocation *userLocation;
-
-/// 返回定位坐标点是否在当前地图可视区域内
-@property (nonatomic, readonly, getter=isUserLocationVisible) BOOL userLocationVisible;
 
 /**
  *向地图窗口添加标注，需要实现BMKMapViewDelegate的-mapView:viewForAnnotation:函数来生成标注对应的View
@@ -223,6 +262,7 @@
 - (void)deselectAnnotation:(id <BMKAnnotation>)annotation animated:(BOOL)animated;
 
 @end
+
 
 @interface BMKMapView (OverlaysAPI)
 
@@ -290,6 +330,7 @@
 
 @end
 
+
 /// MapView的Delegate，mapView通过此类来通知用户对应的事件
 @protocol BMKMapViewDelegate <NSObject>
 @optional
@@ -338,39 +379,13 @@
 - (void)mapView:(BMKMapView *)mapView didDeselectAnnotationView:(BMKAnnotationView *)view;
 
 /**
- *在地图View将要启动定位时，会调用此函数
- *@param mapView 地图View
- */
-- (void)mapViewWillStartLocatingUser:(BMKMapView *)mapView;
-
-/**
- *在地图View停止定位后，会调用此函数
- *@param mapView 地图View
- */
-- (void)mapViewDidStopLocatingUser:(BMKMapView *)mapView;
-
-/**
- *用户位置更新后，会调用此函数
- *@param mapView 地图View
- *@param userLocation 新的用户位置
- */
-- (void)mapView:(BMKMapView *)mapView didUpdateUserLocation:(BMKUserLocation *)userLocation;
-
-/**
- *定位失败后，会调用此函数
- *@param mapView 地图View
- *@param error 错误号，参考CLError.h中定义的错误号
- */
-- (void)mapView:(BMKMapView *)mapView didFailToLocateUserWithError:(NSError *)error;
-
-/**
- *拖动annotation view时view的状态变化，ios3.2以后支持
+ *拖动annotation view时，若view的状态发生变化，会调用此函数。ios3.2以后支持
  *@param mapView 地图View
  *@param view annotation view
  *@param newState 新状态
  *@param oldState 旧状态
  */
-- (void)mapView:(BMKMapView *)mapView annotationView:(BMKAnnotationView *)view didChangeDragState:(BMKAnnotationViewDragState)newState 
+- (void)mapView:(BMKMapView *)mapView annotationView:(BMKAnnotationView *)view didChangeDragState:(BMKAnnotationViewDragState)newState
    fromOldState:(BMKAnnotationViewDragState)oldState;
 
 /**
@@ -395,6 +410,59 @@
  */
 - (void)mapView:(BMKMapView *)mapView didAddOverlayViews:(NSArray *)overlayViews;
 
+/**
+ *点中底图标注后会回调此接口
+ *@param mapview 地图View
+ *@param mapPoi 标注点信息
+ */
+- (void)mapView:(BMKMapView *)mapView onClickedMapPoi:(BMKMapPoi*)mapPoi;
+
+/**
+ *点中底图空白处会回调此接口
+ *@param mapview 地图View
+ *@param coordinate 空白处坐标点的经纬度
+ */
+- (void)mapView:(BMKMapView *)mapView onClickedMapBlank:(CLLocationCoordinate2D)coordinate;
+
+/**
+ *双击地图时会回调此接口
+ *@param mapview 地图View
+ *@param coordinate 返回双击处坐标点的经纬度
+ */
+- (void)mapview:(BMKMapView *)mapView onDoubleClick:(CLLocationCoordinate2D)coordinate;
+
+/**
+ *长按地图时会回调此接口
+ *@param mapview 地图View
+ *@param coordinate 返回长按事件坐标点的经纬度
+ */
+- (void)mapview:(BMKMapView *)mapView onLongClick:(CLLocationCoordinate2D)coordinate;
+
+/**
+ *在地图View将要启动定位时，会调用此函数
+ *@param mapView 地图View
+ */
+- (void)mapViewWillStartLocatingUser:(BMKMapView *)mapView;
+
+/**
+ *在地图View停止定位后，会调用此函数
+ *@param mapView 地图View
+ */
+- (void)mapViewDidStopLocatingUser:(BMKMapView *)mapView;
+
+/**
+ *用户位置更新后，会调用此函数
+ *@param mapView 地图View
+ *@param userLocation 新的用户位置
+ */
+- (void)mapView:(BMKMapView *)mapView didUpdateUserLocation:(BMKUserLocation *)userLocation;
+
+/**
+ *定位失败后，会调用此函数
+ *@param mapView 地图View
+ *@param error 错误号，参考CLError.h中定义的错误号
+ */
+- (void)mapView:(BMKMapView *)mapView didFailToLocateUserWithError:(NSError *)error;
 @end
 
 

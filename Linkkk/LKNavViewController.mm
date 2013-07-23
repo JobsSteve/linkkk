@@ -13,12 +13,13 @@
 #import "UIBarButtonItem+Linkkk.h"
 
 #import "BMapKit.h"
+#import "MobClick.h"
 
 #define MYBUNDLE_NAME @"mapapi.bundle"
 #define MYBUNDLE_PATH [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:MYBUNDLE_NAME]
 #define MYBUNDLE [NSBundle bundleWithPath:MYBUNDLE_PATH]
 
-BOOL isRetina = YES;
+BOOL _isRetina = YES;
 
 @interface RouteAnnotation : BMKPointAnnotation
 {
@@ -46,7 +47,7 @@ BOOL isRetina = YES;
 - (UIImage*)imageRotatedByDegrees:(CGFloat)degrees
 {
 	CGSize rotatedSize = self.size;
-	if (isRetina) {
+	if (_isRetina) {
 		rotatedSize.width *= 2;
 		rotatedSize.height *= 2;
 	}
@@ -143,6 +144,21 @@ BOOL isRetina = YES;
 		[_mapView addOverlay:polyLine];
         delete [] points;
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [MobClick event:@"nav_scene_clicked"];
+    [MobClick beginLogPageView:@"Nav"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [MobClick endLogPageView:@"Nav"];
 }
 
 - (void)didReceiveMemoryWarning

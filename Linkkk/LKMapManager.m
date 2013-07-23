@@ -49,30 +49,30 @@
 
 - (void)suggestionSearch:(NSString *)string withCompletionHandler:(void (^)(BMKSuggestionResult *))block
 {
-    [_search suggestionSearch:string];
     _suggestionHandler = block;
+    [_search suggestionSearch:string];
 }
 
 - (void)reverseGeocode:(CLLocationCoordinate2D)coordinate withCompletionHandler:(void (^)(BMKAddrInfo *, int error))block
 {
-    [_search reverseGeocode:coordinate];
     _reverseGeocodeHandler = block;
+    [_search reverseGeocode:coordinate];
 }
 
 - (void)poiSearchNearby:(NSString *)string withCompletionHandler:(void (^)(NSArray *))block;
 {
-    [_search poiSearchNearBy:string center:[LKProfile profile].address.geoPt radius:1000000 pageIndex:0];
     _poiNearbyHandler = block;
+    [_search poiSearchNearBy:string center:[LKProfile profile].address.geoPt radius:1000000 pageIndex:0];
 }
 
 - (void)drivingSearchFrom:(CLLocationCoordinate2D)from to:(CLLocationCoordinate2D)to withCompletionHandler:(void (^)(BMKPlanResult *))block
 {
+    _driveSearchHandler = block;
 	BMKPlanNode *start = [[BMKPlanNode alloc] init];
 	start.pt = from;
 	BMKPlanNode *end = [[BMKPlanNode alloc] init];
 	end.pt = to;
     [_search drivingSearch:nil startNode:start endCity:nil endNode:end];
-    _driveSearchHandler = block;
 }
 
 #pragma mark Delegates

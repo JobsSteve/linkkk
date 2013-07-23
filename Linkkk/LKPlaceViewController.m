@@ -23,6 +23,7 @@
 
 #import "SinaWeibo.h"
 #import "BMapKit.h"
+#import "MobClick.h"
 #import "MWPhotoBrowser.h"
 
 #import <CoreLocation/CoreLocation.h>
@@ -65,13 +66,18 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.placeView becomeFirstResponder];
     [super viewWillAppear:animated];
+    [self.placeView becomeFirstResponder];
+    
+    [MobClick beginLogPageView:@"Place"];
 }
+
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [self.placeView resignFirstResponder];
     [super viewWillDisappear:animated];
+    [self.placeView resignFirstResponder];
+    
+    [MobClick endLogPageView:@"Place"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -150,6 +156,7 @@
 
 - (IBAction)flagButtonSelected:(UIButton *)sender
 {
+    [MobClick event:@"flag_button_clicked"];
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"举报" message:@"请输入原因" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"提交", nil];
     alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     alertView.delegate = self;
@@ -158,7 +165,8 @@
 
 - (IBAction)favButtonSelected:(UIButton *)sender
 {
-    NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json", _place.placeID];
+    [MobClick event:@"fav_button_place_scene"];
+    NSString *post = [NSString stringWithFormat:@"exp_id=%d&format=json&tag_from=ios", _place.placeID];
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
     NSString *urlString = _place.hasFaved ? @"http://www.linkkk.com/v5/unfavourite/exp/" : @"http://www.linkkk.com/v5/favourite/exp/";
@@ -192,6 +200,7 @@
 
 - (void)didSelectPhoto:(UIButton *)sender
 {
+    [MobClick event:@"gallery_button_clicked"];
     [self presentPhotoGallery:sender];
 }
 

@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Linkkk/LKMainViewController.m"
-         timestampString = "393938418.924832"
+         timestampString = "396014258.233694"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "450"
-         endingLineNumber = "450"
+         startingLineNumber = "458"
+         endingLineNumber = "458"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Linkkk/LKProfileViewController.m"
-         timestampString = "393127129.630208"
+         timestampString = "396013657.678152"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "162"
-         endingLineNumber = "162"
+         startingLineNumber = "168"
+         endingLineNumber = "168"
          landmarkName = "-_fetchFav"
          landmarkType = "5">
       </FileBreakpoint>

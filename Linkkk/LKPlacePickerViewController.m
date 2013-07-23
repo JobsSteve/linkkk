@@ -17,7 +17,9 @@
 #import "UIViewController+Linkkk.h"
 
 #import <CoreLocation/CoreLocation.h>
+
 #import "BMapKit.h"
+#import "MobClick.h"
 
 @interface LKPlacePickerViewController ()
 {
@@ -48,6 +50,20 @@
     }
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem customBackButtonWithTitle:@"选择地址" target:self action:@selector(backButtonSelected:)];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [MobClick beginLogPageView:@"Place Picker"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [MobClick endLogPageView:@"Place Picker"];
 }
 
 - (void)didReceiveMemoryWarning

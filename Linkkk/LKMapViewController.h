@@ -14,4 +14,9 @@
 
 @property (nonatomic, strong) IBOutlet BMKMapView *mapView;
 
+@property (strong, nonatomic) IBOutlet UIButton *centerButton;
+@property (strong, nonatomic) IBOutlet UIButton *refreshButton;
+
+- (IBAction)centerButtonSelected:(id)sender;
+
 @end

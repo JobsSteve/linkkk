@@ -88,9 +88,11 @@
 {
     NSArray* _keyList;
     NSArray* _cityList;
+    NSArray* _districtList;
 }
 
 @property (nonatomic, retain) NSArray* keyList; ///key列表，成员是NSString
 @property (nonatomic, retain) NSArray* cityList; ///city列表，成员是NSString
+@property (nonatomic, retain) NSArray* districtList; ///district列表，成员是NSString
 @end
 
